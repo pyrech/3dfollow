@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste impressions{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <header class="bg-primary mb-5 rounded-lg">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-lg-12">
+                        <h1 class="display-4 text-white mt-5 mb-2">Liste des impressions</h1>
+                        <p class="lead mb-5 text-white-50">Premier arrivé, premier servi... Enfin plus ou moins 😉</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Nom</th>
+                    <th>Lien (thingiverse.com)</th>
+                    <th>Filament</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for print_item in print_items %}
+                <tr>
+                    <td>{{ print_item.user.username }}</td>
+                    <td>{{ print_item.name }}</td>
+                    <td>{{ print_item.link }}</td>
+                    <td>{{ print_item.filament }}</td>
+                    <td>
+                        <span class="badge badge-{{ print_item.isPrinted ? 'success' : 'primary' }}">
+                            {{ print_item.isPrinted ? 'Imprimé' : 'En attente' }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if app.user and app.user.id == print_item.user.id %}
+                            <a href="{{ path('print_item_edit', {'id': print_item.id}) }}" class="btn btn-primary">Modifier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">La liste est vide \o/</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('print_item_new') }}" class="btn btn-success">Ajouter un élément</a>
+    </div>
+{% endblock %}

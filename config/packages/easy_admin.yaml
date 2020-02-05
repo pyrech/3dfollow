@@ -1,0 +1,44 @@
+easy_admin:
+    entities:
+        User:
+            class: App\Entity\User
+            label: User
+            list:
+                fields:
+                    - { property: username }
+                    - { property: password }
+                    - { property: isAdmin }
+            form:
+                fields:
+                    - { property: username }
+                    - { property: password }
+                    - { property: isAdmin }
+        Filament:
+            class: App\Entity\Filament
+            label: Filament
+            list:
+                fields:
+                    - { property: name }
+            form:
+                fields:
+                    - { property: name }
+        PrintItem:
+            class: App\Entity\PrintItem
+            label: PrintItem
+            list:
+                fields:
+                    - { property: user }
+                    - { property: name }
+                    - { property: link, type: 'url' }
+                    - { property: isPrinted }
+                    - { property: cost }
+                    - { property: weight }
+            form:
+                fields:
+                    - { property: user }
+                    - { property: name }
+                    - { property: link }
+                    - { property: comment }
+                    - { property: cost }
+                    - { property: weight }
+                    - { property: createdAt, type_options: {disabled: true} }

@@ -1,0 +1,15 @@
+ {% extends 'base.html.twig' %}
+
+{% block title %}Modifier un élément{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Modifier élément</h1>
+
+        {{ include('print_item/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+        <a href="{{ path('print_item_index') }}">Retourner à la liste</a>
+
+        {{ include('print_item/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
