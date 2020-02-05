@@ -30,6 +30,7 @@ easy_admin:
                     - { property: user }
                     - { property: name }
                     - { property: link, type: 'url' }
+                    - { property: filament }
                     - { property: isPrinted }
                     - { property: cost }
                     - { property: weight }
@@ -38,6 +39,7 @@ easy_admin:
                     - { property: user }
                     - { property: name }
                     - { property: link }
+                    - { property: filament }
                     - { property: comment }
                     - { property: cost }
                     - { property: weight }
