@@ -6,10 +6,18 @@
     <div class="container">
         <h1>Modifier élément</h1>
 
+        {% if print_item.isPrinted %}
+            <p class="text-black-50 mt-5">
+                L'objet a été imprimé. Vous ne pouvez plus le modifier
+            </p>
+        {% endif %}
+
         {{ include('print_item/_form.html.twig', {'button_label': 'Modifier'}) }}
 
         <a href="{{ path('print_item_index') }}">Retourner à la liste</a>
 
-        {{ include('print_item/_delete_form.html.twig') }}
+        {% if not print_item.isPrinted %}
+            {{ include('print_item/_delete_form.html.twig') }}
+        {% endif %}
     </div>
 {% endblock %}

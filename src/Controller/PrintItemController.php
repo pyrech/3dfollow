@@ -54,7 +54,9 @@ class PrintItemController extends AbstractController
     {
         $this->assertUser($printItem);
 
-        $form = $this->createForm(PrintItemType::class, $printItem);
+        $form = $this->createForm(PrintItemType::class, $printItem, [
+            'is_printed' => $printItem->getIsPrinted(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -76,6 +78,10 @@ class PrintItemController extends AbstractController
     {
         $this->assertUser($printItem);
 
+        if ($printItem->getIsPrinted()) {
+            throw $this->createNotFoundException('Item is not deletable');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$printItem->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printItem);
@@ -90,7 +96,7 @@ class PrintItemController extends AbstractController
         $user = $this->getUser();
 
         if (!$user || $user->getId() !== $printItem->getUser()->getId()) {
-            throw $this->createNotFoundException();
+            throw $this->createNotFoundException('Current user does not have access to this item');
         }
     }
 }
