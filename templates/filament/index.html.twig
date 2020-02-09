@@ -22,7 +22,7 @@
                     <tr>
                         <td>{{ filament.name }}</td>
                         <td>{{ filament.weight|number_format }} g</td>
-                        <td>{{ filament.price|number_format }} €</td>
+                        <td>{{ filament.price|number_format(2) }} €</td>
                         <td>
                             <div class="progress" title="{{ usagePercentage }}% used - {{ ((100 - usagePercentage) * 0.01 * filament.weight)|number_format() }}g remaining">
                                 <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
