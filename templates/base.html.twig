@@ -16,16 +16,16 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ path('print_item_index') }}">
                     <img src="{{ asset('favicon.png') }}" alt="" width="50" />
-                    <span>Imprimante 3D Loïck</span>
+                    <span>3D Follow</span>
                 </a>
             </div>
         </nav>
 
         {% block body %}{% endblock %}
 
-        <footer class="py-5">
+        <footer class="footer mt-auto mt-5 py-3">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; imprimante3d.loickpiera.com {{ date()|date('Y') }}</p>
+                <p class="m-0 text-center text-black-50">Copyright &copy; 3D Follow {{ date()|date('Y') }}</p>
             </div>
         </footer>
 
