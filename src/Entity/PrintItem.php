@@ -43,11 +43,6 @@ class PrintItem
     private $isPrinted = false;
 
     /**
-     * @ORM\Column(type="decimal", precision=5, scale=1, nullable=true)
-     */
-    private $cost;
-
-    /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $weight;
@@ -56,6 +51,11 @@ class PrintItem
      * @ORM\ManyToOne(targetEntity="App\Entity\Filament")
      */
     private $filament;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity = 1;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -132,18 +132,6 @@ class PrintItem
         return $this;
     }
 
-    public function getCost(): ?string
-    {
-        return $this->cost;
-    }
-
-    public function setCost(?string $cost): self
-    {
-        $this->cost = $cost;
-
-        return $this;
-    }
-
     public function getWeight(): ?string
     {
         return $this->weight;
@@ -164,6 +152,18 @@ class PrintItem
     public function setFilament(?Filament $filament): self
     {
         $this->filament = $filament;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

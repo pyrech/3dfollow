@@ -19,9 +19,17 @@ easy_admin:
             list:
                 fields:
                     - { property: name }
+                    - { property: weight, label: 'Weight (g)' }
+                    - { property: price, label: 'Price (€)' }
+                    - { property: density, label: 'Density (g/cm³)' }
+                    - { property: diameter, label: 'Diameter (mm)' }
             form:
                 fields:
                     - { property: name }
+                    - { property: weight, label: 'Weight (g)' }
+                    - { property: price, label: 'Price (€)' }
+                    - { property: density, label: 'Density (g/cm³)' }
+                    - { property: diameter, label: 'Diameter (mm)' }
         PrintItem:
             class: App\Entity\PrintItem
             label: PrintItem
@@ -31,9 +39,9 @@ easy_admin:
                     - { property: name }
                     - { property: link, type: 'url' }
                     - { property: filament }
-                    - { property: isPrinted }
-                    - { property: cost }
+                    - { property: quantity }
                     - { property: weight }
+                    - { property: isPrinted }
             form:
                 fields:
                     - { property: user }
@@ -41,6 +49,6 @@ easy_admin:
                     - { property: link }
                     - { property: filament }
                     - { property: comment }
-                    - { property: cost }
+                    - { property: quantity }
                     - { property: weight }
                     - { property: createdAt, type_options: {disabled: true} }

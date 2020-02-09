@@ -20,9 +20,10 @@
                 <tr>
                     <th>Utilisateur</th>
                     <th>Nom</th>
-                    <th>Lien (thingiverse.com)</th>
+                    <th>Quantité</th>
                     <th>Filament</th>
                     <th>Statut</th>
+                    <th>Coût matière</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,12 +32,24 @@
                 <tr>
                     <td>{{ print_item.user.username }}</td>
                     <td>{{ print_item.name }}</td>
-                    <td>{{ print_item.link }}</td>
+                    <td>{{ print_item.quantity }}</td>
                     <td>{{ print_item.filament }}</td>
                     <td>
                         <span class="badge badge-{{ print_item.isPrinted ? 'success' : 'primary' }}">
                             {{ print_item.isPrinted ? 'Imprimé' : 'En attente' }}
                         </span>
+                    </td>
+                    <td>
+                        {% set unitCost = null %}
+                        {% if print_item.weight and print_item.filament %}
+                            {% set unitCost = print_item.filament.computeCostFromWeight(print_item.weight) %}
+                        {% endif %}
+
+                        {% if unitCost %}
+                            {{ (unitCost * print_item.quantity)|number_format(2) }} €
+                        {% else %}
+                            -
+                        {% endif %}
                     </td>
                     <td>
                         {% if app.user and app.user.id == print_item.user.id %}
