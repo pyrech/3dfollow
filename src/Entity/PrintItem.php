@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PrintItemRepository")
@@ -44,6 +45,7 @@ class PrintItem
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\GreaterThanOrEqual(value=1)
      */
     private $weight;
 
@@ -55,6 +57,8 @@ class PrintItem
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(value=1)
      */
     private $quantity = 1;
 

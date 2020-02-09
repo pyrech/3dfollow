@@ -43,6 +43,10 @@ class PrintItemType extends AbstractType
                     ;
                 },
             ])
+            ->add('quantity', null, [
+                'label' => 'Quantité',
+                'disabled' => $isPrinted,
+            ])
             ->add('comment', null, [
                 'label' => 'Commentaire (optionnel)',
                 'help' => 'Autre filament, dimensions à changer, etc.',
