@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FilamentRepository")
@@ -18,6 +21,7 @@ class Filament
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -25,6 +29,7 @@ class Filament
      * Unit: g
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @Assert\NotBlank()
      */
     private $weight;
 
@@ -32,6 +37,7 @@ class Filament
      * Unit: €
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Assert\NotBlank()
      */
     private $price;
 
@@ -39,15 +45,33 @@ class Filament
      * Unit: g/cm³
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @Assert\NotBlank()
      */
-    private $density = 1.24;
+    private $density;
 
     /**
      * Unit: mm
      *
      * @ORM\Column(type="decimal", precision=5, scale=2)
+     * @Assert\NotBlank()
      */
-    private $diameter = 1.75;
+    private $diameter;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="filaments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="filament")
+     */
+    private $printItems;
+
+    public function __construct()
+    {
+        $this->printItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -115,6 +139,49 @@ class Filament
     public function setDiameter(string $diameter): self
     {
         $this->diameter = $diameter;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PrintItem[]
+     */
+    public function getPrintItems(): Collection
+    {
+        return $this->printItems;
+    }
+
+    public function addPrintItem(PrintItem $printItem): self
+    {
+        if (!$this->printItems->contains($printItem)) {
+            $this->printItems[] = $printItem;
+            $printItem->setFilament($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrintItem(PrintItem $printItem): self
+    {
+        if ($this->printItems->contains($printItem)) {
+            $this->printItems->removeElement($printItem);
+            // set the owning side to null (unless already changed)
+            if ($printItem->getFilament() === $this) {
+                $printItem->setFilament(null);
+            }
+        }
 
         return $this;
     }

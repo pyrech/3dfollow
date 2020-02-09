@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Filament;
 use App\Entity\PrintItem;
+use App\Entity\Team;
+use App\Repository\FilamentRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,6 +16,8 @@ class PrintItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $isPrinted = $options['is_printed'];
+        /** @var Team $team */
+        $team = $options['team'];
 
         $builder
             ->add('name', null, [
@@ -32,6 +36,12 @@ class PrintItemType extends AbstractType
                 'class' => Filament::class,
                 'required' => false,
                 'disabled' => $isPrinted,
+                'query_builder' => function(FilamentRepository $filamentRepository) use ($team) {
+                    return $filamentRepository->createQueryBuilder('f')
+                        ->andWhere('f.owner = :user')
+                        ->setParameter('user', $team->getCreator())
+                    ;
+                },
             ])
             ->add('comment', null, [
                 'label' => 'Commentaire (optionnel)',
@@ -49,5 +59,8 @@ class PrintItemType extends AbstractType
 
         $resolver->setRequired('is_printed');
         $resolver->setAllowedTypes('is_printed', 'bool');
+
+        $resolver->setRequired('team');
+        $resolver->setAllowedTypes('team', Team::class);
     }
 }

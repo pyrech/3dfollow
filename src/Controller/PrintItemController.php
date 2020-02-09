@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\PrintItem;
+use App\Entity\Team;
+use App\Entity\User;
 use App\Form\PrintItemType;
 use App\Repository\PrintItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,22 +19,43 @@ class PrintItemController extends AbstractController
      */
     public function index(PrintItemRepository $printItemRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $teamsById = [];
+
+        foreach ($user->getTeams() as $team) {
+            $teamsById[$team->getId()] = $team;
+        }
+
+        $printItemsByTeam = [];
+        $printItems = $printItemRepository->findAllForUser($user);
+
+        foreach ($printItems as $printItem) {
+            $printItemsByTeam[$printItem->getTeam()->getId()][] = $printItem;
+        }
+
         return $this->render('print_item/index.html.twig', [
-            'print_items' => $printItemRepository->findAllForUser($this->getUser()),
+            'teams' => $teamsById,
+            'print_items_by_team' => $printItemsByTeam,
         ]);
     }
 
     /**
-     * @Route("/print-item/new", name="print_item_new", methods={"GET","POST"})
+     * @Route("/print-item/new/{id}", name="print_item_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Team $team): Response
     {
         $printItem = new PrintItem();
-        $form = $this->createForm(PrintItemType::class, $printItem);
+        $form = $this->createForm(PrintItemType::class, $printItem, [
+            'is_printed' => false,
+            'team' => $team,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $printItem->setUser($this->getUser());
+            $printItem->setTeam($team);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($printItem);
@@ -56,6 +79,7 @@ class PrintItemController extends AbstractController
 
         $form = $this->createForm(PrintItemType::class, $printItem, [
             'is_printed' => $printItem->getIsPrinted(),
+            'team' => $printItem->getTeam(),
         ]);
         $form->handleRequest($request);
 

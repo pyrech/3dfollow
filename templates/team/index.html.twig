@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon groupe{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Les membres de mon groupe</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Nombre d'objets</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in team.members %}
+                    <tr>
+                        <td>{{ member.username }}</td>
+                        <td>{{ member.printItems|length }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun membre dans votre groupe</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -48,7 +48,8 @@ class PrintItem
     private $weight;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Filament")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printItems")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $filament;
 
@@ -61,6 +62,12 @@ class PrintItem
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printItems")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $team;
 
     public function __construct()
     {
@@ -171,5 +178,17 @@ class PrintItem
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
+
+        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Filament;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -19,32 +20,16 @@ class FilamentRepository extends ServiceEntityRepository
         parent::__construct($registry, Filament::class);
     }
 
-    // /**
-    //  * @return Filament[] Returns an array of Filament objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Filament[]
+     */
+    public function findAllForOwner(User $user): array
     {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $qb = $this->createQueryBuilder('f')
+            ->andWhere('f.owner = :user')
+            ->setParameter('user', $user)
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Filament
-    {
-        return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $qb->getQuery()->getResult();
     }
-    */
 }

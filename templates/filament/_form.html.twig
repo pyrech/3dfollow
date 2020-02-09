@@ -1,0 +1,23 @@
+{{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.weight, {attr: {list: 'filament-weights'}}) }}
+    {{ form_row(form.price) }}
+    {{ form_row(form.density, {attr: {list: 'filament-densities'}}) }}
+    {{ form_row(form.diameter, {attr: {list: 'filament-diameters'}}) }}
+
+    <datalist id="filament-weights">
+        <option value="500" />
+        <option value="750" />
+        <option value="1000" />
+    </datalist>
+    <datalist id="filament-densities">
+        <option value="1.24" />
+    </datalist>
+    <datalist id="filament-diameters">
+        <option value="1.75" />
+        <option value="2.85" />
+        <option value="3" />
+    </datalist>
+
+    <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+{{ form_end(form) }}

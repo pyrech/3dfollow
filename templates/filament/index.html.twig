@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes filaments{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Mes filaments</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Poids de la bobine</th>
+                    <th>Prix de la bobine</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for filament in filaments %}
+                    <tr>
+                        <td>{{ filament.name }}</td>
+                        <td>{{ filament.weight|number_format }} g</td>
+                        <td>{{ filament.price|number_format }} €</td>
+                        <td>
+                            <a href="{{ path('filament_edit', {'id': filament.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Aucun filament enregistré</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn btn-success" href="{{ path('filament_new') }}">Ajouter un nouveau filament</a>
+    </div>
+{% endblock %}

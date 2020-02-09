@@ -18,6 +18,19 @@
                     <img src="{{ asset('favicon.png') }}" alt="" width="50" />
                     <span>3D Follow</span>
                 </a>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        {% if is_granted('ROLE_PRINTER') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('filament_index') }}">Mes filaments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('team_index') }}">Mon groupe</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </nav>
 

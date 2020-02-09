@@ -30,6 +30,11 @@ class User implements UserInterface
     private $isAdmin = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPrinter = false;
+
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -40,9 +45,26 @@ class User implements UserInterface
      */
     private $printItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Filament", mappedBy="owner", orphanRemoval=true)
+     */
+    private $filaments;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Team", mappedBy="creator", cascade={"persist", "remove"})
+     */
+    private $teamCreated;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Team", mappedBy="members")
+     */
+    private $teams;
+
     public function __construct()
     {
         $this->printItems = new ArrayCollection();
+        $this->filaments = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,6 +101,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getIsPrinter(): bool
+    {
+        return $this->isPrinter;
+    }
+
+    public function setIsPrinter(bool $isPrinter): self
+    {
+        $this->isPrinter = $isPrinter;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -89,6 +123,10 @@ class User implements UserInterface
 
         if ($this->isAdmin) {
             $roles[] = 'ROLE_ADMIN';
+        }
+
+        if ($this->isPrinter) {
+            $roles[] = 'ROLE_PRINTER';
         }
 
         return array_unique($roles);
@@ -157,6 +195,82 @@ class User implements UserInterface
             if ($printItem->getUser() === $this) {
                 $printItem->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Filament[]
+     */
+    public function getFilaments(): Collection
+    {
+        return $this->filaments;
+    }
+
+    public function addFilament(Filament $filament): self
+    {
+        if (!$this->filaments->contains($filament)) {
+            $this->filaments[] = $filament;
+            $filament->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFilament(Filament $filament): self
+    {
+        if ($this->filaments->contains($filament)) {
+            $this->filaments->removeElement($filament);
+            // set the owning side to null (unless already changed)
+            if ($filament->getOwner() === $this) {
+                $filament->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTeamCreated(): ?Team
+    {
+        return $this->teamCreated;
+    }
+
+    public function setTeamCreated(Team $teamCreated): self
+    {
+        $this->teamCreated = $teamCreated;
+
+        // set the owning side of the relation if necessary
+        if ($teamCreated->getCreator() !== $this) {
+            $teamCreated->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+            $team->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->contains($team)) {
+            $this->teams->removeElement($team);
+            $team->removeMember($this);
         }
 
         return $this;

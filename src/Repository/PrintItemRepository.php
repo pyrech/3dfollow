@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Filament;
 use App\Entity\PrintItem;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,7 +21,10 @@ class PrintItemRepository extends ServiceEntityRepository
         parent::__construct($registry, PrintItem::class);
     }
 
-    public function findAllForUser(User $user)
+    /**
+     * @return Filament[]
+     */
+    public function findAllForUser(User $user): array
     {
         $qb = $this->createQueryBuilder('p')
             ->andWhere('p.user = :user')

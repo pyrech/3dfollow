@@ -1,4 +1,11 @@
 easy_admin:
+    site_name: '3D Follow'
+    design:
+        menu:
+            - { entity: 'PrintItem', icon: 'list', default: true }
+            - { entity: 'Filament', icon: 'circle-notch' }
+            - { entity: 'User', icon: 'user' }
+            - { entity: 'Team', icon: 'users' }
     entities:
         User:
             class: App\Entity\User
@@ -7,17 +14,33 @@ easy_admin:
                 fields:
                     - { property: username }
                     - { property: password }
+                    - { property: isPrinter }
                     - { property: isAdmin }
+                    - { property: teams.count, label: "Teams" }
             form:
                 fields:
                     - { property: username }
                     - { property: password }
+                    - { property: isPrinter }
                     - { property: isAdmin }
+                    - { property: teams }
+        Team:
+            class: App\Entity\Team
+            label: Team
+            list:
+                fields:
+                    - { property: creator }
+                    - { property: members.count, label: "Members" }
+            form:
+                fields:
+                    - { property: creator }
+                    - { property: members }
         Filament:
             class: App\Entity\Filament
             label: Filament
             list:
                 fields:
+                    - { property: owner }
                     - { property: name }
                     - { property: weight, label: 'Weight (g)' }
                     - { property: price, label: 'Price (€)' }
@@ -25,6 +48,7 @@ easy_admin:
                     - { property: diameter, label: 'Diameter (mm)' }
             form:
                 fields:
+                    - { property: owner }
                     - { property: name }
                     - { property: weight, label: 'Weight (g)' }
                     - { property: price, label: 'Price (€)' }
@@ -32,9 +56,10 @@ easy_admin:
                     - { property: diameter, label: 'Diameter (mm)' }
         PrintItem:
             class: App\Entity\PrintItem
-            label: PrintItem
+            label: Print item
             list:
                 fields:
+                    - { property: team }
                     - { property: user }
                     - { property: name }
                     - { property: link, type: 'url' }
@@ -44,6 +69,7 @@ easy_admin:
                     - { property: isPrinted }
             form:
                 fields:
+                    - { property: team }
                     - { property: user }
                     - { property: name }
                     - { property: link }
