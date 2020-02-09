@@ -19,7 +19,7 @@ class Team
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="teamCreated", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="teamCreated", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $creator;

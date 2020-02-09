@@ -41,7 +41,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="user")
      */
     private $printItems;
 
