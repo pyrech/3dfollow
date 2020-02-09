@@ -194,4 +194,19 @@ class Filament
 
         return $this->price * $weight / $this->weight;
     }
+
+    public function computeUsagePercentage(): int
+    {
+        $usedWeight = 0;
+
+        foreach ($this->getPrintItems() as $printItem) {
+            if (!$printItem->getIsPrinted()) {
+                continue;
+            }
+
+            $usedWeight += $printItem->getWeight() * $printItem->getQuantity();
+        }
+
+        return $usedWeight * 100 / $this->weight;
+    }
 }

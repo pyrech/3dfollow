@@ -12,15 +12,22 @@
                     <th>Nom</th>
                     <th>Poids de la bobine</th>
                     <th>Prix de la bobine</th>
+                    <th>Utilisation</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for filament in filaments %}
+                    {% set usagePercentage = filament.computeUsagePercentage %}
                     <tr>
                         <td>{{ filament.name }}</td>
                         <td>{{ filament.weight|number_format }} g</td>
                         <td>{{ filament.price|number_format }} €</td>
+                        <td>
+                            <div class="progress" title="{{ usagePercentage }}% used - {{ ((100 - usagePercentage) * 0.01 * filament.weight)|number_format() }}g remaining">
+                                <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </td>
                         <td>
                             <a href="{{ path('filament_edit', {'id': filament.id}) }}">Modifier</a>
                         </td>
