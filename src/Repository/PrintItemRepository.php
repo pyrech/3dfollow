@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PrintItem;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -17,5 +18,15 @@ class PrintItemRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PrintItem::class);
+    }
+
+    public function findAllForUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

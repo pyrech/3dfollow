@@ -18,7 +18,7 @@ class PrintItemController extends AbstractController
     public function index(PrintItemRepository $printItemRepository): Response
     {
         return $this->render('print_item/index.html.twig', [
-            'print_items' => $printItemRepository->findAll(),
+            'print_items' => $printItemRepository->findAllForUser($this->getUser()),
         ]);
     }
 
@@ -89,7 +89,7 @@ class PrintItemController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user || $user->getUsername() !== $printItem->getUser()->getUsername()) {
+        if (!$user || $user->getId() !== $printItem->getUser()->getId()) {
             throw $this->createNotFoundException();
         }
     }
