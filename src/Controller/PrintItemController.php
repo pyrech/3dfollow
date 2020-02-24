@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrintItemController extends AbstractController
 {
     /**
+     * @Route("/", name="home_index", methods={"GET"})
      * @Route("/", name="print_item_index", methods={"GET"})
      */
     public function index(PrintItemRepository $printItemRepository): Response
