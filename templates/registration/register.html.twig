@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <h1 class="mt-5 text-center">
+                    J'ai une imprimante 3D et je souhaite créer mon compte.
+                </h1>
+                <p class="mt-5 text-center text-muted">
+                    J'ai déjà un compte. <a href="{{ path('security_login') }}" class="btn btn-outline-primary">Me connecter</a>
+                </p>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="border rounded rounded-lg p-5">
+                    {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.username) }}
+                    {{ form_row(registrationForm.plainPassword) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    <button class="btn btn-primary">Register</button>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

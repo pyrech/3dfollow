@@ -59,9 +59,13 @@ class Team
         return $this->creator;
     }
 
-    public function setCreator(User $creator): self
+    public function setCreator(?User $creator): self
     {
         $this->creator = $creator;
+
+        if ($creator->getTeamCreated() !== $this) {
+            $creator->setTeamCreated($this);
+        }
 
         return $this;
     }

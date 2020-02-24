@@ -30,8 +30,15 @@
                                     <a class="nav-link" href="{{ path('team_index') }}">Mon groupe</a>
                                 </li>
                             {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('security_logout') }}">Se déconnecter</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ app.user.username }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ path('print_item_index') }}">Ma liste de souhait</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path('security_logout') }}">Se déconnecter</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
