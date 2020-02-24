@@ -19,4 +19,15 @@ class TeamRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Team::class);
     }
+
+    public function findOneByJoinToken(string $token): ?Team
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.joinToken = :token')
+            ->setParameter('token', $token)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

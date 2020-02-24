@@ -4,7 +4,31 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-4 mb-4">Les membres de mon groupe</h1>
+        <h1 class="mt-4 mb-4">Mon groupe</h1>
+
+        <div class="border rounded-lg mt-5 p-5">
+            <h2 class="mb-3">Lien d'invitation</h2>
+
+            <form method="post" action="{{ path('team_generate_join_token') }}">
+                {% if team.joinToken %}
+                    <p>Partager ce lien avec d'autres personnes pour les inviter à rejoindre votre groupe.</p>
+
+                    <div class="mb-3">
+                        <input class="w-100" readonly value="{{ url('team_join', {token: team.joinToken}) }}" />
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-danger">Regénérer mon lien d'invitation</button>
+                {% else %}
+                    <p>Vous n'avez pas encore créer de lien d'invitation.</p>
+
+                    <button type="submit" class="btn btn-primary">Créer mon lien d'invitation</button>
+                {% endif %}
+
+                <input type="hidden" name="token" value="{{ csrf_token('team_generate_join_token') }}" />
+            </form>
+        </div>
+
+        <h2 class="mt-5 mb-2">Les membres de mon groupe</h2>
 
         <table class="table">
             <thead>

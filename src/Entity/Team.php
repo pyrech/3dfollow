@@ -34,6 +34,11 @@ class Team
      */
     private $printItems;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $joinToken;
+
     public function __toString()
     {
         if (!$this->creator) {
@@ -123,6 +128,18 @@ class Team
                 $printItem->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJoinToken(): ?string
+    {
+        return $this->joinToken;
+    }
+
+    public function setJoinToken(?string $joinToken): self
+    {
+        $this->joinToken = $joinToken;
 
         return $this;
     }

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Join{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">
+            Rejoindre un groupe
+        </h1>
+        <p>
+            Vous êtes invité à rejoindre le groupe de {{ team.creator.username }}.
+        </p>
+        <p>
+            Si vous avez déjà un compte, connectez-vous pour rejoindre le groupe : <a href="{{ path('security_login') }}" class="btn btn-outline-primary">Me connecter</a>.
+        </p>
+        <p>
+            Sinon, créer votre compte en un instant afin de rejoindre le groupe : <a href="{{ path('registration_register') }}" class="btn btn-outline-primary">Créer mon compte</a>.
+        </p>
+        </div>
+    </div>
+{% endblock %}

@@ -18,8 +18,12 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="registration_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppLoginFormAuthenticator $authenticator): Response
-    {
+    public function register(
+        UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler,
+        AppLoginFormAuthenticator $authenticator,
+        Request $request
+    ): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute('home_index');
         }
