@@ -64,13 +64,13 @@ class Filament
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="filament")
+     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="filament")
      */
-    private $printItems;
+    private $printRequests;
 
     public function __construct()
     {
-        $this->printItems = new ArrayCollection();
+        $this->printRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,30 +156,30 @@ class Filament
     }
 
     /**
-     * @return Collection|PrintItem[]
+     * @return Collection|PrintRequest[]
      */
-    public function getPrintItems(): Collection
+    public function getPrintRequests(): Collection
     {
-        return $this->printItems;
+        return $this->printRequests;
     }
 
-    public function addPrintItem(PrintItem $printItem): self
+    public function addPrintRequest(PrintRequest $printRequest): self
     {
-        if (!$this->printItems->contains($printItem)) {
-            $this->printItems[] = $printItem;
-            $printItem->setFilament($this);
+        if (!$this->printRequests->contains($printRequest)) {
+            $this->printRequests[] = $printRequest;
+            $printRequest->setFilament($this);
         }
 
         return $this;
     }
 
-    public function removePrintItem(PrintItem $printItem): self
+    public function removePrintRequest(PrintRequest $printRequest): self
     {
-        if ($this->printItems->contains($printItem)) {
-            $this->printItems->removeElement($printItem);
+        if ($this->printRequests->contains($printRequest)) {
+            $this->printRequests->removeElement($printRequest);
             // set the owning side to null (unless already changed)
-            if ($printItem->getFilament() === $this) {
-                $printItem->setFilament(null);
+            if ($printRequest->getFilament() === $this) {
+                $printRequest->setFilament(null);
             }
         }
 
@@ -199,12 +199,12 @@ class Filament
     {
         $usedWeight = 0;
 
-        foreach ($this->getPrintItems() as $printItem) {
-            if (!$printItem->getIsPrinted()) {
+        foreach ($this->getPrintRequests() as $printRequest) {
+            if (!$printRequest->getIsPrinted()) {
                 continue;
             }
 
-            $usedWeight += $printItem->getWeight() * $printItem->getQuantity();
+            $usedWeight += $printRequest->getWeight() * $printRequest->getQuantity();
         }
 
         return $usedWeight * 100 / $this->weight;

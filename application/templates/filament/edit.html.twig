@@ -6,7 +6,7 @@
     <div class="container">
         <h1>Modifier le filament</h1>
 
-        {% if filament.printItems|length > 0 %}
+        {% if filament.printRequests|length > 0 %}
             <p class="text-black-50 mt-5">
                 Le filament a été selectionné pour une ou plusieurs impression(s). Vous ne pouvez plus le supprimer.
             </p>
@@ -16,7 +16,7 @@
 
         <a href="{{ path('filament_index') }}">Retourner à la liste</a>
 
-        {% if filament.printItems|length < 1 %}
+        {% if filament.printRequests|length < 1 %}
             {{ include('filament/_delete_form.html.twig') }}
         {% endif %}
     </div>

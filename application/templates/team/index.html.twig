@@ -34,14 +34,14 @@
             <thead>
                 <tr>
                     <th>Utilisateur</th>
-                    <th>Nombre d'objets</th>
+                    <th>Nombre de modèles soumis</th>
                 </tr>
             </thead>
             <tbody>
                 {% for member in team.members %}
                     <tr>
                         <td>{{ member.username }}</td>
-                        <td>{{ member.printItems|length }}</td>
+                        <td>{{ member.printRequests|length }}</td>
                     </tr>
                 {% else %}
                     <tr>

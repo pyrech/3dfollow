@@ -31,31 +31,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for print_item in print_items_by_team[team.id]|default({}) %}
+                {% for print_request in print_requests_by_team[team.id]|default({}) %}
                     <tr>
-                        <td>{{ print_item.name }}</td>
-                        <td>{{ print_item.quantity }}</td>
-                        <td>{{ print_item.filament }}</td>
+                        <td>{{ print_request.name }}</td>
+                        <td>{{ print_request.quantity }}</td>
+                        <td>{{ print_request.filament }}</td>
                         <td>
-                            <span class="badge badge-{{ print_item.isPrinted ? 'success' : 'primary' }}">
-                                {{ print_item.isPrinted ? 'Imprimé' : 'En attente' }}
+                            <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
+                                {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
                             </span>
                         </td>
                         <td>
                             {% set unitCost = null %}
-                            {% if print_item.weight and print_item.filament %}
-                                {% set unitCost = print_item.filament.computeCostFromWeight(print_item.weight) %}
+                            {% if print_request.weight and print_request.filament %}
+                                {% set unitCost = print_request.filament.computeCostFromWeight(print_request.weight) %}
                             {% endif %}
 
                             {% if unitCost %}
-                                {{ (unitCost * print_item.quantity)|number_format(2) }} €
+                                {{ (unitCost * print_request.quantity)|number_format(2) }} €
                             {% else %}
                                 -
                             {% endif %}
                         </td>
                         <td>
-                            {% if app.user and app.user.id == print_item.user.id %}
-                                <a href="{{ path('print_item_edit', {'id': print_item.id}) }}" class="btn btn-primary">Modifier</a>
+                            {% if app.user and app.user.id == print_request.user.id %}
+                                <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">Modifier</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -67,7 +67,7 @@
                 </tbody>
             </table>
 
-            <a href="{{ path('print_item_new', {id: team.id}) }}" class="btn btn-success">Ajouter un élément à imprimer dans la liste de {{ team.creator }}</a>
+            <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">Ajouter un élément à imprimer dans la liste de {{ team.creator }}</a>
 
             {% if not loop.last %}
                 <hr class="mt-4" />

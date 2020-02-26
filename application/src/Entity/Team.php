@@ -30,9 +30,9 @@ class Team
     private $members;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="team")
      */
-    private $printItems;
+    private $printRequests;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -51,7 +51,7 @@ class Team
     public function __construct()
     {
         $this->members = new ArrayCollection();
-        $this->printItems = new ArrayCollection();
+        $this->printRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,30 +102,30 @@ class Team
     }
 
     /**
-     * @return Collection|PrintItem[]
+     * @return Collection|PrintRequest[]
      */
-    public function getPrintItems(): Collection
+    public function getPrintRequests(): Collection
     {
-        return $this->printItems;
+        return $this->printRequests;
     }
 
-    public function addPrintItem(PrintItem $printItem): self
+    public function addPrintRequest(PrintRequest $printRequest): self
     {
-        if (!$this->printItems->contains($printItem)) {
-            $this->printItems[] = $printItem;
-            $printItem->setTeam($this);
+        if (!$this->printRequests->contains($printRequest)) {
+            $this->printRequests[] = $printRequest;
+            $printRequest->setTeam($this);
         }
 
         return $this;
     }
 
-    public function removePrintItem(PrintItem $printItem): self
+    public function removePrintRequest(PrintRequest $printRequest): self
     {
-        if ($this->printItems->contains($printItem)) {
-            $this->printItems->removeElement($printItem);
+        if ($this->printRequests->contains($printRequest)) {
+            $this->printRequests->removeElement($printRequest);
             // set the owning side to null (unless already changed)
-            if ($printItem->getTeam() === $this) {
-                $printItem->setTeam(null);
+            if ($printRequest->getTeam() === $this) {
+                $printRequest->setTeam(null);
             }
         }
 

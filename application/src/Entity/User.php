@@ -44,9 +44,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintItem", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="user")
      */
-    private $printItems;
+    private $printRequests;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Filament", mappedBy="owner", orphanRemoval=true)
@@ -65,7 +65,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->printItems = new ArrayCollection();
+        $this->printRequests = new ArrayCollection();
         $this->filaments = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
@@ -173,30 +173,30 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|PrintItem[]
+     * @return Collection|PrintRequest[]
      */
-    public function getPrintItems(): Collection
+    public function getPrintRequests(): Collection
     {
-        return $this->printItems;
+        return $this->printRequests;
     }
 
-    public function addPrintItem(PrintItem $printItem): self
+    public function addPrintRequest(PrintRequest $printRequest): self
     {
-        if (!$this->printItems->contains($printItem)) {
-            $this->printItems[] = $printItem;
-            $printItem->setUser($this);
+        if (!$this->printRequests->contains($printRequest)) {
+            $this->printRequests[] = $printRequest;
+            $printRequest->setUser($this);
         }
 
         return $this;
     }
 
-    public function removePrintItem(PrintItem $printItem): self
+    public function removePrintRequest(PrintRequest $printRequest): self
     {
-        if ($this->printItems->contains($printItem)) {
-            $this->printItems->removeElement($printItem);
+        if ($this->printRequests->contains($printRequest)) {
+            $this->printRequests->removeElement($printRequest);
             // set the owning side to null (unless already changed)
-            if ($printItem->getUser() === $this) {
-                $printItem->setUser(null);
+            if ($printRequest->getUser() === $this) {
+                $printRequest->setUser(null);
             }
         }
 

@@ -1,0 +1,5 @@
+<form method="post" class="mt-5" action="{{ path('print_request_delete', {'id': print_request.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément de la liste ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ print_request.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+</form>

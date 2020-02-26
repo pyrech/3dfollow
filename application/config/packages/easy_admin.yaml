@@ -2,7 +2,7 @@ easy_admin:
     site_name: '3D Follow'
     design:
         menu:
-            - { entity: 'PrintItem', icon: 'list', default: true }
+            - { entity: 'PrintRequest', icon: 'list', default: true }
             - { entity: 'Filament', icon: 'circle-notch' }
             - { entity: 'User', icon: 'user' }
             - { entity: 'Team', icon: 'users' }
@@ -54,9 +54,9 @@ easy_admin:
                     - { property: price, label: 'Price (€)' }
                     - { property: density, label: 'Density (g/cm³)' }
                     - { property: diameter, label: 'Diameter (mm)' }
-        PrintItem:
-            class: App\Entity\PrintItem
-            label: Print item
+        PrintRequest:
+            class: App\Entity\PrintRequest
+            label: Print request
             list:
                 fields:
                     - { property: team }

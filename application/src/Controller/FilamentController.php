@@ -81,7 +81,7 @@ class FilamentController extends AbstractController
     {
         $this->assertOwner($filament);
 
-        if (count($filament->getPrintItems()) > 0) {
+        if (count($filament->getPrintRequests()) > 0) {
             throw $this->createNotFoundException('Filament is not deletable');
         }
 

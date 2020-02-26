@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PrintItemRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PrintRequestRepository")
  */
-class PrintItem
+class PrintRequest
 {
     /**
      * @ORM\Id()
@@ -33,7 +33,7 @@ class PrintItem
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printRequests")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -50,7 +50,7 @@ class PrintItem
     private $weight;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printRequests")
      * @ORM\JoinColumn(nullable=true)
      */
     private $filament;
@@ -68,7 +68,7 @@ class PrintItem
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printRequests")
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;

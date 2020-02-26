@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Filament;
-use App\Entity\PrintItem;
+use App\Entity\PrintRequest;
 use App\Entity\Team;
 use App\Repository\FilamentRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PrintItemType extends AbstractType
+class PrintRequestType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -58,7 +58,7 @@ class PrintItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => PrintItem::class,
+            'data_class' => PrintRequest::class,
         ]);
 
         $resolver->setRequired('is_printed');
