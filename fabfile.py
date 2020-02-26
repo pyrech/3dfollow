@@ -117,8 +117,16 @@ def migrate():
     Migrate database schema
     """
     docker_compose_run('php bin/console doctrine:database:create --if-not-exists', no_deps=True)
-    docker_compose_run('php bin/console doctrine:schema:update --force', no_deps=True)
-    # docker_compose_run('php bin/console doctrine:migration:migrate -n', no_deps=True)
+    docker_compose_run('php bin/console doctrine:migration:migrate -n', no_deps=True)
+
+
+@task
+@with_builder
+def migration():
+    """
+    Migrate database schema
+    """
+    docker_compose_run('php bin/console make:migration', no_deps=True)
 
 
 @task
