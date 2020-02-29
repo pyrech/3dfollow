@@ -7,6 +7,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\PrintRequestType;
 use App\Repository\PrintRequestRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -91,6 +92,24 @@ class PrintRequestController extends AbstractController
         return $this->render('print_request/edit.html.twig', [
             'print_request' => $printRequest,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/print-request/{id}", name="print_request_show", methods={"GET"})
+     * @IsGranted("ROLE_PRINTER")
+     */
+    public function show(Request $request, PrintRequest $printRequest): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->getTeamCreated()->getId() !== $printRequest->getTeam()->getId()) {
+            throw $this->createNotFoundException('Current user does not have access to this request');
+        }
+
+        return $this->render('print_request/show.html.twig', [
+            'print_request' => $printRequest,
         ]);
     }
 

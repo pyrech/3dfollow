@@ -30,6 +30,9 @@
                                     <a class="nav-link" href="{{ path('print_object_index') }}">Mes impressions</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('team_print_requests') }}">Les demandes reçues</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ path('team_index') }}">Mon groupe</a>
                                 </li>
                             {% endif %}
@@ -38,7 +41,6 @@
                                     {{ app.user.username }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ path('print_request_index') }}">Ma liste de souhait</a>
                                     <a class="dropdown-item" href="{{ path('account_index') }}">Mon compte</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ path('security_logout') }}">Se déconnecter</a>

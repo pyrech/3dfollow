@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PrintRequest;
+use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -28,6 +29,21 @@ class PrintRequestRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
             ->andWhere('p.user = :user')
             ->setParameter('user', $user)
+            ->orderBy('p.createdAt', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return PrintRequest[]
+     */
+    public function findAllForTeam(Team $team): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.team = :team')
+            ->setParameter('team', $team)
+            ->orderBy('p.createdAt', 'DESC')
         ;
 
         return $qb->getQuery()->getResult();

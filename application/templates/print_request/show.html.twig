@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter l'impression "{{ print_request.name }}" de {{ print_request.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Consulter l'impression "{{ print_request.name }}" de {{ print_request.user.username }}</h1>
+        <ul>
+            <li>Utilisateur : {{ print_request.user.username }}</li>
+            <li>Nom : {{ print_request.name }}</li>
+            <li>Url : <a href="{{ print_request.link }}">{{ print_request.link }}</a></li>
+            <li>
+                Commentaire :
+                <p>{{ print_request.comment|nl2br|default('-') }}</p>
+            </li>
+            <li>Quantité : {{ print_request.quantity }}</li>
+            <li>
+                Coût :
+                {% set cost = print_request.getTotalCost() %}
+                {% if cost %}
+                    {{ cost|number_format(2) }} €
+                {% else %}
+                    -
+                {% endif %}
+            </li>
+            <li>
+                <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
+                    {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
+                </span>
+            </li>
+            <li>
+                Fichiers impressions :
+                {% if print_request.printObjects %}
+                    <ul>
+                        {% for print_object in print_request.printObjects %}
+                            <li><a href="{{ path('print_object_edit', {id: print_object.id}) }}">Modifier l'impression "{{ print_object.name ?: print_object.id }}"</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    -
+                {% endif %}
+            </li>
+        </ul>
+
+        <a href="{{ path('team_print_requests') }}">Retourner à la liste</a>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
 use App\Team\InvitationManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -30,6 +31,22 @@ class TeamController extends AbstractController
 
         return $this->render('team/index.html.twig', [
             'team' => $user->getTeamCreated(),
+        ]);
+    }
+
+    /**
+     * @Route("/print-requests", name="print_requests", methods={"GET"})
+     * @IsGranted("ROLE_PRINTER")
+     */
+    public function printRequests(PrintRequestRepository $printRequestRepository): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $printRequests = $printRequestRepository->findAllForTeam($user->getTeamCreated());
+
+        return $this->render('team/print_requests.html.twig', [
+            'print_requests' => $printRequests,
         ]);
     }
 
