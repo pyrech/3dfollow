@@ -50,7 +50,6 @@ class PrintRequestController extends AbstractController
         $printRequest = new PrintRequest();
         $form = $this->createForm(PrintRequestType::class, $printRequest, [
             'is_printed' => false,
-            'team' => $team,
         ]);
         $form->handleRequest($request);
 
@@ -80,7 +79,6 @@ class PrintRequestController extends AbstractController
 
         $form = $this->createForm(PrintRequestType::class, $printRequest, [
             'is_printed' => $printRequest->getIsPrinted(),
-            'team' => $printRequest->getTeam(),
         ]);
         $form->handleRequest($request);
 
@@ -107,7 +105,7 @@ class PrintRequestController extends AbstractController
             throw $this->createNotFoundException('Print request is not deletable');
         }
 
-        if ($this->isCsrfTokenValid('delete'.$printRequest->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-print-request-'.$printRequest->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printRequest);
             $entityManager->flush();

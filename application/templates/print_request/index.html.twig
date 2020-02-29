@@ -24,7 +24,6 @@
                     <tr>
                         <th>Nom</th>
                         <th>Quantité</th>
-                        <th>Filament</th>
                         <th>Statut</th>
                         <th>Coût matière</th>
                         <th>Actions</th>
@@ -35,20 +34,15 @@
                     <tr>
                         <td>{{ print_request.name }}</td>
                         <td>{{ print_request.quantity }}</td>
-                        <td>{{ print_request.filament }}</td>
                         <td>
                             <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
                                 {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
                             </span>
                         </td>
                         <td>
-                            {% set unitCost = null %}
-                            {% if print_request.weight and print_request.filament %}
-                                {% set unitCost = print_request.filament.computeCostFromWeight(print_request.weight) %}
-                            {% endif %}
-
-                            {% if unitCost %}
-                                {{ (unitCost * print_request.quantity)|number_format(2) }} €
+                            {% set cost = print_request.getTotalCost() %}
+                            {% if cost %}
+                                {{ cost|number_format(2) }} €
                             {% else %}
                                 -
                             {% endif %}
@@ -61,7 +55,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">Votre liste est vide.</td>
+                        <td colspan="5">Votre liste est vide.</td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\PrintRequest;
+use App\Entity\PrintObject;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method PrintRequest|null find($id, $lockMode = null, $lockVersion = null)
- * @method PrintRequest|null findOneBy(array $criteria, array $orderBy = null)
- * @method PrintRequest[]    findAll()
- * @method PrintRequest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PrintObject|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PrintObject|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PrintObject[]    findAll()
+ * @method PrintObject[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PrintRequestRepository extends ServiceEntityRepository
+class PrintObjectRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PrintRequest::class);
+        parent::__construct($registry, PrintObject::class);
     }
 
     /**
-     * @return PrintRequest[]
+     * @return PrintObject[]
      */
     public function findAllForUser(User $user): array
     {

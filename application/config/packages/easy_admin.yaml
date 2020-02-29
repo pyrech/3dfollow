@@ -2,7 +2,8 @@ easy_admin:
     site_name: '3D Follow'
     design:
         menu:
-            - { entity: 'PrintRequest', icon: 'list', default: true }
+            - { entity: 'PrintObject', icon: 'file-code-o', default: true }
+            - { entity: 'PrintRequest', icon: 'list' }
             - { entity: 'Filament', icon: 'circle-notch' }
             - { entity: 'User', icon: 'user' }
             - { entity: 'Team', icon: 'users' }
@@ -63,9 +64,7 @@ easy_admin:
                     - { property: user }
                     - { property: name }
                     - { property: link, type: 'url' }
-                    - { property: filament }
                     - { property: quantity }
-                    - { property: weight }
                     - { property: isPrinted }
             form:
                 fields:
@@ -73,8 +72,28 @@ easy_admin:
                     - { property: user }
                     - { property: name }
                     - { property: link }
-                    - { property: filament }
                     - { property: comment }
                     - { property: quantity }
-                    - { property: weight }
+                    - { property: printObjects }
                     - { property: createdAt, type_options: {disabled: true} }
+        PrintObject:
+            class: App\Entity\PrintObject
+            label: Print object
+            list:
+                fields:
+                    - { property: user }
+                    - { property: name }
+                    - { property: filament }
+                    - { property: quantity }
+                    - { property: cost }
+            form:
+                fields:
+                    - { property: user }
+                    - { property: name }
+                    - { property: filament }
+                    - { property: fileName }
+                    - { property: quantity }
+                    - { property: length }
+                    - { property: cost }
+                    - { property: printRequest }
+                    - { property: printedAt }

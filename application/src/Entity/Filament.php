@@ -64,13 +64,13 @@ class Filament
     private $owner;
 
     /**
-     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="filament")
+     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="filament")
      */
-    private $printRequests;
+    private $printObjects;
 
     public function __construct()
     {
-        $this->printRequests = new ArrayCollection();
+        $this->printObjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,30 +156,30 @@ class Filament
     }
 
     /**
-     * @return Collection|PrintRequest[]
+     * @return Collection|PrintObject[]
      */
-    public function getPrintRequests(): Collection
+    public function getPrintObjects(): Collection
     {
-        return $this->printRequests;
+        return $this->printObjects;
     }
 
-    public function addPrintRequest(PrintRequest $printRequest): self
+    public function addPrintObject(PrintObject $printObject): self
     {
-        if (!$this->printRequests->contains($printRequest)) {
-            $this->printRequests[] = $printRequest;
-            $printRequest->setFilament($this);
+        if (!$this->printObjects->contains($printObject)) {
+            $this->printObjects[] = $printObject;
+            $printObject->setFilament($this);
         }
 
         return $this;
     }
 
-    public function removePrintRequest(PrintRequest $printRequest): self
+    public function removePrintObject(PrintObject $printObject): self
     {
-        if ($this->printRequests->contains($printRequest)) {
-            $this->printRequests->removeElement($printRequest);
+        if ($this->printObjects->contains($printObject)) {
+            $this->printObjects->removeElement($printObject);
             // set the owning side to null (unless already changed)
-            if ($printRequest->getFilament() === $this) {
-                $printRequest->setFilament(null);
+            if ($printObject->getFilament() === $this) {
+                $printObject->setFilament(null);
             }
         }
 
@@ -199,12 +199,14 @@ class Filament
     {
         $usedWeight = 0;
 
-        foreach ($this->getPrintRequests() as $printRequest) {
-            if (!$printRequest->getIsPrinted()) {
+        foreach ($this->getPrintObjects() as $printObject) {
+            if (!$printObject->getLength()) {
                 continue;
             }
 
-            $usedWeight += $printRequest->getWeight() * $printRequest->getQuantity();
+            $weight = $this->getDensity() * ($printObject->getLength() / 10) * M_PI * pow($this->getDiameter() / 2 / 10, 2);
+
+            $usedWeight += $weight * $printObject->getQuantity();
         }
 
         return $usedWeight * 100 / $this->weight;

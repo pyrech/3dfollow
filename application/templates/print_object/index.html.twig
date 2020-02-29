@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de mes impressions{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4 mb-4">Mes impressions</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Filament</th>
+                    <th>Quantité</th>
+                    <th>Longueur filament</th>
+                    <th>Coût matière</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for print_object in print_objects %}
+                <tr>
+                    <td>{{ print_object.name }}</td>
+                    <td>{{ print_object.filament }}</td>
+                    <td>{{ print_object.quantity }}</td>
+                    <td>{{ print_object.length }}</td>
+                    <td>
+                        {% if print_object.cost %}
+                            {{ (print_object.cost * print_object.quantity)|number_format(2) }} €
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if app.user and app.user.id == print_object.user.id %}
+                            <a href="{{ path('print_object_edit', {'id': print_object.id}) }}" class="btn btn-primary">Modifier</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Votre liste est vide.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('print_object_new') }}" class="btn btn-success">Ajouter une impression</a>
+    </div>
+{% endblock %}

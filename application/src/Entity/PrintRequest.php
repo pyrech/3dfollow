@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -33,27 +35,9 @@ class PrintRequest
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printRequests")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isPrinted = false;
-
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\GreaterThanOrEqual(value=1)
-     */
-    private $weight;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printRequests")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $filament;
 
     /**
      * @ORM\Column(type="integer")
@@ -63,9 +47,10 @@ class PrintRequest
     private $quantity = 1;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printRequests")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $createdAt;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printRequests")
@@ -73,9 +58,25 @@ class PrintRequest
      */
     private $team;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="printRequest")
+     */
+    private $printObjects;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
     public function __construct()
     {
+        $this->printObjects = new ArrayCollection();
         $this->createdAt = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->name ?: (string) $this->id;
     }
 
     public function getId(): ?int
@@ -119,18 +120,6 @@ class PrintRequest
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getIsPrinted(): ?bool
     {
         return $this->isPrinted;
@@ -139,30 +128,6 @@ class PrintRequest
     public function setIsPrinted(bool $isPrinted): self
     {
         $this->isPrinted = $isPrinted;
-
-        return $this;
-    }
-
-    public function getWeight(): ?string
-    {
-        return $this->weight;
-    }
-
-    public function setWeight(?string $weight): self
-    {
-        $this->weight = $weight;
-
-        return $this;
-    }
-
-    public function getFilament(): ?Filament
-    {
-        return $this->filament;
-    }
-
-    public function setFilament(?Filament $filament): self
-    {
-        $this->filament = $filament;
 
         return $this;
     }
@@ -179,9 +144,16 @@ class PrintRequest
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getUser(): ?User
     {
-        return $this->createdAt;
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getTeam(): ?Team
@@ -194,5 +166,54 @@ class PrintRequest
         $this->team = $team;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|PrintObject[]
+     */
+    public function getPrintObjects(): Collection
+    {
+        return $this->printObjects;
+    }
+
+    public function addPrintObject(PrintObject $printObject): self
+    {
+        if (!$this->printObjects->contains($printObject)) {
+            $this->printObjects[] = $printObject;
+            $printObject->setPrintRequest($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrintObject(PrintObject $printObject): self
+    {
+        if ($this->printObjects->contains($printObject)) {
+            $this->printObjects->removeElement($printObject);
+            // set the owning side to null (unless already changed)
+            if ($printObject->getPrintRequest() === $this) {
+                $printObject->setPrintRequest(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function getTotalCost(): float
+    {
+        $unitCost = 0;
+
+        foreach ($this->getPrintObjects() as $printObject) {
+            if ($printObject->getCost()) {
+                $unitCost += $printObject->getCost() * $printObject->getQuantity();
+            }
+        }
+
+        return $unitCost * $this->quantity;
     }
 }

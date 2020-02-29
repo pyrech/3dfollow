@@ -63,11 +63,17 @@ class User implements UserInterface
      */
     private $teams;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="user", orphanRemoval=true)
+     */
+    private $printObjects;
+
     public function __construct()
     {
         $this->printRequests = new ArrayCollection();
         $this->filaments = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->printObjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -274,6 +280,37 @@ class User implements UserInterface
         if ($this->teams->contains($team)) {
             $this->teams->removeElement($team);
             $team->removeMember($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PrintObject[]
+     */
+    public function getPrintObjects(): Collection
+    {
+        return $this->printObjects;
+    }
+
+    public function addPrintObject(PrintObject $printObject): self
+    {
+        if (!$this->printObjects->contains($printObject)) {
+            $this->printObjects[] = $printObject;
+            $printObject->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrintObject(PrintObject $printObject): self
+    {
+        if ($this->printObjects->contains($printObject)) {
+            $this->printObjects->removeElement($printObject);
+            // set the owning side to null (unless already changed)
+            if ($printObject->getOwner() === $this) {
+                $printObject->setOwner(null);
+            }
         }
 
         return $this;

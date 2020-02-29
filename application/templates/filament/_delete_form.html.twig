@@ -1,5 +1,5 @@
 <form method="post" class="mt-5" action="{{ path('filament_delete', {'id': filament.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce filament ?');">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ filament.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('filament-delete-' ~ filament.id) }}">
     <button class="btn btn-danger">Supprimer</button>
 </form>

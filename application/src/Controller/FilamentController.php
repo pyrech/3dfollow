@@ -81,11 +81,11 @@ class FilamentController extends AbstractController
     {
         $this->assertOwner($filament);
 
-        if (count($filament->getPrintRequests()) > 0) {
+        if (count($filament->getPrintObjects()) > 0) {
             throw $this->createNotFoundException('Filament is not deletable');
         }
 
-        if ($this->isCsrfTokenValid('delete'.$filament->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('filament-delete-'.$filament->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($filament);
             $entityManager->flush();
