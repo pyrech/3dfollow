@@ -37,6 +37,7 @@ class Filament
      * Unit: g
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @Assert\NotBlank()
      */
     private $weightUsed = 0;
 
@@ -95,7 +96,7 @@ class Filament
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -107,7 +108,7 @@ class Filament
         return $this->weight;
     }
 
-    public function setWeight(string $weight): self
+    public function setWeight(?string $weight): self
     {
         $this->weight = $weight;
 
@@ -119,7 +120,7 @@ class Filament
         return $this->weightUsed;
     }
 
-    public function setWeightUsed(string $weightUsed): self
+    public function setWeightUsed(?string $weightUsed): self
     {
         $this->weightUsed = $weightUsed;
 
@@ -131,7 +132,7 @@ class Filament
         return $this->price;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(?string $price): self
     {
         $this->price = $price;
 
@@ -143,7 +144,7 @@ class Filament
         return $this->density;
     }
 
-    public function setDensity(string $density): self
+    public function setDensity(?string $density): self
     {
         $this->density = $density;
 
@@ -155,7 +156,7 @@ class Filament
         return $this->diameter;
     }
 
-    public function setDiameter(string $diameter): self
+    public function setDiameter(?string $diameter): self
     {
         $this->diameter = $diameter;
 
