@@ -136,7 +136,9 @@ class User implements UserInterface
 
         if ($this->isPrinter) {
             $roles[] = 'ROLE_PRINTER';
-        } else {
+        }
+
+        if (count($this->teams) > 0) {
             $roles[] = 'ROLE_TEAM_MEMBER';
         }
 

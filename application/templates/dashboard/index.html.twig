@@ -6,7 +6,8 @@
 {% block page_body %}
     {% if is_granted('ROLE_PRINTER') %}
         {{ include('dashboard/_printer.html.twig') }}
-    {% elseif is_granted('ROLE_TEAM_MEMBER') %}
+    {% endif %}
+    {% if is_granted('ROLE_TEAM_MEMBER') %}
         {{ include('dashboard/_team_member.html.twig') }}
     {% endif %}
 {% endblock %}
