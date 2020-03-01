@@ -34,6 +34,13 @@ class Filament
     private $weight;
 
     /**
+     * Unit: g
+     *
+     * @ORM\Column(type="decimal", precision=10, scale=0)
+     */
+    private $weightUsed = 0;
+
+    /**
      * Unit: €
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -103,6 +110,18 @@ class Filament
     public function setWeight(string $weight): self
     {
         $this->weight = $weight;
+
+        return $this;
+    }
+
+    public function getWeightUsed(): ?string
+    {
+        return $this->weightUsed;
+    }
+
+    public function setWeightUsed(string $weightUsed): self
+    {
+        $this->weightUsed = $weightUsed;
 
         return $this;
     }
@@ -197,7 +216,7 @@ class Filament
 
     public function computeUsagePercentage(): int
     {
-        $usedWeight = 0;
+        $usedWeight = $this->weightUsed;
 
         foreach ($this->getPrintObjects() as $printObject) {
             if (!$printObject->getLength()) {

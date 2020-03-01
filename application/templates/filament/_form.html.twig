@@ -1,6 +1,7 @@
 {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
     {{ form_row(form.name) }}
     {{ form_row(form.weight, {attr: {list: 'filament-weights'}}) }}
+    {{ form_row(form.weightUsed) }}
     {{ form_row(form.price) }}
     {{ form_row(form.density, {attr: {list: 'filament-densities'}}) }}
     {{ form_row(form.diameter, {attr: {list: 'filament-diameters'}}) }}

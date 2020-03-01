@@ -19,6 +19,10 @@ class FilamentType extends AbstractType
             ->add('weight', null, [
                 'label' => 'Poids de la bobine (en grammes)',
             ])
+            ->add('weightUsed', null, [
+                'label' => 'Quantité de filament déjà utilisé (en grammes)',
+                'help' => 'Permet de corriger la consommation si toutes vos impressions n\'ont pas été enregistrées dans l\'application',
+            ])
             ->add('price', null, [
                 'label' => 'Prix de la bobine (en €)',
             ])
