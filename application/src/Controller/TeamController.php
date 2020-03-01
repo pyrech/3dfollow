@@ -94,7 +94,7 @@ class TeamController extends AbstractController
         if ($user) {
             $invitationManager->join($request, $user, $team);
 
-            return $this->redirectToRoute('home_index');
+            return $this->redirectToRoute('dashboard_index');
         }
 
         $invitationManager->prepareToJoin($request, $team);

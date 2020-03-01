@@ -66,6 +66,16 @@
             {% if not loop.last %}
                 <hr class="mt-4" />
             {% endif %}
+        {% else %}
+            <p class="text-center">
+                Vous n'êtes membre d'aucun groupe.<br />
+                Demander d'abord à vous faire inviter à un groupe existant pour pouvoir exploiter au mieux 3D Follow.<br />
+                <br />
+                Si vous possédez une imprimante 3D, veuillez cocher la case correspondante dans votre profil.
+                Cela permettra d'accéder à de nouvelles fonctionnalités.<br />
+                <a class="btn btn-outline-primary" href="{{ path('account_index') }}">Modifier mon profil</a>
+            </p>
+
         {% endfor %}
     </div>
 {% endblock %}

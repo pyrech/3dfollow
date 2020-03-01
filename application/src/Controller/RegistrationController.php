@@ -25,7 +25,7 @@ class RegistrationController extends AbstractController
         Request $request
     ): Response {
         if ($this->getUser()) {
-            return $this->redirectToRoute('home_index');
+            return $this->redirectToRoute('dashboard_index');
         }
 
         $user = new User();
@@ -42,7 +42,6 @@ class RegistrationController extends AbstractController
             );
 
             $team = new Team();
-            $team->addMember($user);
 
             $user->setIsPrinter(true);
             $user->setTeamCreated($team);

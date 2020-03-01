@@ -13,11 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/print-request", name="print_request_")
+ */
 class PrintRequestController extends AbstractController
 {
     /**
-     * @Route("/", name="home_index", methods={"GET"})
-     * @Route("/", name="print_request_index", methods={"GET"})
+     * @Route("/", name="index", methods={"GET"})
+     * @IsGranted("ROLE_TEAM_MEMBER")
      */
     public function index(PrintRequestRepository $printRequestRepository): Response
     {
@@ -44,7 +47,8 @@ class PrintRequestController extends AbstractController
     }
 
     /**
-     * @Route("/print-request/new/{id}", name="print_request_new", methods={"GET","POST"})
+     * @Route("/new/{id}", name="new", methods={"GET","POST"})
+     * @IsGranted("ROLE_TEAM_MEMBER")
      */
     public function new(Request $request, Team $team): Response
     {
@@ -72,7 +76,8 @@ class PrintRequestController extends AbstractController
     }
 
     /**
-     * @Route("/print-request/{id}/edit", name="print_request_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @IsGranted("ROLE_TEAM_MEMBER")
      */
     public function edit(Request $request, PrintRequest $printRequest): Response
     {
@@ -96,7 +101,7 @@ class PrintRequestController extends AbstractController
     }
 
     /**
-     * @Route("/print-request/{id}", name="print_request_show", methods={"GET"})
+     * @Route("/{id}", name="show", methods={"GET"})
      * @IsGranted("ROLE_PRINTER")
      */
     public function show(Request $request, PrintRequest $printRequest): Response
@@ -114,7 +119,8 @@ class PrintRequestController extends AbstractController
     }
 
     /**
-     * @Route("/print-request/{id}", name="print_request_delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @IsGranted("ROLE_TEAM_MEMBER")
      */
     public function delete(Request $request, PrintRequest $printRequest): Response
     {
