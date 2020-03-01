@@ -7,8 +7,13 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <h1 class="mt-5 text-center">
-                    J'ai une imprimante 3D et je souhaite créer mon compte.
+                    Créer mon compte
                 </h1>
+                <p class="mt-5 text-center">
+                    Vous <strong>possèdez une imprimante 3D</strong> et souhaitez <strong>profiter de toutes les fonctionnalités</strong> de 3D Follow ?<br />
+                    Vous souhaitez <strong>rejoindre le groupe</strong> d'une personne possédant une imprimante ?<br />
+                    Créer votre compte, c'est <strong>gratuit</strong> et ça prend <strong>moins d'une minute</strong>.
+                </p>
                 <p class="mt-5 text-center text-muted">
                     J'ai déjà un compte. <a href="{{ path('security_login') }}" class="btn btn-outline-primary">Me connecter</a>
                 </p>
@@ -18,6 +23,7 @@
                     {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm.username) }}
                     {{ form_row(registrationForm.plainPassword) }}
+                    {{ form_row(registrationForm.isPrinter) }}
                     {{ form_row(registrationForm.agreeTerms) }}
 
                     <button class="btn btn-primary">Register</button>

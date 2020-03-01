@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\AppLoginFormAuthenticator;
+use App\Security\TokenRefresher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,8 +25,7 @@ class AccountController extends AbstractController
      */
     public function index(
         UserPasswordEncoderInterface $passwordEncoder,
-        AppLoginFormAuthenticator $authenticator,
-        GuardAuthenticatorHandler $guardHandler,
+        TokenRefresher $tokenRefresher,
         Request $request
     ): Response {
         /** @var User $user */
@@ -51,15 +52,16 @@ class AccountController extends AbstractController
             }
 
             if ($isValid) {
+                if ($user->getIsPrinter() && !$user->getTeamCreated()) {
+                    $team = new Team();
+                    $user->setTeamCreated($team);
+                }
+
                 $this->getDoctrine()->getManager()->flush();
 
                 $this->addFlash('success', 'Compte mis à jour');
 
-                $providerKey = 'main';
-                // create an authenticated token for the User
-                $token = $authenticator->createAuthenticatedToken($user, $providerKey);
-                // authenticate this in the system
-                $guardHandler->authenticateWithToken($token, $request, $providerKey);
+                $tokenRefresher->refresh($user, $request);
 
                 return $this->redirectToRoute('account_index');
             }

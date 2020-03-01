@@ -62,15 +62,4 @@
             {% endfor %}
         </tbody>
     </table>
-{% else %}
-    <p>
-        Vous n'êtes actuellement membre d'aucun groupe.<br />
-        Demander d'abord à vous faire inviter à un groupe existant pour pouvoir exploiter au mieux 3D Follow.<br />
-        <br />
-        Si vous possédez vous-même une imprimante 3D, pensez à cocher la case correspondante dans votre profil.<br />
-        Cela vous permettra d'accéder à de nouvelles fonctionnalités.
-    </p>
-    <div class="text-center">
-        <a class="btn btn-outline-primary" href="{{ path('account_index') }}">Modifier mon profil</a>
-    </div>
 {% endif %}

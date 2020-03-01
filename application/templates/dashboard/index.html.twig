@@ -7,7 +7,21 @@
     {% if is_granted('ROLE_PRINTER') %}
         {{ include('dashboard/_printer.html.twig') }}
     {% endif %}
+
     {% if is_granted('ROLE_TEAM_MEMBER') %}
         {{ include('dashboard/_team_member.html.twig') }}
+    {% endif %}
+
+    {% if not is_granted('ROLE_PRINTER') and not is_granted('ROLE_TEAM_MEMBER') %}
+        <p>
+            Vous n'êtes actuellement membre d'aucun groupe.<br />
+            Demander d'abord à vous faire inviter à un groupe existant pour pouvoir exploiter au mieux 3D Follow.<br />
+            <br />
+            Si vous possédez vous-même une imprimante 3D, pensez à cocher la case correspondante dans votre profil.<br />
+            Cela vous permettra d'accéder à de nouvelles fonctionnalités.
+        </p>
+        <div class="text-center">
+            <a class="btn btn-outline-primary" href="{{ path('account_index') }}">Modifier mon profil</a>
+        </div>
     {% endif %}
 {% endblock %}

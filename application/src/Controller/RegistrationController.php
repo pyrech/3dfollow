@@ -6,6 +6,8 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppLoginFormAuthenticator;
+use App\Security\TokenRefresher;
+use App\Team\InvitationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +24,7 @@ class RegistrationController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
         AppLoginFormAuthenticator $authenticator,
+        InvitationManager $invitationManager,
         Request $request
     ): Response {
         if ($this->getUser()) {
@@ -29,6 +32,8 @@ class RegistrationController extends AbstractController
         }
 
         $user = new User();
+        $user->setIsPrinter(!$invitationManager->isInvitationInProgress($request));
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -41,14 +46,13 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $team = new Team();
-
-            $user->setIsPrinter(true);
-            $user->setTeamCreated($team);
+            if ($user->getIsPrinter()) {
+                $team = new Team();
+                $user->setTeamCreated($team);
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
-            $entityManager->persist($team);
             $entityManager->flush();
 
             // do anything else you need here, like send an email

@@ -32,6 +32,7 @@ easy_admin:
                 fields:
                     - { property: creator }
                     - { property: members.count, label: "Members" }
+                    - { property: joinToken }
             form:
                 fields:
                     - { property: creator }

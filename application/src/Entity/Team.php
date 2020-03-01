@@ -87,6 +87,7 @@ class Team
     {
         if (!$this->members->contains($member)) {
             $this->members[] = $member;
+            $member->addTeam($this);
         }
 
         return $this;
