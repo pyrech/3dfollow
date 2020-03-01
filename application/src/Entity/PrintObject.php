@@ -25,6 +25,7 @@ class PrintObject
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printObjects")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $filament;
 
