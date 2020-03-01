@@ -7,6 +7,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method PrintRequest|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,10 +27,22 @@ class PrintRequestRepository extends ServiceEntityRepository
      */
     public function findAllForUser(User $user): array
     {
-        $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.user = :user')
-            ->setParameter('user', $user)
+        $qb = $this->createQueryBuilderForUser($user)
             ->orderBy('p.createdAt', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return PrintRequest[]
+     */
+    public function findLatestPendingForUser(User $user, int $limit = 5): array
+    {
+        $qb = $this->createQueryBuilderForUser($user)
+            ->andWhere('p.isPrinted = false')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
         ;
 
         return $qb->getQuery()->getResult();
@@ -40,12 +53,40 @@ class PrintRequestRepository extends ServiceEntityRepository
      */
     public function findAllForTeam(Team $team): array
     {
-        $qb = $this->createQueryBuilder('p')
-            ->andWhere('p.team = :team')
-            ->setParameter('team', $team)
+        $qb = $this->createQueryBuilderForTeam($team)
             ->orderBy('p.createdAt', 'DESC')
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return PrintRequest[]
+     */
+    public function findLatestPendingForTeam(Team $team, int $limit = 5): array
+    {
+        $qb = $this->createQueryBuilderForTeam($team)
+            ->andWhere('p.isPrinted = false')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    private function createQueryBuilderForUser(User $user) :QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+        ;
+    }
+
+    private function createQueryBuilderForTeam(Team $team) :QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.team = :team')
+            ->setParameter('team', $team)
+        ;
     }
 }

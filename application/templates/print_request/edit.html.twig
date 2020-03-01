@@ -1,23 +1,20 @@
- {% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Modifier un élément{% endblock %}
+{% block page_title %}Modifier élément{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1>Modifier élément</h1>
+{% block page_body %}
+    {% if print_request.isPrinted %}
+        <p class="text-black-50 mt-5">
+            L'objet a été imprimé. Vous ne pouvez plus le modifier
+        </p>
+    {% endif %}
 
-        {% if print_request.isPrinted %}
-            <p class="text-black-50 mt-5">
-                L'objet a été imprimé. Vous ne pouvez plus le modifier
-            </p>
-        {% endif %}
+    {{ include('print_request/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-        {{ include('print_request/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <a href="{{ path('print_request_index') }}">Retourner à la liste</a>
 
-        <a href="{{ path('print_request_index') }}">Retourner à la liste</a>
-
-        {% if not print_request.isPrinted %}
-            {{ include('print_request/_delete_form.html.twig') }}
-        {% endif %}
-    </div>
+    {% if not print_request.isPrinted %}
+        {{ include('print_request/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

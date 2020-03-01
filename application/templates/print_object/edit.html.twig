@@ -1,15 +1,12 @@
- {% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Modifier une impression{% endblock %}
+{% block page_title %}Modifier l'impression{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1>Modifier l'impression</h1>
+{% block page_body %}
+    {{ include('print_object/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-        {{ include('print_object/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <a href="{{ path('print_object_index') }}">Retourner à la liste</a>
 
-        <a href="{{ path('print_object_index') }}">Retourner à la liste</a>
-
-        {{ include('print_object/_delete_form.html.twig') }}
-    </div>
+    {{ include('print_object/_delete_form.html.twig') }}
 {% endblock %}

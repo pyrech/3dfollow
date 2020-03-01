@@ -1,13 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Ajouter un nouveau filament{% endblock %}
+{% block page_title %}Ajouter un nouveau filament{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1>Ajouter un nouveau filament</h1>
+{% block page_body %}
+    {{ include('filament/_form.html.twig') }}
 
-        {{ include('filament/_form.html.twig') }}
-
-        <a href="{{ path('filament_index') }}">Retourner à la liste</a>
-    </div>
+    <a href="{{ path('filament_index') }}">Retourner à la liste</a>
 {% endblock %}

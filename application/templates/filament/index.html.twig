@@ -1,45 +1,42 @@
-{% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Mes filaments{% endblock %}
+{% block page_title %}Mes filaments{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1 class="mt-4 mb-4">Mes filaments</h1>
-
-        <table class="table">
-            <thead>
+{% block page_body %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Poids de la bobine</th>
+                <th>Prix de la bobine</th>
+                <th>Utilisation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for filament in filaments %}
+                {% set usagePercentage = filament.computeUsagePercentage %}
                 <tr>
-                    <th>Nom</th>
-                    <th>Poids de la bobine</th>
-                    <th>Prix de la bobine</th>
-                    <th>Utilisation</th>
-                    <th>Actions</th>
+                    <td>{{ filament.name }}</td>
+                    <td>{{ filament.weight|number_format }} g</td>
+                    <td>{{ filament.price|number_format(2) }} €</td>
+                    <td>
+                        <div class="progress" title="{{ usagePercentage }}% used - {{ ((100 - usagePercentage) * 0.01 * filament.weight)|number_format() }}g remaining">
+                            <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('filament_edit', {'id': filament.id}) }}">Modifier</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for filament in filaments %}
-                    {% set usagePercentage = filament.computeUsagePercentage %}
-                    <tr>
-                        <td>{{ filament.name }}</td>
-                        <td>{{ filament.weight|number_format }} g</td>
-                        <td>{{ filament.price|number_format(2) }} €</td>
-                        <td>
-                            <div class="progress" title="{{ usagePercentage }}% used - {{ ((100 - usagePercentage) * 0.01 * filament.weight)|number_format() }}g remaining">
-                                <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{ path('filament_edit', {'id': filament.id}) }}">Modifier</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">Aucun filament enregistré</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun filament enregistré</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        <a class="btn btn-success" href="{{ path('filament_new') }}">Ajouter un nouveau filament</a>
-    </div>
+    <a class="btn btn-success" href="{{ path('filament_new') }}">Ajouter un nouveau filament</a>
 {% endblock %}

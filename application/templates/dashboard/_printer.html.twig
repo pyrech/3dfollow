@@ -1,0 +1,32 @@
+<h2>Les dernières demandes reçues</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Utilisateur</th>
+            <th>Nom</th>
+            <th>Quantité</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for print_request in team_print_requests %}
+            <tr>
+                <td>{{ print_request.user }}</td>
+                <td>{{ print_request.name }}</td>
+                <td>{{ print_request.quantity }}</td>
+                <td>
+                    <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">Voir plus en détail</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Votre liste en attente est vide.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a href="{{ path('team_print_requests') }}" class="btn btn-primary">Voir toutes les demandes reçues</a>
+</div>

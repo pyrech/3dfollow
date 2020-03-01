@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\PrintRequestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +18,23 @@ class DashboardController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PrintRequestRepository $printRequestRepository): Response
     {
-        return $this->render('dashboard/index.html.twig');
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $memberPrintRequests = [];
+        $teamPrintRequests = [];
+
+        if ($this->isGranted('ROLE_PRINTER')) {
+            $teamPrintRequests = $printRequestRepository->findLatestPendingForTeam($user->getTeamCreated());
+        } elseif ($this->isGranted('ROLE_TEAM_MEMBER')) {
+            $memberPrintRequests = $printRequestRepository->findLatestPendingForUser($user);
+        }
+
+        return $this->render('dashboard/index.html.twig', [
+            'member_print_requests' => $memberPrintRequests,
+            'team_print_requests' => $teamPrintRequests,
+        ]);
     }
 }

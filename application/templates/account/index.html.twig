@@ -1,24 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Modifier mon compte{% endblock %}
+{% block page_title %}Modifier mon compte{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1>Modifier mon compte</h1>
-
-        {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
-            <div class="row">
-                <div class="col-md-6">
-                    {{ form_row(form.username) }}
-                    {{ form_row(form.isPrinter) }}
-                </div>
-                <div class="col-md-6">
-                    {{ form_row(form.oldPassword) }}
-                    {{ form_row(form.newPassword) }}
-                </div>
+{% block page_body %}
+    {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.username) }}
+                {{ form_row(form.isPrinter) }}
             </div>
+            <div class="col-md-6">
+                {{ form_row(form.oldPassword) }}
+                {{ form_row(form.newPassword) }}
+            </div>
+        </div>
 
-            <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
-        {{ form_end(form) }}
-    </div>
+        <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+    {{ form_end(form) }}
 {% endblock %}

@@ -1,54 +1,51 @@
-{% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
 {% block title %}Mon groupe{% endblock %}
+{% block page_title %}Mon groupe{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1 class="mt-4 mb-4">Mon groupe</h1>
+{% block page_body %}
+    <div class="border rounded-lg p-5">
+        <h2 class="mb-3">Lien d'invitation</h2>
 
-        <div class="border rounded-lg mt-5 p-5">
-            <h2 class="mb-3">Lien d'invitation</h2>
+        <form method="post" action="{{ path('team_generate_join_token') }}">
+            {% if team.joinToken %}
+                <p>Partager ce lien avec d'autres personnes pour les inviter à rejoindre votre groupe.</p>
 
-            <form method="post" action="{{ path('team_generate_join_token') }}">
-                {% if team.joinToken %}
-                    <p>Partager ce lien avec d'autres personnes pour les inviter à rejoindre votre groupe.</p>
+                <div class="mb-3">
+                    <input class="w-100" readonly value="{{ url('team_join', {token: team.joinToken}) }}" />
+                </div>
 
-                    <div class="mb-3">
-                        <input class="w-100" readonly value="{{ url('team_join', {token: team.joinToken}) }}" />
-                    </div>
+                <button type="submit" class="btn btn-outline-danger">Regénérer mon lien d'invitation</button>
+            {% else %}
+                <p>Vous n'avez pas encore créer de lien d'invitation.</p>
 
-                    <button type="submit" class="btn btn-outline-danger">Regénérer mon lien d'invitation</button>
-                {% else %}
-                    <p>Vous n'avez pas encore créer de lien d'invitation.</p>
+                <button type="submit" class="btn btn-primary">Créer mon lien d'invitation</button>
+            {% endif %}
 
-                    <button type="submit" class="btn btn-primary">Créer mon lien d'invitation</button>
-                {% endif %}
-
-                <input type="hidden" name="token" value="{{ csrf_token('team_generate_join_token') }}" />
-            </form>
-        </div>
-
-        <h2 class="mt-5 mb-2">Les membres de mon groupe</h2>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Utilisateur</th>
-                    <th>Nombre de demandes</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for member in team.members %}
-                    <tr>
-                        <td>{{ member.username }}</td>
-                        <td>{{ member.printRequests|length }}</td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="2">Aucun membre dans votre groupe</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <input type="hidden" name="token" value="{{ csrf_token('team_generate_join_token') }}" />
+        </form>
     </div>
+
+    <h2 class="mt-5 mb-2">Les membres de mon groupe</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Nombre de demandes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in team.members %}
+                <tr>
+                    <td>{{ member.username }}</td>
+                    <td>{{ member.printRequests|length }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">Aucun membre dans votre groupe</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
