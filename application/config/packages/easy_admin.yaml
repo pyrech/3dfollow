@@ -14,14 +14,12 @@ easy_admin:
             list:
                 fields:
                     - { property: username }
-                    - { property: password }
                     - { property: isPrinter }
                     - { property: isAdmin }
                     - { property: teams.count, label: "Teams" }
             form:
                 fields:
                     - { property: username }
-                    - { property: password }
                     - { property: isPrinter }
                     - { property: isAdmin }
                     - { property: teams }
