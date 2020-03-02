@@ -10,8 +10,11 @@ use App\Repository\FilamentRepository;
 use App\Repository\PrintRequestRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class PrintObjectType extends AbstractType
 {
@@ -47,14 +50,25 @@ class PrintObjectType extends AbstractType
                 },
                 'group_by' => 'user',
             ])
-            ->add('quantity', null, [
+            ->add('quantity', IntegerType::class, [
                 'label' => 'Quantité',
             ])
-            ->add('length', null, [
-                'label' => 'Longueur de filament utilisé (en mm)',
+            ->add('gCodeFile', VichFileType::class, [
+                'label' => 'Select .gcode file',
+                'required' => false,
+                'allow_delete' => true,
+                'download_link' => false,
+                'attr' => [
+                    'accept' => '.gcode',
+                ]
             ])
-            ->add('cost', null, [
+            ->add('length', NumberType::class, [
+                'label' => 'Longueur de filament utilisé (en mm)',
+                'required' => false,
+            ])
+            ->add('cost', NumberType::class, [
                 'label' => 'Coût de filament utilisé (en €)',
+                'required' => false,
             ])
         ;
     }

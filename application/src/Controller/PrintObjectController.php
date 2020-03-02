@@ -6,11 +6,17 @@ use App\Entity\PrintObject;
 use App\Entity\User;
 use App\Form\PrintObjectType;
 use App\Repository\PrintObjectRepository;
+use Pyrech\GcodeEstimator\Estimator;
+use Pyrech\GcodeEstimator\Exception\FileNotReadable;
+use Pyrech\GcodeEstimator\Exception\InvalidGcode;
+use Pyrech\GcodeEstimator\Filament as EstimatorFilament;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Storage\StorageInterface;
 
 /**
  * @Route("/print-object", name="print_object_")
@@ -36,7 +42,7 @@ class PrintObjectController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(StorageInterface $storage, Request $request): Response
     {
         $user = $this->getUser();
 
@@ -49,11 +55,15 @@ class PrintObjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $printObject->setUser($user);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($printObject);
-            $entityManager->flush();
+            if ($this->fillPrintProperties($storage, $printObject)) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($printObject);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('print_object_index');
+                return $this->redirectToRoute('print_object_index');
+            }
+
+            $form->get('gCodeFile')->addError(new FormError('Could not estimate length and price for this gcode'));
         }
 
         return $this->render('print_object/new.html.twig', [
@@ -65,7 +75,7 @@ class PrintObjectController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, PrintObject $printObject): Response
+    public function edit(StorageInterface $storage, Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
 
@@ -77,9 +87,13 @@ class PrintObjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($this->fillPrintProperties($storage, $printObject)) {
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('print_object_index');
+                return $this->redirectToRoute('print_object_index');
+            }
+
+            $form->addError(new FormError('Could not estimate length and price for this print. Either upload a valid .gcode file or manually fill length and cost of filament used'));
         }
 
         return $this->render('print_object/edit.html.twig', [
@@ -111,5 +125,52 @@ class PrintObjectController extends AbstractController
         if (!$user || $user->getId() !== $printObject->getUser()->getId()) {
             throw $this->createNotFoundException('Current user does not have access to this object');
         }
+    }
+
+    private function fillPrintProperties(StorageInterface $storage, PrintObject $printObject): bool
+    {
+        if ($printObject->getLength() || $printObject->getCost()) {
+            return true;
+        }
+
+        $filament = $printObject->getFilament();
+
+        if (!$filament) {
+            return true;
+        }
+
+        $gCodePath = null;
+
+        if ($printObject->getGCodeFile()) {
+            $gCodePath = $printObject->getGCodeFile()->getRealPath();
+        } elseif ($printObject->getGCode()) {
+            $gCodePath = $storage->resolvePath($printObject, 'gCodeFile');
+        }
+
+        if (!$gCodePath) {
+            return false;
+        }
+
+        $estimatorFilament = null;
+
+        if ($printObject->getFilament()) {
+            $estimatorFilament = new EstimatorFilament(
+                $filament->getDiameter(),
+                $filament->getDensity(),
+                $filament->getWeight(),
+                $filament->getPrice()
+            );
+        }
+
+        try {
+            $estimate = (new Estimator())->estimate($gCodePath, $estimatorFilament);
+        } catch (FileNotReadable|InvalidGcode $e) {
+            return false;
+        }
+
+        $printObject->setLength($estimate->getLength());
+        $printObject->setCost($estimate->getCost());
+
+        return true;
     }
 }

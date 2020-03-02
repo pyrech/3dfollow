@@ -1,0 +1,13 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        print_oject:
+            upload_destination: '%kernel.project_dir%/media/print-objects'
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+            directory_namer:
+                service: vich_uploader.namer_directory_property
+                options: { property: 'getUploadDirectory', transliterate: false}
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

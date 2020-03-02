@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PrintObjectRepository")
+ * @Vich\Uploadable
  */
 class PrintObject
 {
@@ -16,6 +21,11 @@ class PrintObject
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="guid")
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -30,9 +40,19 @@ class PrintObject
     private $filament;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
+     *
+     * @var EmbeddedFile
      */
-    private $fileName;
+    private $gCode;
+
+    /**
+     * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
+     * @Assert\File(maxSize="50M")
+     *
+     * @var File|null
+     */
+    private $gCodeFile;
 
     /**
      * @ORM\Column(type="integer")
@@ -67,9 +87,27 @@ class PrintObject
      */
     private $printedAt;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $updatedAt;
+
+    public function __construct()
+    {
+        $this->uuid = uuid_create();
+        $this->gCode = new EmbeddedFile();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
     }
 
     public function getName(): ?string
@@ -96,16 +134,35 @@ class PrintObject
         return $this;
     }
 
-    public function getFileName(): ?string
+    public function getGCode(): ?EmbeddedFile
     {
-        return $this->fileName;
+        return $this->gCode;
     }
 
-    public function setFileName(?string $fileName): self
+    public function setGCode(?EmbeddedFile $gCode): self
     {
-        $this->fileName = $fileName;
+        $this->gCode = $gCode;
 
         return $this;
+    }
+
+    /**
+     * @param File|UploadedFile|null $gCodeFile
+     */
+    public function setGCodeFile(?File $gCodeFile = null)
+    {
+        $this->gCodeFile = $gCodeFile;
+
+        if (null !== $gCodeFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getGCodeFile(): ?File
+    {
+        return $this->gCodeFile;
     }
 
     public function getQuantity(): ?int
@@ -178,5 +235,18 @@ class PrintObject
         $this->printedAt = $printedAt;
 
         return $this;
+    }
+
+    public function getUploadDirectory(): string
+    {
+        $directory = '';
+
+        if ($this->user) {
+            $directory .= $this->user->getId() . '/';
+        }
+
+        $directory .= $this->uuid;
+
+        return $directory;
     }
 }

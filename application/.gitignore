@@ -1,3 +1,5 @@
+/media/
+!/media/.gitkeep
 
 ###> symfony/framework-bundle ###
 /.env.local

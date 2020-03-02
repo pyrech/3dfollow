@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\PrintRequest;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,7 +26,7 @@ class PrintRequestType extends AbstractType
                 ],
                 'disabled' => $isPrinted,
             ])
-            ->add('quantity', null, [
+            ->add('quantity', IntegerType::class, [
                 'label' => 'Quantité',
                 'disabled' => $isPrinted,
             ])
