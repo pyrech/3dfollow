@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
@@ -85,5 +86,17 @@ class PrintObjectType extends AbstractType
 
         $resolver->setRequired('user');
         $resolver->setAllowedTypes('user', User::class);
+
+        $resolver->setDefault('validation_groups', function (FormInterface $form) {
+            $groups = ['Default'];
+
+            /** @var PrintObject $data */
+            $data = $form->getData();
+            if (empty($data->getGCodeFile()) && empty($data->getGCode()->getName())) {
+                $groups[] = 'no_gcode_uploaded';
+            }
+
+            return $groups;
+        });
     }
 }

@@ -129,7 +129,7 @@ class PrintObjectController extends AbstractController
 
     private function fillPrintProperties(StorageInterface $storage, PrintObject $printObject): bool
     {
-        if ($printObject->getLength() || $printObject->getCost()) {
+        if ($printObject->getLength() && $printObject->getCost()) {
             return true;
         }
 
@@ -168,8 +168,12 @@ class PrintObjectController extends AbstractController
             return false;
         }
 
-        $printObject->setLength($estimate->getLength());
-        $printObject->setCost($estimate->getCost());
+        if (!$printObject->getLength()) {
+            $printObject->setLength($estimate->getLength());
+        }
+        if (!$printObject->getCost()) {
+            $printObject->setCost($estimate->getCost());
+        }
 
         return true;
     }

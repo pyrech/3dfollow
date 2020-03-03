@@ -65,12 +65,14 @@ class PrintObject
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\NotBlank(message="Cette valeur ne doit pas être vide si aucun .gcode n'est uploadé", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
     private $length;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\NotBlank(message="Cette valeur ne doit pas être vide si aucun .gcode n'est uploadé", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
     private $cost;
