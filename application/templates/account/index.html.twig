@@ -17,5 +17,7 @@
         </div>
 
         <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+
+        <a href="{{ path('dashboard_index') }}">Retourner au dashboard</a>
     {{ form_end(form) }}
 {% endblock %}

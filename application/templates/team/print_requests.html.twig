@@ -4,45 +4,56 @@
 {% block page_title %}Les demandes de mon groupe{% endblock %}
 
 {% block page_body %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Utilisateur</th>
-                <th>Quantité</th>
-                <th>Statut</th>
-                <th>Coût matière</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for print_request in print_requests %}
+    {% if app.user.teamCreated.members|length < 1 %}
+        <div class="rounded border p-4 text-center">
+            <h2 class="mb-3">Nobody on your group</h2>
+            <p>
+                Looks like there is no member in your group yet so you can not receive print request.<br />
+                Maybe you want to invite people in your team first?
+            </p>
+            <a href="{{ path('team_index') }}" class="btn btn-success">Invite people</a>
+        </div>
+    {% else %}
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ print_request.name }}</td>
-                    <td>{{ print_request.user.username }}</td>
-                    <td>{{ print_request.quantity }}</td>
-                    <td>
+                    <th>Nom</th>
+                    <th>Utilisateur</th>
+                    <th>Quantité</th>
+                    <th>Statut</th>
+                    <th>Coût matière</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for print_request in print_requests %}
+                    <tr>
+                        <td>{{ print_request.name }}</td>
+                        <td>{{ print_request.user.username }}</td>
+                        <td>{{ print_request.quantity }}</td>
+                        <td>
                         <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
                             {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
                         </span>
-                    </td>
-                    <td>
-                        {% set cost = print_request.getTotalCost() %}
-                        {% if cost %}
-                            {{ cost|number_format(2) }} €
-                        {% else %}
-                            -
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">Afficher</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">Votre liste est vide.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                        </td>
+                        <td>
+                            {% set cost = print_request.getTotalCost() %}
+                            {% if cost %}
+                                {{ cost|number_format(2) }} €
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">Afficher</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">Votre liste est vide.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}
