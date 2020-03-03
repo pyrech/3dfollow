@@ -10,7 +10,7 @@
                 <th>Nom</th>
                 <th>Filament</th>
                 <th>Quantité</th>
-                <th>Longueur filament</th>
+                <th>Masse filament</th>
                 <th>Coût matière</th>
                 <th>Actions</th>
             </tr>
@@ -21,7 +21,7 @@
                 <td>{{ print_object.name }}</td>
                 <td>{{ print_object.filament }}</td>
                 <td>{{ print_object.quantity }}</td>
-                <td>{{ (print_object.length / 1000)|number_format(2) }} m</td>
+                <td>{{ (print_object.weight)|number_format(2) }} g</td>
                 <td>
                     {% if print_object.cost %}
                         {{ (print_object.cost * print_object.quantity)|number_format(2) }} €

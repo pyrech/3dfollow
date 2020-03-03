@@ -63,6 +63,10 @@ class PrintObjectType extends AbstractType
                     'accept' => '.gcode',
                 ]
             ])
+            ->add('weight', NumberType::class, [
+                'label' => 'Masse de filament utilisé (en g)',
+                'required' => false,
+            ])
             ->add('length', NumberType::class, [
                 'label' => 'Longueur de filament utilisé (en mm)',
                 'required' => false,

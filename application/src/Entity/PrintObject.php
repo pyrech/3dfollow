@@ -68,6 +68,13 @@ class PrintObject
      * @Assert\NotBlank(message="Cette valeur ne doit pas être vide si aucun .gcode n'est uploadé", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
+    private $weight;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\NotBlank(message="Cette valeur ne doit pas être vide si aucun .gcode n'est uploadé", groups={"no_gcode_uploaded"})
+     * @Assert\PositiveOrZero()
+     */
     private $length;
 
     /**
@@ -179,6 +186,18 @@ class PrintObject
     public function setQuantity(?int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getWeight(): ?string
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(?string $weight): self
+    {
+        $this->weight = $weight;
 
         return $this;
     }

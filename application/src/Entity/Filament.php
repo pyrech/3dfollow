@@ -225,13 +225,11 @@ class Filament
         $usedWeight = $this->weightUsed;
 
         foreach ($this->getPrintObjects() as $printObject) {
-            if (!$printObject->getLength()) {
+            if (!$printObject->getWeight()) {
                 continue;
             }
 
-            $weight = $this->getDensity() * ($printObject->getLength() / 10) * M_PI * pow($this->getDiameter() / 2 / 10, 2);
-
-            $usedWeight += $weight * $printObject->getQuantity();
+            $usedWeight += $printObject->getWeight() * $printObject->getQuantity();
         }
 
         return $usedWeight * 100 / $this->weight;

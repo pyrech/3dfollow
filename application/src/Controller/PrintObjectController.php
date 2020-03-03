@@ -63,7 +63,7 @@ class PrintObjectController extends AbstractController
                 return $this->redirectToRoute('print_object_index');
             }
 
-            $form->get('gCodeFile')->addError(new FormError('Could not estimate length and price for this gcode'));
+            $form->addError(new FormError('Could not estimate the quantity of filament used for this print. Either upload a valid .gcode file or manually fill weight, length and cost of filament used'));
         }
 
         return $this->render('print_object/new.html.twig', [
@@ -93,7 +93,7 @@ class PrintObjectController extends AbstractController
                 return $this->redirectToRoute('print_object_index');
             }
 
-            $form->addError(new FormError('Could not estimate length and price for this print. Either upload a valid .gcode file or manually fill length and cost of filament used'));
+            $form->addError(new FormError('Could not estimate the quantity of filament used for this print. Either upload a valid .gcode file or manually fill weight, length and cost of filament used'));
         }
 
         return $this->render('print_object/edit.html.twig', [
@@ -129,7 +129,7 @@ class PrintObjectController extends AbstractController
 
     private function fillPrintProperties(StorageInterface $storage, PrintObject $printObject): bool
     {
-        if ($printObject->getLength() && $printObject->getCost()) {
+        if ($printObject->getWeight() && $printObject->getLength() && $printObject->getCost()) {
             return true;
         }
 
@@ -168,6 +168,9 @@ class PrintObjectController extends AbstractController
             return false;
         }
 
+        if (!$printObject->getWeight()) {
+            $printObject->setWeight($estimate->getWeight());
+        }
         if (!$printObject->getLength()) {
             $printObject->setLength($estimate->getLength());
         }
