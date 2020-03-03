@@ -17,7 +17,9 @@ class AccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username', null, [
+                'label' => 'Nom d\'utilisateur',
+            ])
             ->add('isPrinter', ChoiceType::class, [
                 'label' => 'Je dispose d\'une imprimante 3D',
                 'required' => true,
@@ -28,10 +30,12 @@ class AccountType extends AbstractType
                 'expanded' => true,
             ])
             ->add('oldPassword', PasswordType::class, [
+                'label' => 'Ancien mot de passe',
                 'mapped' => false,
                 'required' => false,
             ])
             ->add('newPassword', PasswordType::class, [
+                'label' => 'Nouveau mot de passe',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
