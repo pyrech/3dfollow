@@ -1,0 +1,8 @@
+{% extends 'bootstrap_4_layout.html.twig' %}
+
+{% block form_label %}
+    {% if required %}
+        {% set label = label ~ ' *' %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

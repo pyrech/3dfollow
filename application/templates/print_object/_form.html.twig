@@ -4,19 +4,26 @@
 
     {{ form_row(form.name) }}
     {{ form_row(form.filament) }}
-    {{ form_row(form.printRequest) }}
+    {% if form.printRequest is defined %}
+        {{ form_row(form.printRequest) }}
+    {% endif %}
     {{ form_row(form.quantity) }}
 
     <div class="row mt-5 mb-5">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="p-3 border rounded h-100">
                 <p class="text-center font-weight-bold">Upload the corresponding .gcode</p>
                 {{ form_row(form.gCodeFile) }}
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-2 text-center">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <p class="font-weight-bold">or</p>
+            </div>
+        </div>
+        <div class="col-md-5">
             <div class="p-3 border rounded h-100">
-                <p class="text-center font-weight-bold">Or manually fill your print's characteristics</p>
+                <p class="text-center font-weight-bold">Manually fill your print's characteristics</p>
                 {{ form_row(form.length) }}
                 {{ form_row(form.cost) }}
             </div>

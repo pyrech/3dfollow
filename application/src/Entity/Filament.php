@@ -30,6 +30,7 @@ class Filament
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
      */
     private $weight;
 
@@ -38,6 +39,7 @@ class Filament
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
      */
     private $weightUsed = 0;
 
@@ -46,6 +48,7 @@ class Filament
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
      */
     private $price;
 
@@ -54,6 +57,7 @@ class Filament
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
      */
     private $density;
 
@@ -62,6 +66,7 @@ class Filament
      *
      * @ORM\Column(type="decimal", precision=5, scale=2)
      * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
      */
     private $diameter;
 

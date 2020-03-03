@@ -1,24 +1,48 @@
+{% macro suggestion(form, suggestions) %}
+    <div class="mb-4">
+        <span>Suggestion :</span>
+        {% for suggestion,value in suggestions %}
+            <button type="button" class="btn btn-dark btn-sm" onclick="$('#{{ form.vars.id }}').val({{ value }})">{{ suggestion }}</button>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% import _self as helper %}
+
 {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
     {{ form_row(form.name) }}
-    {{ form_row(form.weight, {attr: {list: 'filament-weights'}}) }}
-    {{ form_row(form.weightUsed) }}
-    {{ form_row(form.price) }}
-    {{ form_row(form.density, {attr: {list: 'filament-densities'}}) }}
-    {{ form_row(form.diameter, {attr: {list: 'filament-diameters'}}) }}
 
-    <datalist id="filament-weights">
-        <option value="500" />
-        <option value="750" />
-        <option value="1000" />
-    </datalist>
-    <datalist id="filament-densities">
-        <option value="1.24" />
-    </datalist>
-    <datalist id="filament-diameters">
-        <option value="1.75" />
-        <option value="2.85" />
-        <option value="3" />
-    </datalist>
+    <div class="row mt-3 mb-3">
+        <div class="col-md-6">
+            <div class="p-3 border rounded h-100">
+                <p class="text-center font-weight-bold">Bobine</p>
+                {{ form_row(form.weight) }}
+                {{ helper.suggestion(form.weight, {
+                    'Bobine 750g': 700,
+                    'Bobine 1kg': 1000,
+                }) }}
+                {{ form_row(form.weightUsed) }}
+                {{ form_row(form.price) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="p-3 border rounded h-100">
+                <p class="text-center font-weight-bold">Caractéristique du filament</p>
+                {{ form_row(form.density) }}
+                {{ helper.suggestion(form.density, {
+                    'PLA': 1.24,
+                    'ABS': 1.04,
+                    'PETG': 1.27,
+                }) }}
+                {{ form_row(form.diameter) }}
+                {{ helper.suggestion(form.diameter, {
+                    '1.75 mm': 1.75,
+                    '2.85 mm': 2.85,
+                    '3 mm': 3,
+                }) }}
+            </div>
+        </div>
+    </div>
 
     <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}

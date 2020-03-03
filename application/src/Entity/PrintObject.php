@@ -29,6 +29,7 @@ class PrintObject
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -49,6 +50,7 @@ class PrintObject
     /**
      * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
      * @Assert\File(maxSize="50M")
+     * @Assert\PositiveOrZero()
      *
      * @var File|null
      */
@@ -63,11 +65,13 @@ class PrintObject
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\PositiveOrZero()
      */
     private $length;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @Assert\PositiveOrZero()
      */
     private $cost;
 

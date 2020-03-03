@@ -26,11 +26,11 @@ class PrintObjectType extends AbstractType
         $builder
             ->add('name', null, [
                 'label' => 'Nom de l\'objet',
+                'required' => true,
             ])
             ->add('filament', EntityType::class, [
                 'label' => 'Filament',
                 'class' => Filament::class,
-                'required' => false,
                 'query_builder' => function(FilamentRepository $filamentRepository) use ($user) {
                     return $filamentRepository->createQueryBuilder('f')
                         ->andWhere('f.owner = :user')
@@ -71,6 +71,10 @@ class PrintObjectType extends AbstractType
                 'required' => false,
             ])
         ;
+
+        if (count($user->getTeamCreated()->getPrintRequests()) < 1) {
+            $builder->remove('printRequest');
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
