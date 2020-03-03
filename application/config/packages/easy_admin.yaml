@@ -90,8 +90,9 @@ easy_admin:
                     - { property: user }
                     - { property: name }
                     - { property: filament }
-                    - { property: fileName }
+                    - { property: gCodeFile, type: 'vich_file' }
                     - { property: quantity }
+                    - { property: weight }
                     - { property: length }
                     - { property: cost }
                     - { property: printRequest }
