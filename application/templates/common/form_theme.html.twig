@@ -6,3 +6,17 @@
     {% endif %}
     {{ parent() }}
 {% endblock %}
+
+{% block file_widget %}
+    {{ parent()}}
+    <script>
+        (function() {
+            var input = document.getElementById('{{ form.vars.id }}');
+            input.addEventListener('change',function(e){
+                var fileName = input.files[0].name;
+                var nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
+            })
+        })();
+    </script>
+{% endblock %}

@@ -24,6 +24,9 @@ class PrintObjectType extends AbstractType
         /** @var User $user */
         $user = $options['user'];
 
+        /** @var PrintObject|null $data */
+        $data = $builder->getData();
+
         $builder
             ->add('name', null, [
                 'label' => 'Nom de l\'objet',
@@ -61,6 +64,7 @@ class PrintObjectType extends AbstractType
                 'download_link' => false,
                 'attr' => [
                     'accept' => '.gcode',
+                    'placeholder' => $data && $data->getGCode()->getOriginalName() ? $data->getGCode()->getOriginalName() : '',
                 ]
             ])
             ->add('weight', NumberType::class, [
