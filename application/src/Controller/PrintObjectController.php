@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
 /**
@@ -42,7 +43,7 @@ class PrintObjectController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(StorageInterface $storage, Request $request): Response
+    public function new(StorageInterface $storage, TranslatorInterface $translator, Request $request): Response
     {
         $user = $this->getUser();
 
@@ -63,7 +64,7 @@ class PrintObjectController extends AbstractController
                 return $this->redirectToRoute('print_object_index');
             }
 
-            $form->addError(new FormError('Could not estimate the quantity of filament used for this print. Either upload a valid .gcode file or manually fill weight, length and cost of filament used'));
+            $form->addError(new FormError($translator->trans('validation.invalid_gcode', [], 'validators')));
         }
 
         return $this->render('print_object/new.html.twig', [
@@ -75,7 +76,7 @@ class PrintObjectController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(StorageInterface $storage, Request $request, PrintObject $printObject): Response
+    public function edit(StorageInterface $storage, TranslatorInterface $translator, Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
 
@@ -93,7 +94,7 @@ class PrintObjectController extends AbstractController
                 return $this->redirectToRoute('print_object_index');
             }
 
-            $form->addError(new FormError('Could not estimate the quantity of filament used for this print. Either upload a valid .gcode file or manually fill weight, length and cost of filament used'));
+            $form->addError(new FormError($translator->trans('validation.invalid_gcode', [], 'validators')));
         }
 
         return $this->render('print_object/edit.html.twig', [

@@ -1,4 +1,4 @@
-<h2 class="mt-5">Mes dernières demandes en attente</h2>
+<h2 class="mt-5">{{ 'dashboard.index.section.my_pending_prints.title'|trans }}</h2>
 
 {% set hasManyTeam = app.user.teams|length > 1 %}
 
@@ -6,11 +6,11 @@
     <thead>
         <tr>
             {% if hasManyTeam %}
-                <th>Imprimeur</th>
+                <th>{{ 'common.printer'|trans }}</th>
             {% endif %}
-            <th>Nom</th>
-            <th>Quantité</th>
-            <th>Actions</th>
+            <th>{{ 'dashboard.index.section.my_pending_prints.column.name'|trans }}</th>
+            <th>{{ 'common.quantity'|trans }}</th>
+            <th>{{ 'common.actions'|trans }}</th>
         </tr>
     </thead>
     <tbody>
@@ -22,33 +22,31 @@
                 <td>{{ print_request.name }}</td>
                 <td>{{ print_request.quantity }}</td>
                 <td>
-                    <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">Modifier</a>
+                    <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="{{ hasManyTeam ? 4 : 3 }}">Votre liste en attente est vide.</td>
+                <td colspan="{{ hasManyTeam ? 4 : 3 }}">{{ 'dashboard.index.section.my_pending_prints.no_data'|trans }}</td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
 
 <div class="text-center">
-    <a href="{{ path('print_request_index') }}" class="btn btn-primary">Voir toutes mes demandes</a>
+    <a href="{{ path('print_request_index') }}" class="btn btn-primary">{{ 'dashboard.index.section.my_pending_prints.cta'|trans }}</a>
 </div>
 
-<h2 class="mt-5">Groupes</h2>
+<h2 class="mt-5">{{ 'dashboard.index.section.groups.title'|trans }}</h2>
 
 {% if app.user.teams|length > 0 %}
-    <p>
-        Vous êtes actuellement membre de ces groupes :
-    </p>
+    <p>{{ 'dashboard.index.section.groups.subtitle'|trans }}</p>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Imprimeur</th>
-                <th>Actions</th>
+                <th>{{ 'common.printer'|trans }}</th>
+                <th>{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -56,7 +54,7 @@
                 <tr>
                     <td>{{ team.creator }}</td>
                     <td>
-                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">Ajouter un élément à imprimer dans la liste de {{ team.creator }}</a>
+                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">{{ 'dashboard.index.section.groups.action.add_print_request'|trans({'%printer%': team.creator}) }}</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -1,28 +1,25 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Liste des demandes de mon groupe{% endblock %}
-{% block page_title %}Les demandes de mon groupe{% endblock %}
+{% block title %}{{ 'team.print_requests.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'team.print_requests.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     {% if app.user.teamCreated.members|length < 1 %}
         <div class="rounded border p-4 text-center">
-            <h2 class="mb-3">Nobody on your group</h2>
-            <p>
-                Looks like there is no member in your group yet so you can not receive print request.<br />
-                Maybe you want to invite people in your team first?
-            </p>
-            <a href="{{ path('team_index') }}" class="btn btn-success">Invite people</a>
+            <h2 class="mb-3">{{ 'team.print_requests.help.no_members.title'|trans }}</h2>
+            <p>{{ 'team.print_requests.help.no_members.content'|trans|raw }}</p>
+            <a href="{{ path('team_index') }}" class="btn btn-success">{{ 'team.print_requests.help.no_members.cta'|trans }}</a>
         </div>
     {% else %}
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Utilisateur</th>
-                    <th>Quantité</th>
-                    <th>Statut</th>
-                    <th>Coût matière</th>
-                    <th>Actions</th>
+                    <th>{{ 'team.print_requests.column.name'|trans }}</th>
+                    <th>{{ 'common.user'|trans }}</th>
+                    <th>{{ 'common.quantity'|trans }}</th>
+                    <th>{{ 'team.print_requests.column.status'|trans }}</th>
+                    <th>{{ 'team.print_requests.column.cost'|trans }}</th>
+                    <th>{{ 'common.actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +30,7 @@
                         <td>{{ print_request.quantity }}</td>
                         <td>
                         <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
-                            {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
+                            {{ ('team.print_requests.status.' ~ (print_request.isPrinted ? 'printed' : 'pending'))|trans }}
                         </span>
                         </td>
                         <td>
@@ -45,12 +42,12 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">Afficher</a>
+                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.show'|trans }}</a>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="6">Votre liste est vide.</td>
+                        <td colspan="6">{{ 'team.print_requests.no_data'|trans }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

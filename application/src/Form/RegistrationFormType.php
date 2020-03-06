@@ -19,40 +19,41 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('username', null, [
-                'label' => 'Nom d\'utilisateur',
+                'label' => 'registration.register.form.username.label',
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'registration.register.form.plainPassword.label',
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'validation.password_required',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'validation.password_length',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
             ->add('isPrinter', ChoiceType::class, [
-                'label' => 'Je dispose d\'une imprimante 3D',
+                'label' => 'registration.register.form.isPrinter.label',
                 'required' => true,
                 'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
+                    'common.yes' => true,
+                    'common.no' => false,
                 ],
                 'expanded' => true,
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'registration.register.form.agreeTerms.label',
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'validation.accept_terms',
                     ]),
                 ],
             ])

@@ -29,11 +29,11 @@ class PrintObjectType extends AbstractType
 
         $builder
             ->add('name', null, [
-                'label' => 'Nom de l\'objet',
+                'label' => 'print_object.form.name.label',
                 'required' => true,
             ])
             ->add('filament', EntityType::class, [
-                'label' => 'Filament',
+                'label' => 'print_object.form.filament.label',
                 'class' => Filament::class,
                 'query_builder' => function(FilamentRepository $filamentRepository) use ($user) {
                     return $filamentRepository->createQueryBuilder('f')
@@ -43,7 +43,7 @@ class PrintObjectType extends AbstractType
                 },
             ])
             ->add('printRequest', EntityType::class, [
-                'label' => 'Impression demandée',
+                'label' => 'print_object.form.printRequest.label',
                 'class' => PrintRequest::class,
                 'required' => false,
                 'query_builder' => function(PrintRequestRepository $printRequestRepository) use ($user) {
@@ -55,10 +55,10 @@ class PrintObjectType extends AbstractType
                 'group_by' => 'user',
             ])
             ->add('quantity', IntegerType::class, [
-                'label' => 'Quantité',
+                'label' => 'print_object.form.quantity.label',
             ])
             ->add('gCodeFile', VichFileType::class, [
-                'label' => 'Select .gcode file',
+                'label' => 'print_object.form.gCodeFile.label',
                 'required' => false,
                 'allow_delete' => true,
                 'download_link' => false,
@@ -68,15 +68,15 @@ class PrintObjectType extends AbstractType
                 ]
             ])
             ->add('weight', NumberType::class, [
-                'label' => 'Masse de filament utilisé (en g)',
+                'label' => 'print_object.form.weight.label',
                 'required' => false,
             ])
             ->add('length', NumberType::class, [
-                'label' => 'Longueur de filament utilisé (en mm)',
+                'label' => 'print_object.form.length.label',
                 'required' => false,
             ])
             ->add('cost', NumberType::class, [
-                'label' => 'Coût de filament utilisé (en €)',
+                'label' => 'print_object.form.cost.label',
                 'required' => false,
             ])
         ;

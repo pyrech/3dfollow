@@ -1,21 +1,19 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Liste de mes demandes{% endblock %}
-{% block page_title %}Liste de mes demandes{% endblock %}
+{% block title %}{{ 'print_request.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'print_request.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     {% for team in teams %}
-        <h2 class="display-6 mt-4 mb-4">
-            Impressions par {{ team.creator }}
-        </h2>
+        <h2 class="display-6 mt-4 mb-4">{{ 'print_request.index.team_section.title'|trans({'%username%': team.creator.username}) }}</h2>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Quantité</th>
-                    <th>Statut</th>
-                    <th>Coût matière</th>
-                    <th>Actions</th>
+                    <th>{{ 'print_request.index.column.name'|trans }}</th>
+                    <th>{{ 'common.quantity'|trans }}</th>
+                    <th>{{ 'print_request.index.column.status'|trans }}</th>
+                    <th>{{ 'print_request.index.column.cost'|trans }}</th>
+                    <th>{{ 'common.actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,7 +23,7 @@
                     <td>{{ print_request.quantity }}</td>
                     <td>
                         <span class="badge badge-{{ print_request.isPrinted ? 'success' : 'primary' }}">
-                            {{ print_request.isPrinted ? 'Imprimé' : 'En attente' }}
+                            {{ ('print_request.index.status.' ~ (print_request.isPrinted ? 'printed' : 'pending'))|trans }}
                         </span>
                     </td>
                     <td>
@@ -38,24 +36,24 @@
                     </td>
                     <td>
                         {% if app.user and app.user.id == print_request.user.id %}
-                            <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">Modifier</a>
+                            <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.edit'|trans }}</a>
                         {% endif %}
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="5">Votre liste est vide.</td>
+                    <td colspan="5">{{ 'print_request.index.no_data'|trans }}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
 
-        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">Ajouter un élément à imprimer dans la liste de {{ team.creator }}</a>
+        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">{{ 'print_request.index.action.add_print_request'|trans({'%username%': team.creator.username}) }}</a>
 
         {% if not loop.last %}
             <hr class="mt-4" />
         {% endif %}
     {% endfor %}
 
-    <a href="{{ path('dashboard_index') }}">Retourner au dashboard</a>
+    <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
 {% endblock %}

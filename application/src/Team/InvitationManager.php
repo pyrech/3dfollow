@@ -8,6 +8,7 @@ use App\Repository\TeamRepository;
 use App\Security\TokenRefresher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class InvitationManager
 {
@@ -15,22 +16,27 @@ class InvitationManager
 
     private $entityManager;
     private $teamRepository;
+    private $translator;
     private $tokenRefresher;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         TeamRepository $teamRepository,
+        TranslatorInterface $translator,
         TokenRefresher $tokenRefresher
     ) {
         $this->entityManager = $entityManager;
         $this->teamRepository = $teamRepository;
+        $this->translator = $translator;
         $this->tokenRefresher = $tokenRefresher;
     }
 
     public function join(Request $request, User $user, Team $team): void
     {
         if ($team->getMembers()->contains($user)) {
-            $request->getSession()->getFlashBag()->add('warning', sprintf('Vous êtes déjà membre du groupe de %s.', $team->getCreator()->getUsername()));
+            $request->getSession()->getFlashBag()->add('warning', $this->translator->trans('team.join.flash.warning', [
+                '%username%' => $team->getCreator()->getUsername(),
+            ]));
             return;
         }
 
@@ -38,7 +44,9 @@ class InvitationManager
 
         $this->entityManager->flush();
 
-        $request->getSession()->getFlashBag()->add('success', sprintf('Vous êtes désormais membre du groupe de %s.', $team->getCreator()->getUsername()));
+        $request->getSession()->getFlashBag()->add('success', $this->translator->trans('team.join.flash.success', [
+            '%username%' => $team->getCreator()->getUsername(),
+        ]));
 
         // Roles of users may have changed if joining its first group, so let's refresh its token to avoid logout
         $this->tokenRefresher->refresh($user, $request);

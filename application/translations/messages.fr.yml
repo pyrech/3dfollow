@@ -1,0 +1,357 @@
+meta:
+    default_title: Historique de vos impressions, quantité de filament restant, estimation coût | 3D Follow
+
+nav:
+    brand_name: 3D Follow
+    toggle: Ouvrir ou fermer la navigation
+
+    filament: Filaments
+    print_object: Impressions
+    team_print_request: Demandes reçues
+    team: Groupe
+    print_request: Mes demandes
+
+    dashboard: Dashboard
+    account: Mon compte
+    back_to_home: Retour à l'accueil
+    logout: Déconnexion
+
+    login: Se connecter
+    register: Créer un compte
+
+common:
+    close: Fermer
+    actions: Actions
+    quantity: Quantité
+    printer: Imprimeur
+    user: Utlisateur
+    or: ou
+    yes: Oui
+    no: Non
+    csrf_token_error: Token CSRF invalide
+    action:
+        show: Afficher
+        edit: Modifier
+        save: Sauvegarder
+        delete: Supprimer
+        back_to_list: Retourner à la liste
+        back_to_dashboard: Retourner au dashboard
+
+home:
+    index:
+        meta_title: Historique de vos impressions, quantité de filament restant, estimation coût | 3D Follow
+        meta_description: Une application pour tout ce qui se passe avant et après vos impressions 3D
+        header:
+            title: 3D Follow
+            catchline: Pour tout ce qui se passe en dehors de votre imprimante 3D
+        section:
+            features:
+                title: Fonctionnalités
+                history:
+                    name: Historique ds impressions
+                    description: |
+                        Garder un <strong>historique de toutes vos impressions</strong>: matériaux, coût, g-code, &hellip;
+                stock:
+                    name: Filament restant en stock
+                    description: |
+                        Connaitre la <strong>quantité de filament restant</strong> pour chacune de vos bobines.
+                cost:
+                    name: Estimation du coût
+                    description: |
+                        <strong>Estimer</strong> la quantité et le coût des <strong>matières utilisées</strong> pour chaque impression.
+                team:
+                    name: Demande d'impression
+                    description: |
+                        Inviter <strong>votre famille / vos amis / vos clients</strong> à rejoindre votre groupe pour leur permettre de vous envoyer <strong>les modèles qu'ils souhaitent faire imprimer</strong>.
+            try:
+                title: Essayer l'application, elle est gratuite !
+                cta: Aller à l'application
+
+security:
+    login:
+        meta_title: Connexion | 3D Follow
+        page_title: Connexion
+        no_account_yet: Pas encore de compte ?
+        register: Créer mon compte
+        form:
+            username:
+                label: Nom d'utilisateur
+            password:
+                label: Mot de passe
+            remember_me:
+                label: Se souvenir de moi
+            submit: Me connecter
+
+registration:
+    register:
+        meta_title: Création de compte | 3D Follow
+        page_title: Créer mon compte
+        content: |
+            Vous <strong>possèdez une imprimante 3D</strong> et souhaitez <strong>profiter de toutes les fonctionnalités</strong> de 3D Follow ?<br />
+            Ou vous souhaitez simplement <strong>rejoindre le groupe</strong> d'une personne possédant une imprimante ?<br />
+            Créer votre compte, c'est <strong>gratuit</strong> et ça prend <strong>moins d'une minute</strong>.
+        already_has_account: Vous avez déjà un compte ?
+        login: Connectez-vous
+        form:
+            username:
+                label: Nom d'utilisateur
+            plainPassword:
+                label: Mot de passe
+            isPrinter:
+                label: Je possède une imprimante 3D
+            agreeTerms:
+                label: J'accepte les conditions d'utilisation
+            submit: Créer mon compte
+
+dashboard:
+    index:
+        meta_title: Dashboard | 3D Follow
+        page_title: Mon dashboard
+        welcome: 'Bienvenue %username%'
+        help:
+            no_role:
+                title: Nouveau sur 3D Follow?
+                content: |
+                    Vous n'êtes actuellement membre d'aucun groupe.<br />
+                    Demander d'abord à vous faire inviter à un groupe existant pour pouvoir exploiter au mieux 3D Follow.<br />
+                    <br />
+                    Si vous possédez vous-même une imprimante 3D, pensez à cocher la case correspondante dans votre profil.<br />
+                    Cela vous permettra d'accéder à de nouvelles fonctionnalités.
+                cta: Modifier mon profil
+            no_filament:
+                title: Nouveau sur 3D Follow ?
+                content: |
+                    Commencez par ajouter votre premier filament.
+                cta: Ajouter un filament
+            no_print_object:
+                title: Félicitations, vous avez configuré votre premier filament
+                content: |
+                    Et si vous ajoutiez également votre <strong>premiere impression</strong> ?<br />
+                    Cela vous permettra de connaître la <strong>quantité de filament qu'il vous reste</strong> et de garder un <strong>historique</strong> de toutes vos impressions.
+                cta: Enregistrer une impression
+        stats:
+            filaments:
+                label: 'filament|filaments'
+            print_objects:
+                label: 'impression|impressions'
+            members:
+                label: 'membre|membres'
+            pending_print_requests:
+                label: 'demande en attente|demandes en attente'
+        section:
+            pending_print_requests:
+                title: Les dernières demandes reçues
+                column:
+                    name: Nom de la demande
+                action:
+                    show: Voir plus en détails
+                no_data: Votre liste en attente est vide.
+                cta: Voir toutes les demandes reçues
+            my_pending_prints:
+                title: Mes dernières demandes en attente
+                column:
+                    name: Nom de la demande
+                no_data: Votre liste en attente est vide.
+                cta: Voir toutes mes demandes
+            groups:
+                title: Groupes
+                subtitle: 'Vous êtes actuellement membre de ces groupes :'
+                action:
+                    add_print_request: 'Demander une nouvelle impression à %printer%'
+
+filament:
+    index:
+        meta_title: Mes filaments | 3D Follow
+        page_title: Mes filaments
+        no_data: Aucun filament enregistré.
+        column:
+            name: Nom
+            weight: Poids de la bobine
+            price: Prix de la bobine
+            usage: Utilisation
+        usage: '%weightPercentage%% utilisé - %weightRemaining%g restant'
+        action:
+            add_filament: Ajouter un nouveau filament
+    form:
+        suggestion: 'Suggestion :'
+        section:
+            spool: Bobine
+            filament: Caractéristique du filament
+        name:
+            label: Nom à donner au filament pour le retrouver facilement dans l'application
+            help: Couleur, matière imitée, etc.
+        weight:
+            label: Poids de la bobine (en grammes)
+        weightUsed:
+            label: Quantité de filament déjà utilisé (en grammes)
+            help: Permet de corriger la consommation si toutes vos impressions n'ont pas été enregistrées dans l'application
+        price:
+            label: Prix de la bobine (en €)
+        density:
+            label: Densité (en g/cm³)
+        diameter:
+            label: Diamètre (en mm)
+    new:
+        meta_title: Ajouter un filament | 3D Follow
+        page_title: Ajouter un nouveau filament
+    edit:
+        meta_title: Modifier un filament | 3D Follow
+        page_title: Modifier le filament
+        not_deletable: Le filament a été selectionné pour une ou plusieurs impression(s). Vous ne pouvez plus le supprimer.
+    delete:
+        confirm: Êtes-vous sûr de vouloir supprimer ce filament ?
+
+print_object:
+    index:
+        meta_title: Mes impressions | 3D Follow
+        page_title: Mes impressions
+        no_data: Aucune impression enregistrée.
+        column:
+            name: Nom de l'impression
+            filament: Filament
+            weight: Masse utilisée
+            cost: Coût matière unitaire
+        action:
+            add_print_object: Ajouter une nouvelle impression
+    form:
+        section:
+            upload: Uploader le fichier .gcode correspondant
+            manual: Saisir manuellement les caractéristiques
+        name:
+            label: Nom de l'objet
+        filament:
+            label: Filament
+        printRequest:
+            label: Impression demandée
+        quantity:
+            label: Quantité
+        gCodeFile:
+            label: Sélectionner un ficher .gcode
+        weight:
+            label: Masse de filament utilisé (en g)
+        length:
+            label: Longueur de filament utilisé (en mm)
+        cost:
+            label: Coût de filament utilisé (en €)
+    new:
+        meta_title: Ajouter une impression | 3D Follow
+        page_title: Ajouter une nouvelle impression
+    edit:
+        meta_title: Modifier une impression | 3D Follow
+        page_title: Modifier l'impression
+    delete:
+        confirm: Êtes-vous sûr de vouloir supprimer cette impression ?
+
+print_request:
+    index:
+        meta_title: Mes demandes d'impression | 3D Follow
+        page_title: Mes demandes d'impression
+        no_data: Aucune demande enregistrée.
+        team_section:
+            title: Demandes pour %username%
+        column:
+            name: Nom de l'impression
+            status: Statut
+            cost: Coût matière unitaire
+        status:
+            printed: Imprimée
+            pending: En attente
+        action:
+            add_print_request: Ajouter un élément à imprimer dans la liste de %username%
+    form:
+        name:
+            label: Nom de l'objet
+        link:
+            label: Lien du modèle (sur www.thingiverse.com)
+            placeholder: 'https://www.thingiverse.com/thing:XXXXXXX'
+        quantity:
+            label: Quantité
+        comment:
+            label: Commentaire
+            help: Couleur ou matériau en particulier, dimensions à changer, etc.
+    new:
+        meta_title: Ajouter une demande d'impression | 3D Follow
+        page_title: Ajouter une nouvelle demande d'impression
+    edit:
+        meta_title: Modifier une demande d'impression | 3D Follow
+        page_title: Modifier la demande d'impression
+        not_deletable: L'objet a été imprimé. Vous ne pouvez plus le modifier
+    show:
+        meta_title: Impression "%name%" de %username%
+        page_title: Consulter l'impression "%name%" de %username%
+    delete:
+        confirm: Êtes-vous sûr de vouloir supprimer cette demande d'impression ?
+
+team:
+    index:
+        meta_title: Mon groupe | 3D Follow
+        page_title: Mon groupe
+        help:
+            no_join_token:
+                title: Vous vous sentez seul ?
+                content: |
+                    Générer un lien d'invitation pour que vos proches ou vos clients puisse <strong>rejoindre votre groupe</strong>.<br />
+                    Cela leur permettra de facilement, depuis l'application, vous <strong>envoyer les modèles ou objets qu'ils souhaitent</strong> que vous leur imprimiez.
+                cta: Générer mon lien d'invitation
+            has_join_token:
+                title: Votre lien d'invitation
+                content: |
+                    Envoyer ce lien à d'autres personnes pour les inviter à rejoindre votre groupe.
+                cta: Regénérer mon lien d'invitation
+        subtitle: Les membres de mon groupe
+        no_data: Aucun membre dans votre groupe.
+        column:
+            request_count: Nombre de demandes
+        action:
+            see_all_requests: Voir toutes les demandes de mon groupe
+    print_requests:
+        meta_title: Liste des demandes de mon groupe | 3D Follow
+        page_title: Toutes les demandes reçues
+        help:
+            no_members:
+                title: Votre groupe est vide
+                content: |
+                    On dirait bien qu'il n'y a <strong>personne dans votre groupe</strong> pour le moment.
+                    Vous ne pouvez donc pas recevoir de demandes.<br />
+                    Peut-être voudriez vous d'abord <strong>inviter des persones à vous rejoindre</strong> sur 3D Follow :
+                cta: Inviter des personnes
+        column:
+            name: Nom de la demande
+            status: Statut
+            cost: Coût matière total
+        status:
+            pending: En attente
+            printed: Imprimé
+        no_data: Aucune demande reçue.
+    join:
+        meta_title: Rejoindre un groupe | 3D Follow
+        page_title: Vous êtes invité à rejoindre le groupe de %username%
+        section:
+            login:
+                content: Si vous avez déjà un compte, connectez-vous pour rejoindre le groupe.
+                cta: Me connecter
+            register:
+                content: Sinon, créer votre compte en un instant afin de rejoindre le groupe.
+                cta: Créer mon compte
+        flash:
+            warning: 'Vous êtes déjà membre du groupe de %username%.'
+            success: 'Vous êtes désormais membre du groupe de %username%.'
+
+account:
+    index:
+        meta_title: Modifier mon compte | 3D Follow
+        page_title: Modifier mon compte
+        section:
+            profile: Profil
+            password: Mot de passe
+        form:
+            username:
+                label: Nom d'utilisateur
+            isPrinter:
+                label: Je possède une imprimante 3D
+            oldPassword:
+                label: Ancien mot de passe
+            newPassword:
+                label: Nouveau mot de passe
+        flash:
+            success: Compte mis à jour

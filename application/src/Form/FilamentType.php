@@ -13,25 +13,25 @@ class FilamentType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Nom à donner au filament pour le retrouver facilement dans l\'application',
-                'help' => 'Couleur, matière imitée, etc.',
+                'label' => 'filament.form.name.label',
+                'help' => 'filament.form.name.help',
             ])
             ->add('weight', null, [
-                'label' => 'Poids de la bobine (en grammes)',
+                'label' => 'filament.form.weight.label',
             ])
             ->add('weightUsed', null, [
-                'label' => 'Quantité de filament déjà utilisé (en grammes)',
-                'help' => 'Permet de corriger la consommation si toutes vos impressions n\'ont pas été enregistrées dans l\'application',
+                'label' => 'filament.form.weightUsed.label',
+                'help' => 'filament.form.weightUsed.help',
                 'required' => false,
             ])
             ->add('price', null, [
-                'label' => 'Prix de la bobine (en €)',
+                'label' => 'filament.form.price.label',
             ])
             ->add('density', null, [
-                'label' => 'Densité (en g/cm³)',
+                'label' => 'filament.form.density.label',
             ])
             ->add('diameter', null, [
-                'label' => 'Diamètre (en mm)',
+                'label' => 'filament.form.diameter.label',
             ])
         ;
     }

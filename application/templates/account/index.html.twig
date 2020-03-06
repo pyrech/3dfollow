@@ -1,21 +1,21 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Modifier mon compte{% endblock %}
-{% block page_title %}Modifier mon compte{% endblock %}
+{% block title %}{{ 'account.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'account.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
         <div class="row">
             <div class="col-md-6">
                 <div class="p-3 border rounded h-100">
-                    <p class="text-center font-weight-bold">Mon profil</p>
+                    <p class="text-center font-weight-bold">{{ 'account.index.section.profile'|trans }}</p>
                     {{ form_row(form.username) }}
                     {{ form_row(form.isPrinter) }}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="p-3 border rounded h-100">
-                    <p class="text-center font-weight-bold">Changement mot de passe</p>
+                    <p class="text-center font-weight-bold">{{ 'account.index.section.password'|trans }}</p>
                     {{ form_row(form.oldPassword) }}
                     {{ form_row(form.newPassword) }}
                 </div>
@@ -23,8 +23,8 @@
         </div>
 
         <div class="mt-4">
-            <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
-            <a href="{{ path('dashboard_index') }}">Retourner au dashboard</a>
+            <button class="btn btn-success">{{ button_label|default('common.action.save'|trans) }}</button>
+            <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
         </div>
 
     {{ form_end(form) }}

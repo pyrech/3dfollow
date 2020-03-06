@@ -1,0 +1,357 @@
+meta:
+    default_title: Keep a 3D print history, know filament remaining quantities, get print cost estimation | 3D Follow
+
+nav:
+    brand_name: 3D Follow
+    toggle: Toggle navigation
+
+    filament: Filaments
+    print_object: Prints
+    team_print_request: Prints requested
+    team: Group
+    print_request: My requests
+
+    dashboard: Dashboard
+    account: My account
+    back_to_home: Back to home
+    logout: Logout
+
+    login: Log in
+    register: Register
+
+common:
+    close: Close
+    actions: Actions
+    quantity: Quantity
+    printer: Printer
+    user: User
+    or: or
+    yes: Yes
+    no: No
+    csrf_token_error: Invalid CSRF token
+    action:
+        show: Show
+        edit: Edit
+        save: Save
+        delete: Delete
+        back_to_list: Back to the list
+        back_to_dashboard: Back to the dashboard
+
+home:
+    index:
+        meta_title: Keep a 3D print history, know filament remaining quantities, get print cost estimation | 3D Follow
+        meta_description: An application for everything happening before and after your 3D prints
+        header:
+            title: 3D Follow
+            catchline: For everything happening outside your printer
+        section:
+            features:
+                title: Features
+                history:
+                    name: History
+                    description: |
+                        Keep an <strong>history of all your prints</strong>: material, cost, g-code, &hellip;
+                stock:
+                    name: Filament stock
+                    description: |
+                        Know the <strong>quantity of filament it remains</strong> for each of your spool.
+                cost:
+                    name: Cost estimation
+                    description: |
+                        <strong>Estimate</strong> the quantity and cost of <strong>material used</strong> by each print.
+                team:
+                    name: Team requests
+                    description: |
+                        Let your <strong>family / friends / customers</strong> send you their <strong>print wishes</strong>. Invite them to join your team.
+            try:
+                title: Try it, it's free!
+                cta: Go to the app
+
+security:
+    login:
+        meta_title: Login | 3D Follow
+        page_title: Login
+        no_account_yet: No account yet?
+        register: Create an account
+        form:
+            username:
+                label: Username
+            password:
+                label: Password
+            remember_me:
+                label: Remember me
+            submit: Log in
+
+registration:
+    register:
+        meta_title: Register | 3D Follow
+        page_title: Register
+        content: |
+            You <strong>own a 3D printer</strong> and want to <strong> enjoy all the features</strong> of 3D Follow ?<br />
+            Or you simply want to <strong>join the group</strong> of someone having a 3D printer?<br />
+            Create your account - it's <strong>free</strong> and takes <strong>less than a minute</strong>.
+        already_has_account: Already having an account?
+        login: Log in
+        form:
+            username:
+                label: Username
+            plainPassword:
+                label: Password
+            isPrinter:
+                label: I have a 3D printer
+            agreeTerms:
+                label: I accept the terms of use
+            submit: Register
+
+dashboard:
+    index:
+        meta_title: Dashboard | 3D Follow
+        page_title: My dashboard
+        welcome: 'Welcome %username%'
+        help:
+            no_role:
+                title: New on 3D Follow?
+                content: |
+                    You are not a member of any group yet.<br />
+                    First ask someone to invite your in their group to really enjoy 3D Follow.<br />
+                    <br />
+                    If you have a 3D printer, please check the corresponding option in your account.<br />
+                    This will give you access to a lot of new features.
+                cta: Update my account
+            no_filament:
+                title: New on 3D Follow?
+                content: |
+                    Start by adding your first filament.
+                cta: Add a filament
+            no_print_object:
+                title: Congratulation, you configured your first filament
+                content: |
+                    What about registering your <strong>first print</string> now?<br />
+                    This will allow you to know <strong>how many filament it remains</strong> and to keep an <strong>history</strong> of all your prints.
+                cta: Add a new print
+        stats:
+            filaments:
+                label: 'filament|filaments'
+            print_objects:
+                label: 'print|prints'
+            members:
+                label: 'member|member'
+            pending_print_requests:
+                label: 'pending request|pending requests'
+        section:
+            pending_print_requests:
+                title: Last requests received
+                column:
+                    name: Name of the request
+                action:
+                    show: See more detail
+                no_data: Your pending list is empty.
+                cta: See all the requests received
+            my_pending_prints:
+                title: My last pending requests
+                column:
+                    name: Name of the request
+                no_data: Your pending list is empty.
+                cta: See all my requests
+            groups:
+                title: Groups
+                subtitle: 'You are currently a member of this groups:'
+                action:
+                    add_print_request: 'Request a new print to %printer%'
+
+filament:
+    index:
+        meta_title: My filaments | 3D Follow
+        page_title: My filaments
+        no_data: No filament registered.
+        column:
+            name: Name
+            weight: Spool weight
+            price: Spool price
+            usage: Usage
+        usage: '%weightPercentage%% used - %weightRemaining%g remaining'
+        action:
+            add_filament: Add a new filament
+    form:
+        suggestion: 'Suggestion:'
+        section:
+            spool: Spool
+            filament: Filament caracteristics
+        name:
+            label: Name to give to the filament to easily find it in the application
+            help: Color, material, etc.
+        weight:
+            label: Spool weight (in grams)
+        weightUsed:
+            label: Filament quantity already used (in grams)
+            help: Allow to correct the consumption if all your prints are not yet registers in the application
+        price:
+            label: Spool price (in €)
+        density:
+            label: Density (in g/cm³)
+        diameter:
+            label: Diameter (en mm)
+    new:
+        meta_title: Add a filament | 3D Follow
+        page_title: Add a new filament
+    edit:
+        meta_title: Edit a filament | 3D Follow
+        page_title: Edit this filament
+        not_deletable: This filament is used for one or more prints. You can not delete it.
+    delete:
+        confirm: Are you sure you want to remove this filament?
+
+print_object:
+    index:
+        meta_title: My prints | 3D Follow
+        page_title: My prints
+        no_data: No print registered.
+        column:
+            name: Name of the print
+            filament: Filament
+            weight: Weight used
+            cost: Unit material cost
+        action:
+            add_print_object: Add a new print
+    form:
+        section:
+            upload: Upload the corresponding .gcode file
+            manual: Manually fill these caracteristics
+        name:
+            label: Print name
+        filament:
+            label: Filament
+        printRequest:
+            label: Requested print
+        quantity:
+            label: Quantity
+        gCodeFile:
+            label: Select a .gcode file
+        weight:
+            label: Filament used weight (in g)
+        length:
+            label: Filament used length (en mm)
+        cost:
+            label: Filament used cost (en €)
+    new:
+        meta_title: Add a print | 3D Follow
+        page_title: Add a new print
+    edit:
+        meta_title: Edit a print | 3D Follow
+        page_title: Edit this print
+    delete:
+        confirm: Are you sure you want to remove this print?
+
+print_request:
+    index:
+        meta_title: My print requests | 3D Follow
+        page_title: My print requests
+        no_data: No print requested.
+        team_section:
+            title: Request for %username%
+        column:
+            name: Print name
+            status: Status
+            cost: Unit material cost
+        status:
+            printed: Printed
+            pending: Pending
+        action:
+            add_print_request: Add a new request in %username%'s list
+    form:
+        name:
+            label: Print name
+        link:
+            label: Modele link (on www.thingiverse.com)
+            placeholder: 'https://www.thingiverse.com/thing:XXXXXXX'
+        quantity:
+            label: Quantity
+        comment:
+            label: Comment
+            help: Color ou material in particular, sizes to change, etc.
+    new:
+        meta_title: Add a new print request | 3D Follow
+        page_title: Add a new print request
+    edit:
+        meta_title: Edit a print request | 3D Follow
+        page_title: Edit this print request
+        not_deletable: This object was printed. You can not update it
+    show:
+        meta_title: Print "%name%" by %username%
+        page_title: Print "%name%" by %username%
+    delete:
+        confirm: Are you sure you want to remove this print request?
+
+team:
+    index:
+        meta_title: My group | 3D Follow
+        page_title: My group
+        help:
+            no_join_token:
+                title: Feeling alone?
+                content: |
+                    Generate an invite link so your family, friends or customer can <strong>join your team</strong>.<br />
+                    That will allow them to <strong>send you their print wishes</strong> right onto the application.<br />
+                cta: Generate my invite link
+            has_join_token:
+                title: Your invite link
+                content: |
+                    Send this link to anyone so they can joy your team.
+                cta: Regenerate my invite link
+        subtitle: Members of my group
+        no_data: No member in your group.
+        column:
+            request_count: Requests count
+        action:
+            see_all_requests: See all the requests in my group
+    print_requests:
+        meta_title: Received requests | 3D Follow
+        page_title: Received requests in my team
+        help:
+            no_members:
+                title: My group is empty
+                content: |
+                    It looks like there is <strong>nobody in your group</strong> at the moment.
+                    So you can not receive requests yet.<br />
+                    May be you would like to first invite people to join you on 3D Follow:
+                cta: Invite people
+        column:
+            name: Request name
+            status: Status
+            cost: Total material cost
+        status:
+            pending: Pending
+            printed: Printed
+        no_data: No request received.
+    join:
+        meta_title: Join a group | 3D Follow
+        page_title: You are invited to join %username%'s group
+        section:
+            login:
+                content: If you already have an account, log in to join the group.
+                cta: Log in
+            register:
+                content: Else create an account in less than a minute to join the group.
+                cta: Register
+        flash:
+            warning: 'You are already part of %username%''s group.'
+            success: 'You are now a member of %username%''s group.'
+
+account:
+    index:
+        meta_title: Edit my account | 3D Follow
+        page_title: Edit my account
+        section:
+            profile: Account
+            password: Password
+        form:
+            username:
+                label: Username
+            isPrinter:
+                label: I have a 3D printer
+            oldPassword:
+                label: Old password
+            newPassword:
+                label: New password
+        flash:
+            success: Account updated

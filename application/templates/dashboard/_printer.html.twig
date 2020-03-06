@@ -6,7 +6,7 @@
                     <i class="fas fa-tape"></i>
                 </div>
                 <span class="display-3">{{ app.user.filaments|length }}</span>
-                <span>Filament(s)</span>
+                <span>{{ 'dashboard.index.stats.filaments.label'|transchoice(app.user.filaments|length) }}</span>
             </a>
         </div>
         <div class="col-md-3">
@@ -15,7 +15,7 @@
                     <i class="fas fa-print"></i>
                 </div>
                 <span class="display-3">{{ app.user.printObjects|length }}</span>
-                <span>Impression(s)</span>
+                <span>{{ 'dashboard.index.stats.print_objects.label'|transchoice(app.user.printObjects|length) }}</span>
             </a>
         </div>
         <div class="col-md-3">
@@ -24,7 +24,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <span class="display-3">{{ app.user.teamCreated.members|length }}</span>
-                <span>member(s)</span>
+                <span>{{ 'dashboard.index.stats.members.label'|transchoice(app.user.teamCreated.members|length) }}</span>
             </a>
         </div>
         <div class="col-md-3">
@@ -33,41 +33,34 @@
                     <i class="fas fa-envelope"></i>
                 </div>
                 <span class="display-3">{{ team_print_requests|length }}</span>
-                <span>pending request(s)</span>
+                <span>{{ 'dashboard.index.stats.pending_print_requests.label'|transchoice(team_print_requests|length) }}</span>
             </a>
         </div>
     </div>
 {% elseif app.user.filaments|length > 0 %}
     <div class="rounded border p-4 text-center">
-        <h2 class="mb-3">
-            Congratulations for adding your first filament!
-        </h2>
-        <p>
-            What about registering your <strong>first print</strong> too?<br/>
-            This will help you track <strong>how much filament it remains</strong> and also keep an history of all your prints.
-        </p>
-        <a href="{{ path('print_object_new') }}" class="btn btn-success">Register a print</a>
+        <h2 class="mb-3">{{ 'dashboard.index.help.no_print_object.title'|trans }}</h2>
+        <p>{{ 'dashboard.index.help.no_print_object.content'|trans|raw }}</p>
+        <a href="{{ path('print_object_new') }}" class="btn btn-success">{{ 'dashboard.index.help.no_print_object.cta'|trans }}</a>
     </div>
 {% else %}
     <div class="rounded border p-4 text-center">
-        <h2 class="mb-3">New on 3D Follow?</h2>
-        <p>
-            Start by registering your first filament.
-        </p>
-        <a href="{{ path('filament_new') }}" class="btn btn-success">Add my first filament</a>
+        <h2 class="mb-3">{{ 'dashboard.index.help.no_filament.title'|trans }}</h2>
+        <p>{{ 'dashboard.index.help.no_filament.content'|trans|raw }}</p>
+        <a href="{{ path('filament_new') }}" class="btn btn-success">{{ 'dashboard.index.help.no_filament.cta'|trans }}</a>
     </div>
 {% endif %}
 
 {% if team_print_requests|length > 0 %}
-    <h2 class="mt-5">Les dernières demandes reçues</h2>
+    <h2 class="mt-5">{{ 'dashboard.index.section.pending_print_requests.title'|trans }}</h2>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Utilisateur</th>
-                <th>Nom</th>
-                <th>Quantité</th>
-                <th>Actions</th>
+                <th>{{ 'common.user'|trans }}</th>
+                <th>{{ 'dashboard.index.section.pending_print_requests.column.name'|trans }}</th>
+                <th>{{ 'common.quantity'|trans }}</th>
+                <th>{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -77,18 +70,18 @@
                     <td>{{ print_request.name }}</td>
                     <td>{{ print_request.quantity }}</td>
                     <td>
-                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">Voir plus en détail</a>
+                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'dashboard.index.section.pending_print_requests.action.show'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">Votre liste en attente est vide.</td>
+                    <td colspan="4">{{ 'dashboard.index.section.pending_print_requests.no_data'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <div class="text-center">
-        <a href="{{ path('team_print_requests') }}" class="btn btn-primary">Voir toutes les demandes reçues</a>
+        <a href="{{ path('team_print_requests') }}" class="btn btn-primary">{{ 'dashboard.index.section.pending_print_requests.cta'|trans }}</a>
     </div>
 {% endif %}

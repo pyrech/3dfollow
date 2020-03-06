@@ -1,44 +1,39 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Mon groupe{% endblock %}
-{% block page_title %}Mon groupe{% endblock %}
+{% block title %}{{ 'team.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'team.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     <div class="rounded border p-4 text-center">
-        <h2 class="mb-3">{{ team.members|length < 1 and not team.joinToken ? 'Feeling alone?' : 'Lien d\'invitation' }}</h2>
-
         <form method="post" action="{{ path('team_generate_join_token') }}">
-            {% if team.joinToken %}
-                <p>Partager ce lien avec d'autres personnes pour les inviter à rejoindre votre groupe.</p>
+            {% if not team.joinToken %}
+                <h2 class="mb-3">{{ 'team.index.help.no_join_token.title'|trans }}</h2>
+                <p>{{ 'team.index.help.no_join_token.content'|trans|raw }}</p>
+                <button type="submit" class="btn btn-success">{{ 'team.index.help.no_join_token.cta'|trans }}</button>
+            {% else %}
+                <h2 class="mb-3">{{ 'team.index.help.has_join_token.title'|trans }}</h2>
+                <p>{{ 'team.index.help.has_join_token.content'|trans|raw }}</p>
 
                 <div class="mb-3">
                     <input class="w-100" readonly value="{{ url('team_join', {token: team.joinToken}) }}" />
                 </div>
 
                 <div class="text-right">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Regénérer mon lien d'invitation</button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ 'team.index.help.has_join_token.cta'|trans }}</button>
                 </div>
-            {% else %}
-                <p>
-                    Invite your family, friends or customer to join your team.<br />
-                    That will allow them to send you their print wishes right onto the application.<br />
-                </p>
-
-                <button type="submit" class="btn btn-success">Créer mon lien d'invitation</button>
             {% endif %}
-
             <input type="hidden" name="token" value="{{ csrf_token('team_generate_join_token') }}" />
         </form>
     </div>
 
     {% if team.joinToken  %}
-        <h2 class="mt-5 mb-2">Les membres de mon groupe</h2>
+        <h2 class="mt-5 mb-2">{{ 'team.index.subtitle'|trans }}</h2>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>Utilisateur</th>
-                    <th>Nombre de demandes</th>
+                    <th>{{ 'common.user'|trans }}</th>
+                    <th>{{ 'team.index.column.request_count'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,12 +44,14 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="2">Aucun membre dans votre groupe</td>
+                        <td colspan="2">{{ 'team.index.no_data'|trans }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <a class="btn btn-primary" href="{{ path('team_print_requests') }}">{{ 'team.index.action.see_all_requests'|trans }}</a>
     {% endif %}
 
-    <a href="{{ path('dashboard_index') }}">Retourner au dashboard</a>
+    <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
 {% endblock %}

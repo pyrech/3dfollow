@@ -1,10 +1,10 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Nouvelle impression souhaitée{% endblock %}
-{% block page_title %}Ajouter nouvel élément{% endblock %}
+{% block title %}{{ 'print_request.new.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'print_request.new.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     {{ include('print_request/_form.html.twig') }}
 
-    <a href="{{ path('print_request_index') }}">Retourner à la liste</a>
+    <a href="{{ path('print_request_index') }}">{{ 'common.action.back_to_list'|trans }}</a>
 {% endblock %}

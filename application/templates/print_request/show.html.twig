@@ -1,20 +1,20 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Consulter l'impression "{{ print_request.name }}" de {{ print_request.user.username }}{% endblock %}
-{% block page_title %}Consulter l'impression "{{ print_request.name }}" de {{ print_request.user.username }}{% endblock %}
+{% block title %}{{ 'print_request.show.meta_title'|trans({'%name%': print_request.name, '%username%': print_request.user.username}) }}{% endblock %}
+{% block page_title %}{{ 'print_request.show.page_title'|trans({'%name%': print_request.name, '%username%': print_request.user.username}) }}{% endblock %}
 
 {% block page_body %}
     <ul>
-        <li>Utilisateur : {{ print_request.user.username }}</li>
-        <li>Nom : {{ print_request.name }}</li>
+        <li>User : {{ print_request.user.username }}</li>
+        <li>Name : {{ print_request.name }}</li>
         <li>Url : <a href="{{ print_request.link }}">{{ print_request.link }}</a></li>
         <li>
-            Commentaire :
+            Comment :
             <p>{{ print_request.comment|nl2br|default('-') }}</p>
         </li>
-        <li>Quantité : {{ print_request.quantity }}</li>
+        <li>Quantity : {{ print_request.quantity }}</li>
         <li>
-            Coût :
+            Cost :
             {% set cost = print_request.getTotalCost() %}
             {% if cost %}
                 {{ cost|number_format(2) }} €
@@ -28,11 +28,11 @@
             </span>
         </li>
         <li>
-            Fichiers impressions :
+            Prints :
             {% if print_request.printObjects %}
                 <ul>
                     {% for print_object in print_request.printObjects %}
-                        <li><a href="{{ path('print_object_edit', {id: print_object.id}) }}">Modifier l'impression "{{ print_object.name ?: print_object.id }}"</a></li>
+                        <li><a href="{{ path('print_object_edit', {id: print_object.id}) }}">Edit print "{{ print_object.name ?: print_object.id }}"</a></li>
                     {% endfor %}
                 </ul>
             {% else %}
@@ -41,5 +41,5 @@
         </li>
     </ul>
 
-    <a href="{{ path('team_print_requests') }}">Retourner à la liste</a>
+    <a href="{{ path('team_print_requests') }}">{{ 'common.action.back_to_list'|trans }}</a>
 {% endblock %}

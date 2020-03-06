@@ -1,10 +1,10 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Ajouter un nouveau filament{% endblock %}
-{% block page_title %}Ajouter un nouveau filament{% endblock %}
+{% block title %}{{ 'filament.new.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'filament.new.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     {{ include('filament/_form.html.twig') }}
 
-    <a href="{{ path('filament_index') }}">Retourner à la liste</a>
+    <a href="{{ path('filament_index') }}">{{ 'common.action.back_to_list'|trans }}</a>
 {% endblock %}

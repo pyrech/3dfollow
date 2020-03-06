@@ -1,12 +1,12 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Modifier une impression{% endblock %}
-{% block page_title %}Modifier l'impression{% endblock %}
+{% block title %}{{ 'print_object.edit.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'print_object.edit.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
-    {{ include('print_object/_form.html.twig', {'button_label': 'Modifier'}) }}
+    {{ include('print_object/_form.html.twig', {'button_label': 'common.action.edit'|trans}) }}
 
-    <a href="{{ path('print_object_index') }}">Retourner à la liste</a>
+    <a href="{{ path('print_object_index') }}">{{ 'common.action.back_to_list'|trans }}</a>
 
     {{ include('print_object/_delete_form.html.twig') }}
 {% endblock %}

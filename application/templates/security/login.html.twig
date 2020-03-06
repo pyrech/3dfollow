@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ 'security.login.meta_title'|trans }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-12">
-                <h1 class="mt-5 text-center">
-                    Connexion
-                </h1>
+                <h1 class="mt-5 text-center">{{ 'security.login.page_title'|trans }}</h1>
                 <p class="mt-5 text-center text-muted">
-                    Je n'ai pas encore de compte <a href="{{ path('registration_register') }}" class="btn btn-outline-primary">Créer mon compte</a>
+                    {{ 'security.login.no_account_yet'|trans }}
+                    <a href="{{ path('registration_register') }}" class="btn btn-outline-primary">{{ 'security.login.register'|trans }}</a>
                 </p>
             </div>
             <div class="col-md-6 col-sm-12">
@@ -21,11 +20,11 @@
                         {% endif %}
 
                         <div class="form-group">
-                            <label for="inputUsername">Username</label>
+                            <label for="inputUsername">{{ 'security.login.form.username.label'|trans }}</label>
                             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required autofocus>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword">Password</label>
+                            <label for="inputPassword">{{ 'security.login.form.password.label'|trans }}</label>
                             <input type="password" name="password" id="inputPassword" class="form-control" required>
                         </div>
 
@@ -34,13 +33,11 @@
                         >
                         <div class="checkbox mb-3">
                             <label>
-                                <input type="checkbox" name="_remember_me"> Remember me
+                                <input type="checkbox" name="_remember_me"> {{ 'security.login.form.remember_me.label'|trans }}
                             </label>
                         </div>
 
-                        <button class="btn btn-lg btn-primary" type="submit">
-                            Sign in
-                        </button>
+                        <button class="btn btn-lg btn-primary" type="submit">{{ 'security.login.form.submit'|trans }}</button>
                     </form>
                 </div>
             </div>

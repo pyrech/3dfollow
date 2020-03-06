@@ -1,0 +1,9 @@
+validation:
+    username_existing: Ce nom d'utilisateur est déjà utilisé
+    password_required: Veuillez saisir un mot de passe
+    password_length: 'Votre mot de passe doit contenir au moins {{ limit }} caractères'
+    accept_terms: Vous devez accepter nos conditions d'utilisations
+    invalid_gcode: La quantité de filament utilisé n'a pas pu être déterminée pour cette impression. Veuillez soit uploader un fichier .gcode valide, soit saisir manuellement les poids, longueur et coût de filament utilisé.
+    value_required_no_gcode: Ce champ ne doit pas être vide si aucun .gcode n'est uploadé
+    old_password_required: Veuillez saisir votre mot de passe actuel
+    old_password_wrong: Le mot de passe est incorrect

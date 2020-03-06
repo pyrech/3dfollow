@@ -1,17 +1,17 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Mes filaments{% endblock %}
-{% block page_title %}Mes filaments{% endblock %}
+{% block title %}{{ 'filament.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'filament.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Poids de la bobine</th>
-                <th>Prix de la bobine</th>
-                <th>Utilisation</th>
-                <th>Actions</th>
+                <th>{{ 'filament.index.column.name'|trans }}</th>
+                <th>{{ 'filament.index.column.weight'|trans }}</th>
+                <th>{{ 'filament.index.column.price'|trans }}</th>
+                <th>{{ 'filament.index.column.usage'|trans }}</th>
+                <th>{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -22,23 +22,23 @@
                     <td>{{ filament.weight|number_format }} g</td>
                     <td>{{ filament.price|number_format(2) }} €</td>
                     <td>
-                        <div class="progress" title="{{ usagePercentage }}% used - {{ ((100 - usagePercentage) * 0.01 * filament.weight)|number_format() }}g remaining">
+                        <div class="progress" title="{{ 'filament.index.usage'|trans({'%weightPercentage%': usagePercentage, '%weightRemaining%': ((100 - usagePercentage) * 0.01 * filament.weight)|number_format}) }}">
                             <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </td>
                     <td>
-                        <a href="{{ path('filament_edit', {'id': filament.id}) }}">Modifier</a>
+                        <a href="{{ path('filament_edit', {'id': filament.id}) }}">{{ 'common.action.edit'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">Aucun filament enregistré</td>
+                    <td colspan="4">{{ 'filament.index.no_data'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-success" href="{{ path('filament_new') }}">Ajouter un nouveau filament</a>
+    <a class="btn btn-success" href="{{ path('filament_new') }}">{{ 'filament.index.action.add_filament'|trans }}</a>
 
-    <a href="{{ path('dashboard_index') }}">Retourner au dashboard</a>
+    <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
 {% endblock %}

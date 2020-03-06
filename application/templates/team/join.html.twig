@@ -1,21 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'default_page.html.twig' %}
 
-{% block title %}Join{% endblock %}
+{% block title %}{{ 'team.join.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'team.join.page_title'|trans({'%username%': team.creator.username})|raw }}{% endblock %}
 
-{% block body %}
-    <div class="container">
-        <h1 class="mt-5">
-            Rejoindre un groupe
-        </h1>
-        <p>
-            Vous êtes invité à rejoindre le groupe de {{ team.creator.username }}.
-        </p>
-        <p>
-            Si vous avez déjà un compte, connectez-vous pour rejoindre le groupe : <a href="{{ path('security_login') }}" class="btn btn-outline-primary">Me connecter</a>.
-        </p>
-        <p>
-            Sinon, créer votre compte en un instant afin de rejoindre le groupe : <a href="{{ path('registration_register') }}" class="btn btn-outline-primary">Créer mon compte</a>.
-        </p>
+{% block page_body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rounded border p-4 text-center h-100">
+                <p>{{ 'team.join.section.login.content'|trans|raw }}</p>
+                <a href="{{ path('security_login') }}" class="btn btn-outline-primary">{{ 'team.join.section.login.cta'|trans }}</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="rounded border p-4 text-center h-100">
+                <p>{{ 'team.join.section.register.content'|trans|raw }}</p>
+                <a href="{{ path('registration_register') }}" class="btn btn-primary">{{ 'team.join.section.register.cta'|trans }}</a>
+            </div>
         </div>
     </div>
 {% endblock %}

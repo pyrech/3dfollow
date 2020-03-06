@@ -1,12 +1,10 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}Mon dashboard{% endblock %}
-{% block page_title %}Mon dashboard{% endblock %}
+{% block title %}{{ 'dashboard.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'dashboard.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
-    <p>
-        Welcome {{ app.user.username }}
-    </p>
+    <p>{{ 'dashboard.index.welcome'|trans({'%username%': app.user.username}) }}</p>
 
     {% if is_granted('ROLE_PRINTER') %}
         {{ include('dashboard/_printer.html.twig') }}
@@ -18,16 +16,10 @@
 
     {% if not is_granted('ROLE_PRINTER') and not is_granted('ROLE_TEAM_MEMBER') %}
         <div class="rounded border p-4">
-            <h2 class="mb-3">New on 3D Follow?</h2>
-            <p>
-                Vous n'êtes actuellement membre d'aucun groupe.<br />
-                Demander d'abord à vous faire inviter à un groupe existant pour pouvoir exploiter au mieux 3D Follow.<br />
-                <br />
-                Si vous possédez vous-même une imprimante 3D, pensez à cocher la case correspondante dans votre profil.<br />
-                Cela vous permettra d'accéder à de nouvelles fonctionnalités.
-            </p>
+            <h2 class="mb-3">{{ 'dashboard.index.help.no_role.title'|trans }}</h2>
+            <p>{{ 'dashboard.index.help.no_role.content'|trans|raw  }}</p>
             <div class="text-center">
-                <a class="btn btn-outline-primary" href="{{ path('account_index') }}">Modifier mon profil</a>
+                <a class="btn btn-outline-primary" href="{{ path('account_index') }}">{{ 'dashboard.index.help.no_role.cta'|trans }}</a>
             </div>
         </div>
     {% endif %}

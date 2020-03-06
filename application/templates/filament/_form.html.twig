@@ -1,6 +1,6 @@
 {% macro suggestion(form, suggestions) %}
     <div class="mb-4">
-        <span>Suggestion :</span>
+        <span>{{ 'filament.form.suggestion'|trans }}</span>
         {% for suggestion,value in suggestions %}
             <button type="button" class="btn btn-dark btn-sm" onclick="$('#{{ form.vars.id }}').val({{ value }})">{{ suggestion }}</button>
         {% endfor %}
@@ -15,11 +15,11 @@
     <div class="row mt-3 mb-3">
         <div class="col-md-6">
             <div class="p-3 border rounded h-100">
-                <p class="text-center font-weight-bold">Bobine</p>
+                <p class="text-center font-weight-bold">{{ 'filament.form.section.spool'|trans }}</p>
                 {{ form_row(form.weight) }}
                 {{ helper.suggestion(form.weight, {
-                    'Bobine 750g': 700,
-                    'Bobine 1kg': 1000,
+                    '750g': 700,
+                    '1kg': 1000,
                 }) }}
                 {{ form_row(form.weightUsed) }}
                 {{ form_row(form.price) }}
@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-6">
             <div class="p-3 border rounded h-100">
-                <p class="text-center font-weight-bold">Caractéristique du filament</p>
+                <p class="text-center font-weight-bold">{{ 'filament.form.section.filament'|trans }}</p>
                 {{ form_row(form.density) }}
                 {{ helper.suggestion(form.density, {
                     'PLA': 1.24,
@@ -44,5 +44,5 @@
         </div>
     </div>
 
-    <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+    <button class="btn btn-success">{{ button_label|default('common.action.save'|trans) }}</button>
 {{ form_end(form) }}

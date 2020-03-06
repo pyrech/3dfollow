@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/account", name="account_")
@@ -26,6 +27,7 @@ class AccountController extends AbstractController
     public function index(
         UserPasswordEncoderInterface $passwordEncoder,
         TokenRefresher $tokenRefresher,
+        TranslatorInterface $translator,
         Request $request
     ): Response {
         /** @var User $user */
@@ -46,7 +48,7 @@ class AccountController extends AbstractController
                         )
                     );
                 } else {
-                    $form->get('oldPassword')->addError(new FormError('Veuillez saisir votre mot de passe actuel'));
+                    $form->get('oldPassword')->addError(new FormError($translator->trans('validation.old_password_wrong', [], 'validators')));
                     $isValid = false;
                 }
             }
@@ -59,7 +61,7 @@ class AccountController extends AbstractController
 
                 $this->getDoctrine()->getManager()->flush();
 
-                $this->addFlash('success', 'Compte mis à jour');
+                $this->addFlash('success', 'account.index.flash.success');
 
                 $tokenRefresher->refresh($user, $request);
 

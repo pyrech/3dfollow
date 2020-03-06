@@ -19,6 +19,7 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/proxy-manager-bridge": "5.0.*",
         "symfony/security-bundle": "5.0.*",
+        "symfony/translation": "5.0.*",
         "symfony/yaml": "5.0.*",
         "vich/uploader-bundle": "^1.13"
     },

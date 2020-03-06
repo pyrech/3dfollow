@@ -1,21 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'registration.register.meta_title'|trans }}{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-12">
-                <h1 class="mt-5 text-center">
-                    Créer mon compte
-                </h1>
-                <p class="mt-5 text-center">
-                    Vous <strong>possèdez une imprimante 3D</strong> et souhaitez <strong>profiter de toutes les fonctionnalités</strong> de 3D Follow ?<br />
-                    Vous souhaitez <strong>rejoindre le groupe</strong> d'une personne possédant une imprimante ?<br />
-                    Créer votre compte, c'est <strong>gratuit</strong> et ça prend <strong>moins d'une minute</strong>.
-                </p>
+                <h1 class="mt-5 text-center">{{ 'registration.register.page_title'|trans }}</h1>
+                <p class="mt-5 text-center">{{ 'registration.register.content'|trans|raw }}</p>
                 <p class="mt-5 text-center text-muted">
-                    J'ai déjà un compte. <a href="{{ path('security_login') }}" class="btn btn-outline-primary">Me connecter</a>
+                    {{ 'registration.register.already_has_account'|trans }}
+                    <a href="{{ path('security_login') }}" class="btn btn-outline-primary">{{ 'registration.register.login'|trans }}</a>
                 </p>
             </div>
             <div class="col-md-6 col-sm-12">
@@ -26,7 +21,7 @@
                     {{ form_row(registrationForm.isPrinter) }}
                     {{ form_row(registrationForm.agreeTerms) }}
 
-                    <button class="btn btn-primary">Register</button>
+                    <button class="btn btn-primary">{{ 'registration.register.form.submit'|trans }}</button>
                     {{ form_end(registrationForm) }}
                 </div>
             </div>

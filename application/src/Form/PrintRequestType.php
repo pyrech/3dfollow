@@ -16,23 +16,23 @@ class PrintRequestType extends AbstractType
 
         $builder
             ->add('name', null, [
-                'label' => 'Nom de l\'objet',
+                'label' => 'print_request.form.name.label',
                 'disabled' => $isPrinted,
             ])
             ->add('link', null, [
-                'label' => 'Lien du modèle (sur www.thingiverse.com)',
+                'label' => 'print_request.form.link.label',
                 'attr' => [
-                    'placeholder' => 'https://www.thingiverse.com/thing:XXXXXXX',
+                    'placeholder' => 'print_request.form.link.placeholder',
                 ],
                 'disabled' => $isPrinted,
             ])
             ->add('quantity', IntegerType::class, [
-                'label' => 'Quantité',
+                'label' => 'print_request.form.quantity.label',
                 'disabled' => $isPrinted,
             ])
             ->add('comment', null, [
-                'label' => 'Commentaire (optionnel)',
-                'help' => 'Autre filament, dimensions à changer, etc.',
+                'label' => 'print_request.form.comment.label',
+                'help' => 'print_request.form.comment.help',
                 'required' => false,
             ])
         ;
