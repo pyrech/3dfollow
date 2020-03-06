@@ -1,7 +1,7 @@
 {% if app.user.filaments|length > 0 and app.user.printObjects|length > 0 %}
     <div class="row">
-        <div class="col-md-3">
-            <a href="{{ path('filament_index') }}"class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
+        <div class="col-md-3 mt-4">
+            <a href="{{ path('filament_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-tape"></i>
                 </div>
@@ -9,7 +9,7 @@
                 <span>{{ 'dashboard.index.stats.filaments.label'|transchoice(app.user.filaments|length) }}</span>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <a href="{{ path('print_object_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-print"></i>
@@ -18,7 +18,7 @@
                 <span>{{ 'dashboard.index.stats.print_objects.label'|transchoice(app.user.printObjects|length) }}</span>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <a href="{{ path('team_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-users"></i>
@@ -27,7 +27,7 @@
                 <span>{{ 'dashboard.index.stats.members.label'|transchoice(app.user.teamCreated.members|length) }}</span>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 mt-4">
             <a href="{{ path('team_print_requests') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-envelope"></i>

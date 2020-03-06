@@ -12,8 +12,8 @@
 {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
     {{ form_row(form.name) }}
 
-    <div class="row mt-3 mb-3">
-        <div class="col-md-6">
+    <div class="row mb-3">
+        <div class="col-md-6 mt-4">
             <div class="p-3 border rounded h-100">
                 <p class="text-center font-weight-bold">{{ 'filament.form.section.spool'|trans }}</p>
                 {{ form_row(form.weight) }}
@@ -25,7 +25,7 @@
                 {{ form_row(form.price) }}
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-4">
             <div class="p-3 border rounded h-100">
                 <p class="text-center font-weight-bold">{{ 'filament.form.section.filament'|trans }}</p>
                 {{ form_row(form.density) }}
