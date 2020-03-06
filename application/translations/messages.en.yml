@@ -69,6 +69,17 @@ home:
                     name: Team requests
                     description: |
                         Let your <strong>family / friends / customers</strong> send you their <strong>print wishes</strong>. Invite them to join your team.
+            stock:
+                title: Look at your filament stock
+                content: |
+                    It only takes a glance to see all your spool's state!<br />
+                    Which spool do you need to rebuy soon?
+                    Which filament is not used a lot?
+            upload:
+                title: Simply upload your .gcode
+                content: |
+                    No boring data to fill. You just need to upload your .gcode files.
+                    We compute for you the quantity of filament used and the estimated cost of the print.
             try:
                 title: Try it, it's free!
                 cta: Go to the app

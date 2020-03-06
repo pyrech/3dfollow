@@ -69,6 +69,17 @@ home:
                     name: Demande d'impression
                     description: |
                         Inviter <strong>votre famille / vos amis / vos clients</strong> à rejoindre votre groupe pour leur permettre de vous envoyer <strong>les modèles qu'ils souhaitent faire imprimer</strong>.
+            stock:
+                title: Consultez votre stock de filament
+                content: |
+                    En coup d'œil, vous voyez l'état de vos différentes bobines.<br />
+                    Quelle bobine vous faudra-t-il bientôt racheter ?<br />
+                    Quel filament est le moins utilisé ?
+            upload:
+                title: Uploadez directement vos .gcode
+                content: |
+                    Aucune donnée fastidieuse à saisir, il vous suffit d'uploader vos fichiers .gcode.
+                    On calcule pour vous la quantité de filament utilisé et le prix estimé de l'impression.
             try:
                 title: Essayer l'application, elle est gratuite !
                 cta: Aller à l'application

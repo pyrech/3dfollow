@@ -19,7 +19,7 @@
                 {% set usagePercentage = filament.computeUsagePercentage %}
                 <tr>
                     <td>{{ filament.name }}</td>
-                    <td>{{ filament.weight|number_format }} g</td>
+                    <td>{{ filament.weight|number_format(0) }} g</td>
                     <td>{{ filament.price|number_format(2) }} €</td>
                     <td>
                         <div class="progress" title="{{ 'filament.index.usage'|trans({'%weightPercentage%': usagePercentage, '%weightRemaining%': ((100 - usagePercentage) * 0.01 * filament.weight)|number_format}) }}">
