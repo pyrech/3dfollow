@@ -16,12 +16,14 @@ easy_admin:
                     - { property: username }
                     - { property: isPrinter }
                     - { property: isAdmin }
+                    - { property: createdAt }
                     - { property: teams.count, label: "Teams" }
             form:
                 fields:
                     - { property: username }
                     - { property: isPrinter }
                     - { property: isAdmin }
+                    - { property: createdAt, type_options: {disabled: true} }
                     - { property: teams }
         Team:
             class: App\Entity\Team
