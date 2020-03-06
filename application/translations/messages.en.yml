@@ -20,6 +20,7 @@ nav:
     register: Register
 
 footer:
+    built_with_love: 'Built with <i class="fa fa-heart"></i> by <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
     terms: Terms of Service
     privacy: Privacy Policy
 

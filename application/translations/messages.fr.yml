@@ -20,6 +20,7 @@ nav:
     register: Créer un compte
 
 footer:
+    built_with_love: 'Developpé avec <i class="fa fa-heart"></i> par <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
     terms: Conditions d'utilisation
     privacy: Politique de protection des données
 

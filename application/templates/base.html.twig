@@ -110,7 +110,8 @@
         <footer class="footer mt-5 py-3">
             <div class="container">
                 <p class="m-0 text-center text-black-50">Copyright &copy; 3D Follow {{ date()|date('Y') }}</p>
-                <p class="mt-3 text-muted text-center">
+                <p class="my-2 text-center text-black-50">{{ 'footer.built_with_love'|trans|raw }}</p>
+                <p class="text-muted text-center">
                     <a class="text-muted" href="{{ path('home_terms') }}">{{ 'footer.terms'|trans }}</a>
                     {{ 'common.and'|trans }}
                     <a class="text-muted" href="{{ path('home_privacy') }}">{{ 'footer.privacy'|trans }}</a>
