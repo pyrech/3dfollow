@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\AppLoginFormAuthenticator;
 use App\Security\TokenRefresher;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/account", name="account_")
+ * @IsGranted("ROLE_USER")
  */
 class AccountController extends AbstractController
 {
