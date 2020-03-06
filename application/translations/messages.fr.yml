@@ -19,6 +19,10 @@ nav:
     login: Se connecter
     register: Créer un compte
 
+footer:
+    terms: Conditions d'utilisation
+    privacy: Politique de protection des données
+
 common:
     close: Fermer
     actions: Actions
@@ -26,6 +30,7 @@ common:
     printer: Imprimeur
     user: Utlisateur
     or: ou
+    and: et
     yes: Oui
     no: Non
     csrf_token_error: Token CSRF invalide
@@ -66,6 +71,12 @@ home:
             try:
                 title: Essayer l'application, elle est gratuite !
                 cta: Aller à l'application
+    terms:
+        meta_title: Conditions d'utilisation | 3D Follow
+        page_title: Conditions d'utilisation
+    privacy:
+        meta_title: Protection des données | 3D Follow
+        page_title: Politique de protection des données
 
 security:
     login:
@@ -100,7 +111,7 @@ registration:
             isPrinter:
                 label: Je possède une imprimante 3D
             agreeTerms:
-                label: J'accepte les conditions d'utilisation
+                label: J'accepte les Conditions d'utilisation
             submit: Créer mon compte
 
 dashboard:

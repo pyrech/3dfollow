@@ -19,6 +19,10 @@ nav:
     login: Log in
     register: Register
 
+footer:
+    terms: Terms of Service
+    privacy: Privacy Policy
+
 common:
     close: Close
     actions: Actions
@@ -26,6 +30,7 @@ common:
     printer: Printer
     user: User
     or: or
+    and: and
     yes: Yes
     no: No
     csrf_token_error: Invalid CSRF token
@@ -66,6 +71,12 @@ home:
             try:
                 title: Try it, it's free!
                 cta: Go to the app
+    terms:
+        meta_title: Terms of Service | 3D Follow
+        page_title: Terms of Service
+    privacy:
+        meta_title: Privacy Policy | 3D Follow
+        page_title: Privacy Policy
 
 security:
     login:
@@ -100,7 +111,7 @@ registration:
             isPrinter:
                 label: I have a 3D printer
             agreeTerms:
-                label: I accept the terms of use
+                label: I accept the Terms of Service
             submit: Register
 
 dashboard:
