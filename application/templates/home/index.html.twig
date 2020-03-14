@@ -70,12 +70,15 @@
         <div style="height: 1em;"></div>
 
         <div class="row my-5 justify-content-center align-items-center">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <img src="{{ asset('images/filament-stock.jpg') }}" class="border rounded img-fluid" alt="{{ 'home.index.section.stock.title'|trans }}" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="px-3 py-5 text-center h-100">
-                    <h2>{{ 'home.index.section.stock.title'|trans }}</h2>
+                    <h2>
+                        <i class="fas fa-tape"></i>
+                        {{ 'home.index.section.stock.title'|trans }}
+                    </h2>
                     <p class="mt-3">
                         {{ 'home.index.section.stock.content'|trans|raw }}
                     </p>
@@ -86,24 +89,49 @@
         <div style="height: 1em;"></div>
 
         <div class="row my-5 justify-content-center align-items-center">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="px-3 py-5 text-center h-100">
-                    <h2>{{ 'home.index.section.upload.title'|trans }}</h2>
+                    <h2>
+                        <i class="fas fa-file-upload"></i>
+                        {{ 'home.index.section.upload.title'|trans }}
+                    </h2>
                     <p class="mt-3">
                         {{ 'home.index.section.upload.content'|trans|raw }}
                     </p>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <img src="{{ asset('images/gcode-upload.jpg') }}" class="border rounded img-fluid" alt="{{ 'home.index.section.upload.title'|trans }}" />
             </div>
         </div>
 
         <div style="height: 1em;"></div>
 
-        <h2 class="text-center mt-5">{{ 'home.index.section.try.title'|trans }}</h2>
+        <div class="row my-5 justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="px-3 py-5 text-center h-100">
+                    <h2>
+                        <i class="fas fa-user-secret"></i>
+                        {{ 'home.index.section.privacy.title'|trans }}</h2>
+                    <p class="mt-3">
+                        {{ 'home.index.section.privacy.content'|trans|raw }}
+                    </p>
+                </div>
+            </div>
+        </div>
 
-        <div class="text-center mt-3 mb-5">
+        <div style="height: 1em;"></div>
+
+        <h2 class="text-center mt-5">
+            <i class="far fa-grin-hearts"></i>
+            {{ 'home.index.section.try.title'|trans }}
+        </h2>
+
+        <p class="text-center mt-3">
+            {{ 'home.index.section.try.content'|trans|raw }}
+        </p>
+
+        <div class="text-center mt-5 mb-5">
             <a class="btn btn-primary" href="{{ path('dashboard_index') }}">{{ 'home.index.section.try.cta'|trans }}</a>
         </div>
     </div>

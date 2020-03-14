@@ -80,8 +80,25 @@ home:
                 content: |
                     No boring data to fill. You just need to upload your .gcode files.
                     We compute for you the quantity of filament used and the estimated cost of the print.
+            privacy:
+                title: Your personal informations remain private
+                content: |
+                    We <strong>do not need your personal informations</strong>.<br />
+                    <strong>No email</strong> required.<br />
+                    <strong>No phone number</strong>.<br />
+                    No account to validate by clicking on a link.<br />
+                    To create an account on 3D Follow, you only need to fill a username and password and you can <strong>immediately access the application</strong>.<br />
+                    It simple, fast and it <strong>respects your privacy</strong>.
             try:
-                title: Try it, it's free!
+                title: It's free !
+                content: |
+                    This application is <strong>completely free</strong>.<br />
+                    <strong>No ad</strong> displayed.<br />
+                    We <strong>do not collect any personal information</strong> other than the one mandatory for login (username and password).<br />
+                    We <strong>do not use web analytic trackers</strong>.<br />
+                    We <strong>do not send SPAM</strong> (we do not even ask your email).<br />
+                    <br />
+                    You can use 3D Follow without any compromise on your privacy.
                 cta: Go to the app
     terms:
         meta_title: Terms of Service | 3D Follow

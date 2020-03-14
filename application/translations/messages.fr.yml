@@ -80,9 +80,26 @@ home:
                 content: |
                     Aucune donnée fastidieuse à saisir, il vous suffit d'uploader vos fichiers .gcode.
                     On calcule pour vous la quantité de filament utilisé et le prix estimé de l'impression.
+            privacy:
+                title: Respect de vos données personnelles
+                content: |
+                    Nous n'avons <strong>pas besoin de vos informations personnelles</strong>.<br />
+                    <strong>Aucun email</strong> n'est requis.<br />
+                    <strong>Pas de numéro de téléphone</strong>.<br />
+                    Pas de compte à valider en cliquant sur un lien.<br />
+                    Pour créer un compte sur 3D Follow, il vous suffit de saisir un nom d'utilisateur et un mot de passe et vous avez <strong>immédiatement accès à l'application</strong>.<br />
+                    C'est simple, rapide et ça <strong>respecte votre vie privée</strong>.
             try:
-                title: Essayer l'application, elle est gratuite !
-                cta: Aller à l'application
+                title: C'est gratuit !
+                content: |
+                    Cette application est <strong>complètement gratuite</strong>.<br />
+                    <strong>Aucune pub</strong> n'est affichée.<br />
+                    Nous ne collectons <strong>aucune donnée personnelle</strong> autre que les identifiants nécessaires à la connexion (nom d'utilisateur et mot de passe).<br />
+                    Nous n'utilisons <strong>pas de trackers analytiques</strong>.<br />
+                    Nous n'envoyons <strong>pas de SPAM</strong> (nous ne demandons même pas votre email).<br />
+                    <br />
+                    Pour simplifier, vous pouvez utiliser 3D Follow sans aucun compromis sur la confidentialité de vos données.
+                cta: Aller sur l'application
     terms:
         meta_title: Conditions d'utilisation | 3D Follow
         page_title: Conditions d'utilisation
