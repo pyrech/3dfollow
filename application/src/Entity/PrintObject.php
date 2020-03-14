@@ -113,6 +113,11 @@ class PrintObject
         $this->gCode = new EmbeddedFile();
     }
 
+    public function __toString()
+    {
+        return $this->name ?: 'New print';
+    }
+
     public function getId(): ?int
     {
         return $this->id;
