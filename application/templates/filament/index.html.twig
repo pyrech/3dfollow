@@ -9,30 +9,40 @@
             <tr>
                 <th>{{ 'filament.index.column.name'|trans }}</th>
                 <th>{{ 'filament.index.column.weight'|trans }}</th>
-                <th>{{ 'filament.index.column.price'|trans }}</th>
                 <th>{{ 'filament.index.column.usage'|trans }}</th>
-                <th>{{ 'common.actions'|trans }}</th>
+                <th class="text-right">{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
             {% for filament in filaments %}
                 {% set usagePercentage = filament.computeUsagePercentage %}
+                {% set weightRemaining = ((100 - usagePercentage) * 0.01 * filament.weight) %}
                 <tr>
                     <td>{{ filament.name }}</td>
                     <td>{{ filament.weight|number_format(0) }} g</td>
-                    <td>{{ filament.price|number_format(2) }} €</td>
                     <td>
-                        <div class="progress" title="{{ 'filament.index.usage'|trans({'%weightPercentage%': usagePercentage, '%weightRemaining%': ((100 - usagePercentage) * 0.01 * filament.weight)|number_format}) }}">
-                            <div class="progress-bar bg-{{ usagePercentage > 80 ? 'danger' : usagePercentage > 50 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% if usagePercentage == 0 %}
+                                    {{ 'filament.index.full'|trans }}
+                                {% else %}
+                                    {{ 'filament.index.usage'|trans({'%weightPercentage%': usagePercentage|number_format(0), '%weightRemaining%': weightRemaining|number_format(0)}) }}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <div class="progress" title="{{ usagePercentage|number_format(0) }}%">
+                                    <div class="progress-bar bg-{{ usagePercentage > 90 ? 'danger' : usagePercentage > 75 ? 'warning' : 'success' }}" role="progressbar" style="width: {{ usagePercentage }}%" aria-valuenow="{{ usagePercentage }}" aria-valuemin="0" aria-valuemax="100">{{ usagePercentage|number_format(0) }}%</div>
+                                </div>
+                            </div>
                         </div>
                     </td>
-                    <td>
-                        <a href="{{ path('filament_edit', {'id': filament.id}) }}">{{ 'common.action.edit'|trans }}</a>
+                    <td class="text-right">
+                        <a href="{{ path('filament_edit', {'id': filament.id}) }}" class="btn btn-info">{{ 'common.action.edit'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="4">{{ 'filament.index.no_data'|trans }}</td>
+                    <td colspan="5">{{ 'filament.index.no_data'|trans }}</td>
                 </tr>
             {% endfor %}
         </tbody>

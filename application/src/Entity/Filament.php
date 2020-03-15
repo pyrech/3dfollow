@@ -220,7 +220,7 @@ class Filament
         return $this->price * $weight / $this->weight;
     }
 
-    public function computeUsagePercentage(): int
+    public function computeUsagePercentage(): float
     {
         $usedWeight = $this->weightUsed;
 

@@ -1,3 +1,4 @@
+{% set hasHeader =  app.request.attributes.get('_route') == 'home_index' %}
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -10,28 +11,30 @@
         <meta property="og:title" content="{{ block('title')|e('html_attr') }}" />
         <meta property="og:description" content="{{ block('metaDescription')|e('html_attr') }}" />
         <meta property="og:type" content="website" />
+        <meta property="og:image" content="/images/header.jpg" />
         <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
         <link rel="alternate" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'en'})) }}" hreflang="en" />
         <link rel="alternate" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'fr'})) }}" hreflang="fr" />
         {% block stylesheets %}
             <!-- Latest compiled and minified CSS -->
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-            <link href="/css/app.css" rel="stylesheet">
-            <link href="/css/fontawesome.min.css" rel="stylesheet">
+            <link href="{{ asset('css/fonts.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet" type="text/css">
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
         {% endblock %}
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <body class="{{ hasHeader ? 'has-header' }}">
+        <nav id="navbar-main" class="navbar navbar-expand-lg navbar-dark {{ not hasHeader ? 'navbar-shrink' }} fixed-top mb-5">
             <div class="container">
                 <a class="navbar-brand" href="{{ is_granted('ROLE_USER') ? path('dashboard_index') : path('home_index') }}">
-                    <img src="{{ asset('favicon.png') }}" alt="" width="50" />
                     <span>{{ 'nav.brand_name'|trans }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="{{ 'nav.toggle'|trans }}">
-                    <span class="navbar-toggler-icon"></span>
+                    {{ 'nav.menu'|trans }}
+                    <i class="ml-1 fas fa-bars"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbar-header">
-                    <ul class="navbar-nav ml-auto text-center">
+                <div class="collapse navbar-collapse mb-3 mb-lg-0" id="navbar-header">
+                    <ul class="navbar-nav ml-auto text-center align-items-center">
                         {% if is_granted('ROLE_PRINTER') %}
                             <li class="nav-item {{ app.request.attributes.get('_route') == 'filament_index' ? 'active' }}">
                                 <a class="nav-link" href="{{ path('filament_index') }}">{{ 'nav.filament'|trans }}</a>
@@ -88,44 +91,58 @@
             </div>
         </nav>
 
-        {% if app.session is not null and app.session.started %}
-            {% set _flash_messages = app.session.flashbag.all %}
+        <div style="{{ not hasHeader ? 'margin-top: 8rem' }}">
+            {% if app.session is not null and app.session.started %}
+                {% set _flash_messages = app.session.flashbag.all %}
 
-            {% if _flash_messages|length > 0 %}
-                <div id="flash-messages" class="container">
-                    {% for label, messages in _flash_messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ label }} alert-dismissible fade show">
-                                {{ message|trans|striptags }}
+                {% if _flash_messages|length > 0 %}
+                    <div id="flash-messages" class="container">
+                        {% for label, messages in _flash_messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }} alert-dismissible fade show">
+                                    {{ message|trans|striptags }}
 
-                                <button type="button" class="close" data-dismiss="alert" aria-label="{{ 'common.close'|trans }}">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="{{ 'common.close'|trans }}">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
                         {% endfor %}
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
+        </div>
 
         <footer class="footer mt-5 py-3">
-            <div class="container">
-                <p class="m-0 text-center text-black-50">Copyright &copy; 3D Follow {{ date()|date('Y') }}</p>
-                <p class="my-2 text-center text-black-50">{{ 'footer.built_with_love'|trans|raw }}</p>
-                <p class="text-muted text-center">
-                    <a class="text-muted" href="{{ path('home_terms') }}">{{ 'footer.terms'|trans }}</a>
-                    {{ 'common.and'|trans }}
-                    <a class="text-muted" href="{{ path('home_privacy') }}">{{ 'footer.privacy'|trans }}</a>
-                </p>
+            <div class="container text-center">
+                <div class="row center align-items-center">
+                    <div class="col-md-4">
+                        <span class="copyright">Copyright &copy; 3D Follow {{ date()|date('Y') }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        {{ 'footer.built_with_love'|trans|raw }}
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline quicklinks">
+                            <li class="list-inline-item">
+                                <a href="{{ path('home_terms') }}">{{ 'footer.terms'|trans }}</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="{{ path('home_privacy') }}">{{ 'footer.privacy'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </footer>
 
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/popper.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>

@@ -1,9 +1,10 @@
 meta:
-    default_title: Historique de vos impressions, quantité de filament restant, estimation coût | 3D Follow
+    default_title: Quantité de filament restant, historique de vos impressions, estimation coût | 3D Follow
 
 nav:
     brand_name: 3D Follow
     toggle: Ouvrir ou fermer la navigation
+    menu: Menu
 
     filament: Filaments
     print_object: Impressions
@@ -22,7 +23,7 @@ nav:
 footer:
     built_with_love: 'Developpé avec <i class="fa fa-heart"></i> par <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
     terms: Conditions d'utilisation
-    privacy: Politique de protection des données
+    privacy: Protection des données
 
 common:
     close: Fermer
@@ -46,29 +47,37 @@ common:
 home:
     index:
         meta_title: Historique de vos impressions, quantité de filament restant, estimation coût | 3D Follow
-        meta_description: Une application pour tout ce qui se passe avant et après vos impressions 3D
+        meta_description: Une application pour tout ce qui se passe en dehors de vos impressions 3D
         header:
-            title: 3D Follow
-            catchline: Pour tout ce qui se passe en dehors de votre imprimante 3D
+            catchline: Pour tout ce qui se passe <span>en dehors</span><br /> de votre <span>imprimante 3D</span>
+            cta: En savoir plus
         section:
             features:
                 title: Fonctionnalités
-                history:
-                    name: Historique ds impressions
-                    description: |
-                        Garder un <strong>historique de toutes vos impressions</strong>: matériaux, coût, g-code, &hellip;
                 stock:
-                    name: Filament restant en stock
+                    name: Filament restant
                     description: |
-                        Connaitre la <strong>quantité de filament restant</strong> pour chacune de vos bobines.
+                        Consulter en un instant la quantité de filament restant pour chacune de vos bobines.
+                history:
+                    name: Historique des impressions
+                    description: |
+                        Garder un historique de toutes vos impressions (matériaux, coût, .gcode).
+                privacy:
+                    name: Données privées
+                    description: |
+                        Seuls un nom d'utilisateur et un mot de passe sont nécessaires pour utiliser l'application. Aucun email ni téléphone requis.
                 cost:
                     name: Estimation du coût
                     description: |
-                        <strong>Estimer</strong> la quantité et le coût des <strong>matières utilisées</strong> pour chaque impression.
+                        Estimer la quantité et le coût des matières utilisées pour chaque impression.
                 team:
                     name: Demande d'impression
                     description: |
-                        Inviter <strong>votre famille / vos amis / vos clients</strong> à rejoindre votre groupe pour leur permettre de vous envoyer <strong>les modèles qu'ils souhaitent faire imprimer</strong>.
+                        Inviter votre famille / vos amis / vos clients à rejoindre votre groupe pour leur permettre de vous envoyer les modèles qu'ils souhaitent faire imprimer.
+                free:
+                    name: Gratuit
+                    description: |
+                        Rien à payer, ni tout de suite, ni plus tard. L'application est complètement gratuite et aucune publicité n'est affichée.
             stock:
                 title: Consultez votre stock de filament
                 content: |
@@ -83,23 +92,16 @@ home:
             privacy:
                 title: Respect de vos données personnelles
                 content: |
-                    Nous n'avons <strong>pas besoin de vos informations personnelles</strong>.<br />
-                    <strong>Aucun email</strong> n'est requis.<br />
-                    <strong>Pas de numéro de téléphone</strong>.<br />
-                    Pas de compte à valider en cliquant sur un lien.<br />
-                    Pour créer un compte sur 3D Follow, il vous suffit de saisir un nom d'utilisateur et un mot de passe et vous avez <strong>immédiatement accès à l'application</strong>.<br />
+                    Nous n'avons pas besoin de vos informations personnelles : aucun email ni téléphone ne sont requis.<br />
+                    Nous n'utilisons pas de trackers analytiques.<br />
+                    Nous n'envoyons pas de SPAM (nous ne demandons même pas votre email).<br />
+                    Pour créer un compte sur 3D Follow, il vous suffit de saisir un nom d'utilisateur et un mot de passe et vous avez immédiatement accès à l'application.<br />
                     C'est simple, rapide et ça <strong>respecte votre vie privée</strong>.
-            try:
+            free:
                 title: C'est gratuit !
                 content: |
-                    Cette application est <strong>complètement gratuite</strong>.<br />
-                    <strong>Aucune pub</strong> n'est affichée.<br />
-                    Nous ne collectons <strong>aucune donnée personnelle</strong> autre que les identifiants nécessaires à la connexion (nom d'utilisateur et mot de passe).<br />
-                    Nous n'utilisons <strong>pas de trackers analytiques</strong>.<br />
-                    Nous n'envoyons <strong>pas de SPAM</strong> (nous ne demandons même pas votre email).<br />
-                    <br />
-                    Pour simplifier, vous pouvez utiliser 3D Follow sans aucun compromis sur la confidentialité de vos données.
-                cta: Aller sur l'application
+                    Cette application est complètement gratuite et sans publicités.<br />
+                cta: Démarrer
     terms:
         meta_title: Conditions d'utilisation | 3D Follow
         page_title: Conditions d'utilisation
@@ -207,9 +209,9 @@ filament:
         column:
             name: Nom
             weight: Poids de la bobine
-            price: Prix de la bobine
             usage: Utilisation
-        usage: '%weightPercentage%% utilisé - %weightRemaining%g restant'
+        usage: ' %weightRemaining%g restant'
+        full: Pas encore utilisée
         action:
             add_filament: Ajouter un nouveau filament
     form:

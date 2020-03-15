@@ -12,7 +12,7 @@
                 <th>{{ 'common.quantity'|trans }}</th>
                 <th>{{ 'print_object.index.column.weight'|trans }}</th>
                 <th>{{ 'print_object.index.column.cost'|trans }}</th>
-                <th>{{ 'common.actions'|trans }}</th>
+                <th class="text-right">{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -29,9 +29,9 @@
                         -
                     {% endif %}
                 </td>
-                <td>
+                <td class="text-right">
                     {% if app.user and app.user.id == print_object.user.id %}
-                        <a href="{{ path('print_object_edit', {'id': print_object.id}) }}" class="btn btn-primary">{{ 'common.action.edit'|trans }}</a>
+                        <a href="{{ path('print_object_edit', {'id': print_object.id}) }}" class="btn btn-info">{{ 'common.action.edit'|trans }}</a>
                     {% endif %}
                 </td>
             </tr>

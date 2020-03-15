@@ -19,7 +19,7 @@
                     <th>{{ 'common.quantity'|trans }}</th>
                     <th>{{ 'team.print_requests.column.status'|trans }}</th>
                     <th>{{ 'team.print_requests.column.cost'|trans }}</th>
-                    <th>{{ 'common.actions'|trans }}</th>
+                    <th class="text-right">{{ 'common.actions'|trans }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +41,8 @@
                                 -
                             {% endif %}
                         </td>
-                        <td>
-                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.show'|trans }}</a>
+                        <td class="text-right">
+                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info">{{ 'common.action.show'|trans }}</a>
                         </td>
                     </tr>
                 {% else %}

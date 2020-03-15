@@ -1,7 +1,7 @@
 {% if app.user.filaments|length > 0 and app.user.printObjects|length > 0 %}
     <div class="row">
         <div class="col-md-3 mt-4">
-            <a href="{{ path('filament_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
+            <a href="{{ path('filament_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-black h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-tape"></i>
                 </div>
@@ -10,7 +10,7 @@
             </a>
         </div>
         <div class="col-md-3 mt-4">
-            <a href="{{ path('print_object_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
+            <a href="{{ path('print_object_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-black h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-print"></i>
                 </div>
@@ -19,7 +19,7 @@
             </a>
         </div>
         <div class="col-md-3 mt-4">
-            <a href="{{ path('team_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
+            <a href="{{ path('team_index') }}" class="d-block text-decoration-none text-center rounded bg-primary text-black h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-users"></i>
                 </div>
@@ -28,7 +28,7 @@
             </a>
         </div>
         <div class="col-md-3 mt-4">
-            <a href="{{ path('team_print_requests') }}" class="d-block text-decoration-none text-center rounded bg-primary text-white h-100 p-3">
+            <a href="{{ path('team_print_requests') }}" class="d-block text-decoration-none text-center rounded bg-primary text-black h-100 p-3">
                 <div class="display-4">
                     <i class="fas fa-envelope"></i>
                 </div>
@@ -60,7 +60,7 @@
                 <th>{{ 'common.user'|trans }}</th>
                 <th>{{ 'dashboard.index.section.pending_print_requests.column.name'|trans }}</th>
                 <th>{{ 'common.quantity'|trans }}</th>
-                <th>{{ 'common.actions'|trans }}</th>
+                <th class="text-right">{{ 'common.actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -69,8 +69,8 @@
                     <td>{{ print_request.user }}</td>
                     <td>{{ print_request.name }}</td>
                     <td>{{ print_request.quantity }}</td>
-                    <td>
-                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'dashboard.index.section.pending_print_requests.action.show'|trans }}</a>
+                    <td class="text-right">
+                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info">{{ 'dashboard.index.section.pending_print_requests.action.show'|trans }}</a>
                     </td>
                 </tr>
             {% else %}

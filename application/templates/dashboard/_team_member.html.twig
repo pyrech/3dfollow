@@ -10,7 +10,7 @@
             {% endif %}
             <th>{{ 'dashboard.index.section.my_pending_prints.column.name'|trans }}</th>
             <th>{{ 'common.quantity'|trans }}</th>
-            <th>{{ 'common.actions'|trans }}</th>
+            <th class="text-right">{{ 'common.actions'|trans }}</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
                 {% endif %}
                 <td>{{ print_request.name }}</td>
                 <td>{{ print_request.quantity }}</td>
-                <td>
+                <td class="text-right">
                     <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.edit'|trans }}</a>
                 </td>
             </tr>

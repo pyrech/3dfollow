@@ -4,6 +4,7 @@ meta:
 nav:
     brand_name: 3D Follow
     toggle: Toggle navigation
+    menu: Menu
 
     filament: Filaments
     print_object: Prints
@@ -45,30 +46,38 @@ common:
 
 home:
     index:
-        meta_title: Keep a 3D print history, know filament remaining quantities, get print cost estimation | 3D Follow
-        meta_description: An application for everything happening before and after your 3D prints
+        meta_title: See filament remaining quantities, keep a 3D print history, get print cost estimation | 3D Follow
+        meta_description: An application for everything happening outside your 3D prints
         header:
-            title: 3D Follow
-            catchline: For everything happening outside your printer
+            catchline: For everything happening <span>outside</span> your <span>3D printer</span>
+            cta: Tell me more
         section:
             features:
                 title: Features
-                history:
-                    name: History
-                    description: |
-                        Keep an <strong>history of all your prints</strong>: material, cost, g-code, &hellip;
                 stock:
                     name: Filament stock
                     description: |
-                        Know the <strong>quantity of filament it remains</strong> for each of your spool.
+                        See at a glance the quantity of filament remaining for each of your spool.
+                history:
+                    name: History
+                    description: |
+                        Keep an history of all your prints (material, cost, .gcode).
+                privacy:
+                    name: Privacy
+                    description: |
+                        Only a username and password are required to use the app. No email nor phone number to fill.
                 cost:
                     name: Cost estimation
                     description: |
-                        <strong>Estimate</strong> the quantity and cost of <strong>material used</strong> by each print.
+                        Estimate the quantity and cost of material used by each print.
                 team:
                     name: Team requests
                     description: |
-                        Let your <strong>family / friends / customers</strong> send you their <strong>print wishes</strong>. Invite them to join your team.
+                        Let your family / friends / customers send you their print wishes. Invite them to join your team.
+                free:
+                    name: Free
+                    description: |
+                        Nothing to pay, not now, nor later. The application is completely free and no ad is displayed.
             stock:
                 title: Look at your filament stock
                 content: |
@@ -83,23 +92,16 @@ home:
             privacy:
                 title: Your personal informations remain private
                 content: |
-                    We <strong>do not need your personal informations</strong>.<br />
-                    <strong>No email</strong> required.<br />
-                    <strong>No phone number</strong>.<br />
-                    No account to validate by clicking on a link.<br />
-                    To create an account on 3D Follow, you only need to fill a username and password and you can <strong>immediately access the application</strong>.<br />
-                    It simple, fast and it <strong>respects your privacy</strong>.
-            try:
+                    We do not need your personal informations: no email required nor phone number.<br />
+                    We do not use web analytic trackers.<br />
+                    We do not send SPAM (we do not even ask your email).<br />
+                    To create an account on 3D Follow, you only need to fill a username and password and you can immediately access the application.<br />
+                    It's simple, fast and it <strong>respects your privacy</strong>.
+            free:
                 title: It's free !
                 content: |
-                    This application is <strong>completely free</strong>.<br />
-                    <strong>No ad</strong> displayed.<br />
-                    We <strong>do not collect any personal information</strong> other than the one mandatory for login (username and password).<br />
-                    We <strong>do not use web analytic trackers</strong>.<br />
-                    We <strong>do not send SPAM</strong> (we do not even ask your email).<br />
-                    <br />
-                    You can use 3D Follow without any compromise on your privacy.
-                cta: Go to the app
+                    This application is completely free and without any ad.<br />
+                cta: Start
     terms:
         meta_title: Terms of Service | 3D Follow
         page_title: Terms of Service
@@ -207,9 +209,9 @@ filament:
         column:
             name: Name
             weight: Spool weight
-            price: Spool price
             usage: Usage
-        usage: '%weightPercentage%% used - %weightRemaining%g remaining'
+        usage: '%weightRemaining%g remaining'
+        full: Not used yet
         action:
             add_filament: Add a new filament
     form:

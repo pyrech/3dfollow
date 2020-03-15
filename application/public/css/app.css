@@ -1,3 +1,170 @@
+body {
+    --color-yellow: #fed136;
+    --color-yellow-darken: #fec503;
+    --color-black: #212529;
+
+    font-size: 1.1rem;
+    overflow-x: hidden;
+    font-family: 'Baloo Chettan 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.bg-primary {
+    background-color: var(--color-yellow) !important;
+}
+a.bg-primary:focus, a.bg-primary:hover, button.bg-primary:focus, button.bg-primary:hover {
+    background-color: var(--color-yellow-darken) !important;
+}
+
+.text-primary {
+    color: var(--color-yellow) !important;
+}
+.text-black {
+    color: var(--color-black) !important;
+}
+
+.btn-xl {
+    font-size: 18px;
+    padding: 20px 40px;
+}
+.btn-primary {
+    background-color: var(--color-yellow);
+    border-color: var(--color-yellow);
+    color: var(--color-black);
+}
+
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:hover {
+    background-color: var(--color-yellow-darken) !important;
+    border-color: var(--color-yellow-darken) !important;
+    color: var(--color-black);
+}
+
+.btn-primary:active,
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
+}
+
+#navbar-main {
+    background-color: var(--color-black);
+}
+
+#navbar-main .navbar-toggler {
+    font-size: 12px;
+    right: 0;
+    padding: 13px;
+    text-transform: uppercase;
+    color: white;
+    border: 0;
+    background-color: var(--color-yellow);
+}
+
+#navbar-main .navbar-brand {
+    color: var(--color-yellow);
+    font-family: 'Kaushan Script', Arial, sans-serif;
+}
+
+#navbar-main .navbar-brand.active,
+#navbar-main .navbar-brand:active,
+#navbar-main .navbar-brand:focus,
+#navbar-main .navbar-brand:hover {
+    color: var(--color-yellow-darken);
+}
+
+#navbar-main .navbar-nav .nav-item .nav-link {
+    font-size: 90%;
+    font-weight: 400;
+    padding: 0.75em 0;
+    letter-spacing: 1px;
+    color: white;
+}
+
+#navbar-main .navbar-nav .nav-item.active .nav-link,
+#navbar-main .navbar-nav .nav-item .nav-link:hover {
+    color: var(--color-yellow-darken);
+}
+
+@media (min-width: 992px) {
+    #navbar-main {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        transition: padding-top 0.3s, padding-bottom 0.3s;
+        border: none;
+        background-color: transparent;
+    }
+    #navbar-main .navbar-brand {
+        font-size: 1.75em;
+        transition: all 0.3s;
+    }
+    #navbar-main .navbar-nav .nav-item .nav-link {
+        padding: 1.1em 1em !important;
+    }
+    #navbar-main.navbar-shrink {
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: var(--color-black);
+    }
+    #navbar-main.navbar-shrink .navbar-brand {
+        font-size: 1.25em;
+        padding: 12px 0;
+    }
+}
+
+header.masthead {
+    text-align: center;
+    color: white;
+    background-image: url("/images/header.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+header.masthead .intro-text {
+    padding-top: 150px;
+    padding-bottom: 100px;
+}
+
+header.masthead .intro-text .intro-heading h1 {
+    line-height: 4rem !important;
+    margin-bottom: 25px;
+}
+
+header.masthead .intro-text .intro-heading span {
+    color: var(--color-yellow);
+    font-family: 'Kaushan Script', Arial, sans-serif;
+    padding-right: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    header.masthead .intro-text {
+        padding-top: 300px;
+        padding-bottom: 200px;
+    }
+    header.masthead .intro-text .intro-heading {
+        font-size: 75px;
+        font-weight: 700;
+        line-height: 75px;
+        margin-bottom: 50px;
+    }
+}
+
+.footer {
+    padding: 25px 0;
+    text-align: center;
+    font-size: 90%;
+    line-height: 40px;
+    text-transform: none;
+}
+
+.footer ul.quicklinks {
+    font-size: 90%;
+    line-height: 40px;
+    margin-bottom: 0;
+    text-transform: none;
+}
+
+
 .form-group > label.required:after {
     content: ' *'
 }
