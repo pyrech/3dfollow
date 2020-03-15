@@ -175,7 +175,7 @@ dashboard:
             print_objects:
                 label: 'print|prints'
             members:
-                label: 'member|member'
+                label: 'member|members'
             pending_print_requests:
                 label: 'pending request|pending requests'
         section:
@@ -230,7 +230,7 @@ filament:
         density:
             label: Density (in g/cm³)
         diameter:
-            label: Diameter (en mm)
+            label: Diameter (in mm)
     new:
         meta_title: Add a filament | 3D Follow
         page_title: Add a new filament
@@ -270,9 +270,9 @@ print_object:
         weight:
             label: Filament used weight (in g)
         length:
-            label: Filament used length (en mm)
+            label: Filament used length (in mm)
         cost:
-            label: Filament used cost (en €)
+            label: Filament used cost (in €)
     new:
         meta_title: Add a print | 3D Follow
         page_title: Add a new print
