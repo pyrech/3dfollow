@@ -142,7 +142,7 @@ class PrintRequestController extends AbstractController
             throw $this->createNotFoundException('Print request is not deletable');
         }
 
-        if ($this->isCsrfTokenValid('delete-print-request-'.$printRequest->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-print-request-' . $printRequest->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printRequest);
             $entityManager->flush();

@@ -16,4 +16,6 @@ services:
         volumes:
             - "../../${PROJECT_DIRECTORY}:/home/app/application:cached"
             - "${COMPOSER_CACHE_DIR}:/home/app/.composer/cache"
+            - "../../invoke.py:/home/app/invoke.py"
+            - "../../tasks.py:/home/app/tasks.py"
             - "builder-data:/home/app"

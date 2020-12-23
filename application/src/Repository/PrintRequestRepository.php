@@ -6,8 +6,8 @@ use App\Entity\PrintRequest;
 use App\Entity\Team;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method PrintRequest|null find($id, $lockMode = null, $lockVersion = null)
@@ -74,7 +74,7 @@ class PrintRequestRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    private function createQueryBuilderForUser(User $user) :QueryBuilder
+    private function createQueryBuilderForUser(User $user): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.user = :user')
@@ -82,7 +82,7 @@ class PrintRequestRepository extends ServiceEntityRepository
         ;
     }
 
-    private function createQueryBuilderForTeam(Team $team) :QueryBuilder
+    private function createQueryBuilderForTeam(Team $team): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.team = :team')

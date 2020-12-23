@@ -31,6 +31,7 @@
         "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.17",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^0.12.64",
         "phpstan/phpstan-doctrine": "^0.12.26",

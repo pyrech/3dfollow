@@ -13,11 +13,14 @@ RUN apt-get update \
         git \
         make \
         nodejs \
+        python3-pip \
         sudo \
         unzip \
     && apt-get clean \
     && npm install -g yarn \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+RUN pip3 install pycodestyle
 
 # Config
 COPY etc/. /etc/

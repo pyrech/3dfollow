@@ -26,7 +26,7 @@ class Filament
     private ?string $name = null;
 
     /**
-     * Unit: g
+     * Weight in grams (g).
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
@@ -35,7 +35,7 @@ class Filament
     private ?string $weight = null;
 
     /**
-     * Unit: g
+     * Quantity of filament used in grams (g).
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
@@ -44,7 +44,7 @@ class Filament
     private ?string $weightUsed = '0';
 
     /**
-     * Unit: €
+     * Price in euro (€).
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
@@ -53,7 +53,7 @@ class Filament
     private ?string $price = null;
 
     /**
-     * Unit: g/cm³
+     * Density in g/cm³.
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
@@ -62,7 +62,7 @@ class Filament
     private ?string $density = null;
 
     /**
-     * Unit: mm
+     * Diameter in millimeters (mm).
      *
      * @ORM\Column(type="decimal", precision=5, scale=2)
      * @Assert\NotBlank()
@@ -232,6 +232,6 @@ class Filament
             $usedWeight += ((float) $printObject->getWeight()) * $printObject->getQuantity();
         }
 
-        return $usedWeight * 100 / (float) $this->weight;
+        return $usedWeight * 100 / $this->weight;
     }
 }

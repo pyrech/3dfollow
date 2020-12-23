@@ -41,6 +41,7 @@ class InvitationManager
             $this->getFlashBag($request)->add('warning', $this->translator->trans('team.join.flash.warning', [
                 '%username%' => $teamCreator ? $teamCreator->getUsername() : '',
             ]));
+
             return;
         }
 

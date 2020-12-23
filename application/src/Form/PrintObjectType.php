@@ -42,7 +42,7 @@ class PrintObjectType extends AbstractType
             ->add('filament', EntityType::class, [
                 'label' => 'print_object.form.filament.label',
                 'class' => Filament::class,
-                'query_builder' => function(FilamentRepository $filamentRepository) use ($user) {
+                'query_builder' => function (FilamentRepository $filamentRepository) use ($user) {
                     return $filamentRepository->createQueryBuilder('f')
                         ->andWhere('f.owner = :user')
                         ->setParameter('user', $user)
@@ -53,7 +53,7 @@ class PrintObjectType extends AbstractType
                 'label' => 'print_object.form.printRequest.label',
                 'class' => PrintRequest::class,
                 'required' => false,
-                'query_builder' => function(PrintRequestRepository $printRequestRepository) use ($user) {
+                'query_builder' => function (PrintRequestRepository $printRequestRepository) use ($user) {
                     return $printRequestRepository->createQueryBuilder('p')
                         ->andWhere('p.team = :team')
                         ->setParameter('team', $user->getTeamCreated())
@@ -72,7 +72,7 @@ class PrintObjectType extends AbstractType
                 'attr' => [
                     'accept' => '.gcode',
                     'placeholder' => $gCodeName ?: '',
-                ]
+                ],
             ])
             ->add('weight', NumberType::class, [
                 'label' => 'print_object.form.weight.label',

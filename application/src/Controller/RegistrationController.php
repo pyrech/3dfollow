@@ -6,7 +6,6 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppLoginFormAuthenticator;
-use App\Security\TokenRefresher;
 use App\Team\InvitationManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
