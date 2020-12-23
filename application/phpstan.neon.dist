@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    tmpDir: var/phpstan-tmp
+    inferPrivatePropertyTypeFromConstructor: true
+    checkGenericClassInNonGenericObjectType: false
+
+    symfony:
+        container_xml_path: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
+
+    ignoreErrors: []

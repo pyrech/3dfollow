@@ -37,7 +37,13 @@ class PrintRequestController extends AbstractController
         $printRequests = $printRequestRepository->findAllForUser($user);
 
         foreach ($printRequests as $printRequest) {
-            $printRequestsByTeam[$printRequest->getTeam()->getId()][] = $printRequest;
+            $printRequestTeam = $printRequest->getTeam();
+
+            if (!$printRequestTeam) {
+                continue;
+            }
+
+            $printRequestsByTeam[$printRequestTeam->getId()][] = $printRequest;
         }
 
         return $this->render('print_request/index.html.twig', [
@@ -52,6 +58,9 @@ class PrintRequestController extends AbstractController
      */
     public function new(Request $request, Team $team): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $printRequest = new PrintRequest();
         $form = $this->createForm(PrintRequestType::class, $printRequest, [
             'is_printed' => false,
@@ -59,7 +68,7 @@ class PrintRequestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $printRequest->setUser($this->getUser());
+            $printRequest->setUser($user);
             $printRequest->setTeam($team);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -109,7 +118,10 @@ class PrintRequestController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
 
-        if ($user->getTeamCreated()->getId() !== $printRequest->getTeam()->getId()) {
+        $teamCreated = $user->getTeamCreated();
+        $printRequestTeam = $printRequest->getTeam();
+
+        if (!$teamCreated || !$printRequestTeam || $teamCreated->getId() !== $printRequestTeam->getId()) {
             throw $this->createNotFoundException('Current user does not have access to this request');
         }
 
@@ -130,7 +142,7 @@ class PrintRequestController extends AbstractController
             throw $this->createNotFoundException('Print request is not deletable');
         }
 
-        if ($this->isCsrfTokenValid('delete-print-request-'.$printRequest->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-print-request-' . $printRequest->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printRequest);
             $entityManager->flush();
@@ -141,9 +153,11 @@ class PrintRequestController extends AbstractController
 
     private function assertUser(PrintRequest $printRequest): void
     {
+        /** @var User|null $user */
         $user = $this->getUser();
+        $printRequestUser = $printRequest->getUser();
 
-        if (!$user || $user->getId() !== $printRequest->getUser()->getId()) {
+        if (!$user || !$printRequestUser || $user->getId() !== $printRequestUser->getId()) {
             throw $this->createNotFoundException('Current user does not have access to this request');
         }
     }

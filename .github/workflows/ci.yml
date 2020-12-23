@@ -1,0 +1,59 @@
+name: CI
+
+on:
+    push:
+        branches: [ master ]
+    pull_request:
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            # Cache
+            - uses: satackey/action-docker-layer-caching@v0.0.8
+              continue-on-error: true
+              with:
+                  key: docker-{hash}
+                  restore-keys: docker-
+            - name: Cache Composer
+              id: cache-composer
+              uses: actions/cache@v2
+              with:
+                  path: ~/.composer/cache/
+                  key: composer-${{ hashFiles('composer.lock') }}
+                  restore-keys: composer-
+            - name: Cache Pipenv
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      ~/.cache/pip
+                      ~/.cache/pipenv
+                      ~/.local/share/virtualenvs/
+                  key: pip-pipenv-${{ hashFiles('Pipfile.lock') }}
+                  restore-keys: pip-pipenv-
+            - name: Cache PHPStan
+              uses: actions/cache@v2
+              with:
+                  path: var/phpstan-tmp/
+                  key: phpstan-${{ github.sha }}
+                  restore-keys: phpstan-
+
+            # Setup
+            - uses: actions/setup-python@v2
+              with:
+                  python-version: 3.8
+            - run: pip install pipenv
+
+            # Install the stack and run the tests
+            - run: pipenv install --deploy --dev
+            - run: pipenv run inv start && sleep 5
+            - name: Test the infrastructure is working
+              run: |
+                  set -e
+                  set -o pipefail
+                  curl --fail --insecure --silent -H "Host: 3dfollow.test" https://127.0.0.1 | grep "3D Follow"
+            - run: pipenv run inv tests
+            - run: pipenv run inv qa
+            - run: pipenv run inv cs --dry-run

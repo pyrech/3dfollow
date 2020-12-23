@@ -17,69 +17,69 @@ class Filament
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $name;
+    private ?string $name = null;
 
     /**
-     * Unit: g
+     * Weight in grams (g).
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
      * @Assert\PositiveOrZero()
      */
-    private $weight;
+    private ?string $weight = null;
 
     /**
-     * Unit: g
+     * Quantity of filament used in grams (g).
      *
      * @ORM\Column(type="decimal", precision=10, scale=0)
      * @Assert\NotBlank()
      * @Assert\PositiveOrZero()
      */
-    private $weightUsed = 0;
+    private ?string $weightUsed = '0';
 
     /**
-     * Unit: €
+     * Price in euro (€).
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
      * @Assert\PositiveOrZero()
      */
-    private $price;
+    private ?string $price = null;
 
     /**
-     * Unit: g/cm³
+     * Density in g/cm³.
      *
      * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank()
      * @Assert\PositiveOrZero()
      */
-    private $density;
+    private ?string $density = null;
 
     /**
-     * Unit: mm
+     * Diameter in millimeters (mm).
      *
      * @ORM\Column(type="decimal", precision=5, scale=2)
      * @Assert\NotBlank()
      * @Assert\PositiveOrZero()
      */
-    private $diameter;
+    private ?string $diameter = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="filaments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $owner;
+    private ?User $owner = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="filament")
      */
-    private $printObjects;
+    private Collection $printObjects;
 
     public function __construct()
     {
@@ -93,7 +93,7 @@ class Filament
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?: 'New filament';
     }
 
     public function getName(): ?string
@@ -222,14 +222,14 @@ class Filament
 
     public function computeUsagePercentage(): float
     {
-        $usedWeight = $this->weightUsed;
+        $usedWeight = (float) $this->weightUsed;
 
         foreach ($this->getPrintObjects() as $printObject) {
             if (!$printObject->getWeight()) {
                 continue;
             }
 
-            $usedWeight += $printObject->getWeight() * $printObject->getQuantity();
+            $usedWeight += ((float) $printObject->getWeight()) * $printObject->getQuantity();
         }
 
         return $usedWeight * 100 / $this->weight;

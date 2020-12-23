@@ -45,6 +45,7 @@ class PrintObjectController extends AbstractController
      */
     public function new(StorageInterface $storage, TranslatorInterface $translator, Request $request): Response
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         $printObject = new PrintObject();
@@ -80,6 +81,7 @@ class PrintObjectController extends AbstractController
     {
         $this->assertUser($printObject);
 
+        /** @var User $user */
         $user = $this->getUser();
 
         $form = $this->createForm(PrintObjectType::class, $printObject, [
@@ -110,7 +112,7 @@ class PrintObjectController extends AbstractController
     {
         $this->assertUser($printObject);
 
-        if ($this->isCsrfTokenValid('delete-print-object-'.$printObject->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printObject);
             $entityManager->flush();
@@ -121,9 +123,11 @@ class PrintObjectController extends AbstractController
 
     private function assertUser(PrintObject $printObject): void
     {
+        /** @var User|null $user */
         $user = $this->getUser();
+        $printObjectUser = $printObject->getUser();
 
-        if (!$user || $user->getId() !== $printObject->getUser()->getId()) {
+        if (!$user || !$printObjectUser || $user->getId() !== $printObjectUser->getId()) {
             throw $this->createNotFoundException('Current user does not have access to this object');
         }
     }
@@ -142,8 +146,8 @@ class PrintObjectController extends AbstractController
 
         $gCodePath = null;
 
-        if ($printObject->getGCodeFile()) {
-            $gCodePath = $printObject->getGCodeFile()->getRealPath();
+        if ($gCodeFile = $printObject->getGCodeFile()) {
+            $gCodePath = $gCodeFile->getRealPath();
         } elseif ($printObject->getGCode()) {
             $gCodePath = $storage->resolvePath($printObject, 'gCodeFile');
         }
@@ -156,27 +160,27 @@ class PrintObjectController extends AbstractController
 
         if ($printObject->getFilament()) {
             $estimatorFilament = new EstimatorFilament(
-                $filament->getDiameter(),
-                $filament->getDensity(),
-                $filament->getWeight(),
-                $filament->getPrice()
+                (float) $filament->getDiameter(),
+                (float) $filament->getDensity(),
+                (float) $filament->getWeight(),
+                (float) $filament->getPrice()
             );
         }
 
         try {
             $estimate = (new Estimator())->estimate($gCodePath, $estimatorFilament);
-        } catch (FileNotReadable|InvalidGcode $e) {
+        } catch (FileNotReadable | InvalidGcode $e) {
             return false;
         }
 
         if (!$printObject->getWeight()) {
-            $printObject->setWeight($estimate->getWeight());
+            $printObject->setWeight((string) $estimate->getWeight());
         }
         if (!$printObject->getLength()) {
-            $printObject->setLength($estimate->getLength());
+            $printObject->setLength((string) $estimate->getLength());
         }
         if (!$printObject->getCost()) {
-            $printObject->setCost($estimate->getCost());
+            $printObject->setCost((string) $estimate->getCost());
         }
 
         return true;

@@ -8,16 +8,18 @@ use App\Repository\TeamRepository;
 use App\Security\TokenRefresher;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class InvitationManager
 {
     private const JOIN_SESSION_KEY = 'team_join';
 
-    private $entityManager;
-    private $teamRepository;
-    private $translator;
-    private $tokenRefresher;
+    private EntityManagerInterface $entityManager;
+    private TeamRepository $teamRepository;
+    private TranslatorInterface $translator;
+    private TokenRefresher $tokenRefresher;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -33,10 +35,13 @@ class InvitationManager
 
     public function join(Request $request, User $user, Team $team): void
     {
+        $teamCreator = $team->getCreator();
+
         if ($team->getMembers()->contains($user)) {
-            $request->getSession()->getFlashBag()->add('warning', $this->translator->trans('team.join.flash.warning', [
-                '%username%' => $team->getCreator()->getUsername(),
+            $this->getFlashBag($request)->add('warning', $this->translator->trans('team.join.flash.warning', [
+                '%username%' => $teamCreator ? $teamCreator->getUsername() : '',
             ]));
+
             return;
         }
 
@@ -44,8 +49,8 @@ class InvitationManager
 
         $this->entityManager->flush();
 
-        $request->getSession()->getFlashBag()->add('success', $this->translator->trans('team.join.flash.success', [
-            '%username%' => $team->getCreator()->getUsername(),
+        $this->getFlashBag($request)->add('success', $this->translator->trans('team.join.flash.success', [
+            '%username%' => $teamCreator ? $teamCreator->getUsername() : '',
         ]));
 
         // Roles of users may have changed if joining its first group, so let's refresh its token to avoid logout
@@ -76,5 +81,16 @@ class InvitationManager
         }
 
         $this->join($request, $user, $team);
+    }
+
+    private function getFlashBag(Request $request): FlashBagInterface
+    {
+        $session = $request->getSession();
+
+        if (!$session instanceof Session) {
+            throw new \RuntimeException('Wrong session instance');
+        }
+
+        return $session->getFlashBag();
     }
 }
