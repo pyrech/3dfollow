@@ -8,7 +8,7 @@ services:
         build: services/router
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        network_mode: "host"
+        network_mode: host
 
     frontend:
         build: services/frontend
@@ -16,6 +16,8 @@ services:
             - postgres
         volumes:
             - "../../${PROJECT_DIRECTORY}:/home/app/application:cached"
+        environment:
+            - "PHP_VERSION=${PHP_VERSION}"
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.${PROJECT_NAME}-frontend.rule=Host(${PROJECT_DOMAINS})"
