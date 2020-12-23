@@ -133,6 +133,15 @@ def stop(c):
 
 
 @task
+def tests(c):
+    """
+    Launch tests
+    """
+    # with Builder(c):
+    #     docker_compose_run(c, 'bin/phpunit')
+
+
+@task
 def qa(c):
     """
     Run static analysis tools
