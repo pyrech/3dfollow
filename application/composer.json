@@ -2,29 +2,39 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-migrations-bundle": "^2.1",
         "easycorp/easyadmin-bundle": "^2.3",
         "pyrech/gcode-estimator": "^1.0",
         "sensio/framework-extra-bundle": "^5.5",
-        "symfony/console": "5.0.*",
-        "symfony/dotenv": "5.0.*",
+        "symfony/asset": "*",
+        "symfony/console": "*",
+        "symfony/dotenv": "*",
+        "symfony/expression-language": "*",
         "symfony/flex": "^1.3.1",
-        "symfony/framework-bundle": "5.0.*",
-        "symfony/maker-bundle": "^1.14",
+        "symfony/form": "*",
+        "symfony/framework-bundle": "*",
+        "symfony/intl": "*",
+        "symfony/monolog-bundle": "^3.1",
+        "symfony/notifier": "*",
         "symfony/orm-pack": "^1.0",
         "symfony/polyfill-uuid": "^1.14",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/proxy-manager-bridge": "5.0.*",
-        "symfony/security-bundle": "5.0.*",
-        "symfony/translation": "5.0.*",
-        "symfony/yaml": "5.0.*",
+        "symfony/proxy-manager-bridge": "*",
+        "symfony/security-bundle": "*",
+        "symfony/serializer-pack": "*",
+        "symfony/string": "*",
+        "symfony/translation": "*",
+        "symfony/twig-pack": "*",
+        "symfony/validator": "*",
+        "symfony/yaml": "*",
         "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
-        "symfony/debug-pack": "^1.0"
+        "symfony/debug-pack": "*",
+        "symfony/maker-bundle": "^1.0",
+        "symfony/profiler-pack": "*",
+        "symfony/test-pack": "*"
     },
     "config": {
         "preferred-install": {
@@ -45,11 +55,7 @@
     "replace": {
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php72": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
+        "symfony/polyfill-iconv": "*"
     },
     "scripts": {
         "auto-scripts": {
@@ -69,7 +75,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.0.*"
+            "require": "5.2.*"
         }
     }
 }
