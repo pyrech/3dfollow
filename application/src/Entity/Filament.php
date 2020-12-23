@@ -81,6 +81,11 @@ class Filament
      */
     private Collection $printObjects;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $comment = null;
+
     public function __construct()
     {
         $this->printObjects = new ArrayCollection();
@@ -207,6 +212,18 @@ class Filament
                 $printObject->setFilament(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }

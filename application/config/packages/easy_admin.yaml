@@ -56,6 +56,7 @@ easy_admin:
                     - { property: price, label: 'Price (€)' }
                     - { property: density, label: 'Density (g/cm³)' }
                     - { property: diameter, label: 'Diameter (mm)' }
+                    - { property: comment }
         PrintRequest:
             class: App\Entity\PrintRequest
             label: Print request

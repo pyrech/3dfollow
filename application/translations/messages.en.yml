@@ -233,6 +233,8 @@ filament:
             label: Density (in g/cm³)
         diameter:
             label: Diameter (in mm)
+        comment:
+            label: Optionnal informations you want to save (bed temperature, nozzle temperature, speed, etc)
     new:
         meta_title: Add a filament | 3D Follow
         page_title: Add a new filament

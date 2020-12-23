@@ -233,6 +233,8 @@ filament:
             label: Densité (en g/cm³)
         diameter:
             label: Diamètre (en mm)
+        comment:
+            label: Informations optionnelles que vous souhaitez sauvegarder (température du plateau, température buse, vitesse, etc)
     new:
         meta_title: Ajouter un filament | 3D Follow
         page_title: Ajouter un nouveau filament

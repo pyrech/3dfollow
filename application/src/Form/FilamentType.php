@@ -33,6 +33,13 @@ class FilamentType extends AbstractType
             ->add('diameter', null, [
                 'label' => 'filament.form.diameter.label',
             ])
+            ->add('comment', null, [
+                'label' => 'filament.form.comment.label',
+                'required' => false,
+                'attr' => [
+                    'rows' => 5,
+                ],
+            ])
         ;
     }
 
