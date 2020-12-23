@@ -338,7 +338,7 @@ team:
             has_join_token:
                 title: Your invite link
                 content: |
-                    Send this link to anyone so they can joy your team.
+                    Send this link to anyone so they can join your team.
                 cta: Regenerate my invite link
         subtitle: Members of my group
         no_data: No member in your group.
