@@ -8,10 +8,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class TokenRefresher
 {
-    const PROVIDER_KEY = 'main';
+    public const PROVIDER_KEY = 'main';
 
-    private $authenticator;
-    private $tokenStorage;
+    private AppLoginFormAuthenticator $authenticator;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(
         AppLoginFormAuthenticator $authenticator,
@@ -21,7 +21,7 @@ class TokenRefresher
         $this->tokenStorage = $tokenStorage;
     }
 
-    public function refresh(User $user, Request $request)
+    public function refresh(User $user, Request $request): void
     {
         // create an authenticated token for the User
         $token = $this->authenticator->createAuthenticatedToken($user, self::PROVIDER_KEY);

@@ -20,92 +20,86 @@ class PrintObject
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="guid")
      */
-    private $uuid;
+    private string $uuid;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printObjects")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
      */
-    private $filament;
+    private ?Filament $filament = null;
 
     /**
      * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     *
-     * @var EmbeddedFile
      */
-    private $gCode;
+    private ?EmbeddedFile $gCode = null;
 
     /**
      * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
      * @Assert\File(maxSize="50M")
      * @Assert\PositiveOrZero()
-     *
-     * @var File|null
      */
-    private $gCodeFile;
+    private ?File $gCodeFile = null;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(value=1)
      */
-    private $quantity = 1;
+    private ?int $quantity = 1;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
-    private $weight;
+    private ?string $weight = null;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
-    private $length;
+    private ?string $length = null;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
      * @Assert\PositiveOrZero()
      */
-    private $cost;
+    private ?string $cost = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printObjects")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PrintRequest", inversedBy="printObjects")
      */
-    private $printRequest;
+    private ?PrintRequest $printRequest = null;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $printedAt;
+    private ?\DateTimeInterface $printedAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTimeInterface|null
      */
-    private $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     public function __construct()
     {
@@ -167,7 +161,7 @@ class PrintObject
     /**
      * @param File|UploadedFile|null $gCodeFile
      */
-    public function setGCodeFile(?File $gCodeFile = null)
+    public function setGCodeFile(?File $gCodeFile = null): void
     {
         $this->gCodeFile = $gCodeFile;
 

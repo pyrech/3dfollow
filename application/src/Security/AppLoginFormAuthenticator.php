@@ -96,9 +96,15 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
         return $credentials['password'];
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        $this->invitationManager->handleUser($request, $token->getUser());
+        $user = $token->getUser();
+
+        if (!$user instanceof User) {
+            throw new \RuntimeException('Wrong user instance');
+        }
+
+        $this->invitationManager->handleUser($request, $user);
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

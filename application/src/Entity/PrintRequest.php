@@ -17,57 +17,57 @@ class PrintRequest
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank()
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $link;
+    private ?string $link = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $comment;
+    private ?string $comment = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPrinted = false;
+    private bool $isPrinted = false;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(value=1)
      */
-    private $quantity = 1;
+    private ?int $quantity = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printRequests")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printRequests")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $team;
+    private ?Team $team = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="printRequest")
      */
-    private $printObjects;
+    private Collection $printObjects;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     public function __construct()
     {
@@ -77,7 +77,7 @@ class PrintRequest
 
     public function __toString()
     {
-        return $this->name ?: (string) $this->id;
+        return $this->name ?: 'New print request';
     }
 
     public function getId(): ?int
@@ -211,7 +211,7 @@ class PrintRequest
 
         foreach ($this->getPrintObjects() as $printObject) {
             if ($printObject->getCost()) {
-                $unitCost += $printObject->getCost() * $printObject->getQuantity();
+                $unitCost += ((float) $printObject->getCost()) * $printObject->getQuantity();
             }
         }
 

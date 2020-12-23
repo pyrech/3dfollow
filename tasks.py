@@ -133,6 +133,15 @@ def stop(c):
 
 
 @task
+def qa(c):
+    """
+    Run static analysis tools
+    """
+    with Builder(c):
+        docker_compose_run(c, 'vendor/bin/phpstan analyse', no_deps=True)
+
+
+@task
 def start_workers(c):
     """
     Start the workers

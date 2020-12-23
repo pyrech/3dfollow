@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Filament;
+use App\Entity\User;
 use App\Form\FilamentType;
 use App\Repository\FilamentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -22,8 +23,11 @@ class FilamentController extends AbstractController
      */
     public function index(FilamentRepository $filamentRepository): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         return $this->render('filament/index.html.twig', [
-            'filaments' => $filamentRepository->findAllForOwner($this->getUser()),
+            'filaments' => $filamentRepository->findAllForOwner($user),
         ]);
     }
 
@@ -32,12 +36,15 @@ class FilamentController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
         $filament = new Filament();
         $form = $this->createForm(FilamentType::class, $filament);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $filament->setOwner($this->getUser());
+            $filament->setOwner($user);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($filament);
@@ -96,9 +103,11 @@ class FilamentController extends AbstractController
 
     private function assertOwner(Filament $filament): void
     {
+        /** @var User|null $user */
         $user = $this->getUser();
+        $owner = $filament->getOwner();
 
-        if (!$user || $user->getId() !== $filament->getOwner()->getId()) {
+        if (!$user || !$owner || $user->getId() !== $owner->getId()) {
             throw $this->createNotFoundException('Current user does not have access to this filament');
         }
     }

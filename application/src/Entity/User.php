@@ -21,59 +21,59 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      */
-    private $username;
+    private ?string $username = null;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isAdmin = false;
+    private bool $isAdmin = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isPrinter = false;
+    private bool $isPrinter = false;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private ?string $password = null;
 
     /**
      * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="user")
      */
-    private $printRequests;
+    private Collection $printRequests;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Filament", mappedBy="owner", orphanRemoval=true)
      */
-    private $filaments;
+    private Collection $filaments;
 
     /**
      * @ORM\OneToOne(targetEntity="Team", mappedBy="creator", cascade={"persist", "remove"})
      */
-    private $teamCreated;
+    private ?Team $teamCreated = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="Team", mappedBy="members")
      */
-    private $teams;
+    private Collection $teams;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="user", orphanRemoval=true)
      */
-    private $printObjects;
+    private Collection $printObjects;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
     public function __construct()
     {
@@ -171,15 +171,16 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
     }
 
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -187,7 +188,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return $this->username;
+        return $this->username ?: 'New user';
     }
 
     /**
@@ -309,7 +310,7 @@ class User implements UserInterface
     {
         if (!$this->printObjects->contains($printObject)) {
             $this->printObjects[] = $printObject;
-            $printObject->setOwner($this);
+            $printObject->setUser($this);
         }
 
         return $this;
@@ -319,10 +320,6 @@ class User implements UserInterface
     {
         if ($this->printObjects->contains($printObject)) {
             $this->printObjects->removeElement($printObject);
-            // set the owning side to null (unless already changed)
-            if ($printObject->getOwner() === $this) {
-                $printObject->setOwner(null);
-            }
         }
 
         return $this;

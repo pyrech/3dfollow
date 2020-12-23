@@ -31,6 +31,10 @@
         "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^0.12.64",
+        "phpstan/phpstan-doctrine": "^0.12.26",
+        "phpstan/phpstan-symfony": "^0.12.12",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

@@ -19,13 +19,20 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class PrintObjectType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var User $user */
         $user = $options['user'];
+        $team = $user->getTeamCreated();
 
         /** @var PrintObject|null $data */
         $data = $builder->getData();
+
+        $gCodeName = null;
+
+        if ($data && $gCode = $data->getGCode()) {
+            $gCodeName = $gCode->getOriginalName() ?: null;
+        }
 
         $builder
             ->add('name', null, [
@@ -64,7 +71,7 @@ class PrintObjectType extends AbstractType
                 'download_link' => false,
                 'attr' => [
                     'accept' => '.gcode',
-                    'placeholder' => $data && $data->getGCode()->getOriginalName() ? $data->getGCode()->getOriginalName() : '',
+                    'placeholder' => $gCodeName ?: '',
                 ]
             ])
             ->add('weight', NumberType::class, [
@@ -81,12 +88,12 @@ class PrintObjectType extends AbstractType
             ])
         ;
 
-        if (count($user->getTeamCreated()->getPrintRequests()) < 1) {
+        if (!$team || count($team->getPrintRequests()) < 1) {
             $builder->remove('printRequest');
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => PrintObject::class,

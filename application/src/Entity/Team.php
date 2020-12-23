@@ -16,33 +16,33 @@ class Team
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="teamCreated", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $creator;
+    private ?User $creator = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="teams")
      */
-    private $members;
+    private Collection $members;
 
     /**
      * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="team")
      */
-    private $printRequests;
+    private Collection $printRequests;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $joinToken;
+    private ?string $joinToken = null;
 
     public function __toString()
     {
         if (!$this->creator) {
-            return 'new team';
+            return 'New team';
         }
 
         return sprintf('%s\'s team', $this->creator);
@@ -68,7 +68,7 @@ class Team
     {
         $this->creator = $creator;
 
-        if ($creator->getTeamCreated() !== $this) {
+        if ($creator && $creator->getTeamCreated() !== $this) {
             $creator->setTeamCreated($this);
         }
 

@@ -27,7 +27,11 @@ class DashboardController extends AbstractController
         $teamPrintRequests = [];
 
         if ($this->isGranted('ROLE_PRINTER')) {
-            $teamPrintRequests = $printRequestRepository->findLatestPendingForTeam($user->getTeamCreated());
+            $team = $user->getTeamCreated();
+
+            if ($team) {
+                $teamPrintRequests = $printRequestRepository->findLatestPendingForTeam($team);
+            }
         } elseif ($this->isGranted('ROLE_TEAM_MEMBER')) {
             $memberPrintRequests = $printRequestRepository->findLatestPendingForUser($user);
         }

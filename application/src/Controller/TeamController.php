@@ -42,8 +42,9 @@ class TeamController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
+        $team = $user->getTeamCreated();
 
-        $printRequests = $printRequestRepository->findAllForTeam($user->getTeamCreated());
+        $printRequests = $team ? $printRequestRepository->findAllForTeam($team) : [];
 
         return $this->render('team/print_requests.html.twig', [
             'print_requests' => $printRequests,
@@ -63,12 +64,16 @@ class TeamController extends AbstractController
 
             return $this->redirectToRoute('team_index');
         }
+
         /** @var User $user */
         $user = $this->getUser();
+        $team = $user->getTeamCreated();
 
-        $user->getTeamCreated()->setJoinToken($tokenGenerator->generateToken());
+        if ($team) {
+            $team->setJoinToken($tokenGenerator->generateToken());
 
-        $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
+        }
 
         return $this->redirectToRoute('team_index');
     }
