@@ -1,0 +1,18 @@
+{% extends 'default_page.html.twig' %}
+
+{% block title %}{{ 'changelog.index.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'changelog.index.page_title'|trans }}{% endblock %}
+
+{% block page_body %}
+    {% for changelog in changelogs %}
+        {% if not loop.first %}
+            <hr />
+        {% endif %}
+        <h2>{{ changelog.date|format_datetime('long', 'none') }}</h2>
+        <ul>
+            {% for item in changelog.items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

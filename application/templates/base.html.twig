@@ -144,5 +144,9 @@
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/app.js') }}"></script>
         {% endblock %}
+
+        {% block dialogs %}
+            {{ include('changelog/_dialog_new.html.twig') }}
+        {% endblock %}
     </body>
 </html>

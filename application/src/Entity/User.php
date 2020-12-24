@@ -75,6 +75,11 @@ class User implements UserInterface
      */
     private \DateTimeInterface $createdAt;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private ?\DateTimeInterface $lastChangelogSeenAt = null;
+
     public function __construct()
     {
         $this->printRequests = new ArrayCollection();
@@ -325,8 +330,20 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function getLastChangelogSeenAt(): ?\DateTimeInterface
+    {
+        return $this->lastChangelogSeenAt;
+    }
+
+    public function setLastChangelogSeenAt(?\DateTimeInterface $lastChangelogSeenAt): self
+    {
+        $this->lastChangelogSeenAt = $lastChangelogSeenAt;
+
+        return $this;
     }
 }

@@ -399,3 +399,13 @@ account:
                 label: Nouveau mot de passe
         flash:
             success: Compte mis à jour
+
+changelog:
+    index:
+        meta_title: Liste des changements | 3D Follow
+        page_title: Liste des changements
+
+dialog:
+    new_changelogs:
+        title: Nouveautés depuis votre dernière visite
+        link_all: Consulter toute la liste des changements

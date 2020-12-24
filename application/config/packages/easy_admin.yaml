@@ -7,6 +7,7 @@ easy_admin:
             - { entity: 'Filament', icon: 'circle-notch' }
             - { entity: 'User', icon: 'user' }
             - { entity: 'Team', icon: 'users' }
+            - { entity: 'Changelog', icon: 'book' }
     entities:
         User:
             class: App\Entity\User
@@ -100,3 +101,13 @@ easy_admin:
                     - { property: cost }
                     - { property: printRequest }
                     - { property: printedAt }
+        Changelog:
+            class: App\Entity\Changelog
+            label: Changelog
+            list:
+                fields:
+                    - { property: date }
+            form:
+                fields:
+                    - { property: date }
+                    - { property: items }

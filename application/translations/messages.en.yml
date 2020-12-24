@@ -399,3 +399,14 @@ account:
                 label: New password
         flash:
             success: Account updated
+
+changelog:
+    index:
+        meta_title: Changelogs | 3D Follow
+        page_title: Changelogs
+
+
+dialog:
+    new_changelogs:
+        title: Changes since your last visit
+        link_all: See full changelog
