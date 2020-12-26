@@ -105,6 +105,7 @@ class PrintObject
     {
         $this->uuid = uuid_create();
         $this->gCode = new EmbeddedFile();
+        $this->printedAt = new \DateTime();
     }
 
     public function __toString()

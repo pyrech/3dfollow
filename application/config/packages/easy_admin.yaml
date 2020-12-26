@@ -89,6 +89,7 @@ easy_admin:
                     - { property: filament }
                     - { property: quantity }
                     - { property: cost }
+                    - { property: printedAt }
             form:
                 fields:
                     - { property: user }

@@ -269,6 +269,8 @@ print_object:
             label: Impression demandée
         quantity:
             label: Quantité
+        printedAt:
+            label: Date d'impression
         gCodeFile:
             label: Sélectionner un ficher .gcode
         weight:

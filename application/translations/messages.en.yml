@@ -277,6 +277,8 @@ print_object:
             label: Filament used length (in mm)
         cost:
             label: Filament used cost (in €)
+        printedAt:
+            label: Print date
     new:
         meta_title: Add a print | 3D Follow
         page_title: Add a new print

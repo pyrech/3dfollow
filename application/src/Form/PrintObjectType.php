@@ -10,6 +10,7 @@ use App\Repository\FilamentRepository;
 use App\Repository\PrintRequestRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -63,6 +64,12 @@ class PrintObjectType extends AbstractType
             ])
             ->add('quantity', IntegerType::class, [
                 'label' => 'print_object.form.quantity.label',
+            ])
+            ->add('printedAt', DateTimeType::class, [
+                'label' => 'print_object.form.printedAt.label',
+                'required' => false,
+                'html5' => true,
+                'widget' => 'single_text',
             ])
             ->add('gCodeFile', VichFileType::class, [
                 'label' => 'print_object.form.gCodeFile.label',
