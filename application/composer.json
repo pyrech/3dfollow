@@ -5,6 +5,7 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-zip": "^1.15",
         "easycorp/easyadmin-bundle": "^2.3",
         "pyrech/gcode-estimator": "^1.0",
         "sensio/framework-extra-bundle": "^5.5",

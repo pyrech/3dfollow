@@ -200,6 +200,7 @@ dashboard:
                 subtitle: 'Vous êtes actuellement membre de ces groupes :'
                 action:
                     add_print_request: 'Demander une nouvelle impression à %printer%'
+        export_data_link: Exporter mes données
 
 filament:
     index:
@@ -401,6 +402,13 @@ account:
                 label: Nouveau mot de passe
         flash:
             success: Compte mis à jour
+    export_data:
+        meta_title: Exporter mes données | 3D Follow
+        page_title: Exporter mes données
+        content: |
+            Voici un moyen d'exporter toutes vos données sur cette application.
+            L'export consiste en une archive (.zip) qui contient un fichier tableur (.csv) pour chaque type de données (filaments, impressions, etc.).
+        button_submit: Exporter
 
 changelog:
     index:

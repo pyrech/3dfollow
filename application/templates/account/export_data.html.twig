@@ -1,0 +1,16 @@
+{% extends 'default_page.html.twig' %}
+
+{% block title %}{{ 'account.export_data.meta_title'|trans }}{% endblock %}
+{% block page_title %}{{ 'account.export_data.page_title'|trans }}{% endblock %}
+
+{% block page_body %}
+    <p>
+        {{ 'account.export_data.content'|trans|nl2br }}
+    </p>
+    {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
+        <div class="mt-4">
+            <button class="btn btn-success">{{ 'account.export_data.button_submit'|trans }}</button>
+            <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}

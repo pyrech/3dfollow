@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Data\Exporter;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\TokenRefresher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -72,5 +75,30 @@ class AccountController extends AbstractController
         return $this->render('account/index.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/export-data", name="export_data", methods={"GET", "POST"})
+     */
+    public function exportData(Exporter $exporter, Request $request): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $form = $this->createForm(FormType::class);
+        $form->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->render('account/export_data.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+
+        $filename = $exporter->export($user);
+
+        return $this
+            ->file($filename, '3dfollow-export.zip', ResponseHeaderBag::DISPOSITION_INLINE)
+            ->deleteFileAfterSend(true)
+        ;
     }
 }
