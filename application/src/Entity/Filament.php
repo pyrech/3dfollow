@@ -98,7 +98,7 @@ class Filament
 
     public function __toString()
     {
-        return $this->name ?: 'New filament';
+        return $this->name ? ($this->name . ' (' . floor($this->computeUsagePercentage()) . ' %)'): 'New filament';
     }
 
     public function getName(): ?string
