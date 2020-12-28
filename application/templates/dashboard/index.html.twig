@@ -24,8 +24,13 @@
         </div>
     {% endif %}
 
-    <p class="mt-5 clearfix">
-        <a class="float-left" href="{{ path('account_export_data') }}">{{ 'dashboard.index.export_data_link'|trans }}</a>
-        <a class="float-right" href="{{ path('changelog_index') }}">{{ 'dialog.new_changelogs.link_all'|trans }}</a>
-    </p>
+
+    {% embed 'common/form_actions.html.twig' %}
+        {% block success_form %}
+            <a href="{{ path('account_export_data') }}"><span class="fa fa-file-export"></span> {{ 'dashboard.index.export_data_link'|trans }}</a>
+        {% endblock %}
+        {% block delete_form %}
+            <a href="{{ path('changelog_index') }}"><span class="fa fa-list"></span> {{ 'dialog.new_changelogs.link_all'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

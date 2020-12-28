@@ -22,7 +22,7 @@
                 <td>{{ print_request.name }}</td>
                 <td>{{ print_request.quantity }}</td>
                 <td class="text-right">
-                    <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary">{{ 'common.action.edit'|trans }}</a>
+                    <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-primary"><span class="fa fa-edit"></span> {{ 'common.action.edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
@@ -34,7 +34,7 @@
 </table>
 
 <div class="text-center">
-    <a href="{{ path('print_request_index') }}" class="btn btn-primary">{{ 'dashboard.index.section.my_pending_prints.cta'|trans }}</a>
+    <a href="{{ path('print_request_index') }}" class="btn btn-primary"><span class="fa fa-eye"></span> {{ 'dashboard.index.section.my_pending_prints.cta'|trans }}</a>
 </div>
 
 <h2 class="mt-5">{{ 'dashboard.index.section.groups.title'|trans }}</h2>
@@ -54,7 +54,7 @@
                 <tr>
                     <td>{{ team.creator }}</td>
                     <td>
-                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">{{ 'dashboard.index.section.groups.action.add_print_request'|trans({'%printer%': team.creator}) }}</a>
+                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'dashboard.index.section.groups.action.add_print_request'|trans({'%printer%': team.creator}) }}</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -42,7 +42,7 @@
                             {% endif %}
                         </td>
                         <td class="text-right">
-                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info">{{ 'common.action.show'|trans }}</a>
+                            <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info"><span class="fa fa-eye"></span> {{ 'common.action.show'|trans }}</a>
                         </td>
                     </tr>
                 {% else %}
@@ -53,4 +53,9 @@
             </tbody>
         </table>
     {% endif %}
+
+    {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
+        {% block success_form %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

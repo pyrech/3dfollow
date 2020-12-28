@@ -214,7 +214,7 @@ filament:
         usage: ' %weightRemaining%g restant'
         full: Pas encore utilisée
         action:
-            add_filament: Ajouter un nouveau filament
+            add_filament: Ajouter un filament
     form:
         suggestion: 'Suggestion :'
         section:
@@ -257,7 +257,7 @@ print_object:
             weight: Masse utilisée
             cost: Coût matière unitaire
         action:
-            add_print_object: Ajouter une nouvelle impression
+            add_print_object: Ajouter une impression
     form:
         section:
             upload: Uploader le fichier .gcode correspondant
@@ -304,7 +304,7 @@ print_request:
             printed: Imprimée
             pending: En attente
         action:
-            add_print_request: Ajouter un élément à imprimer dans la liste de %username%
+            add_print_request: Ajouter une demande pour %username%
     form:
         name:
             label: Nom de l'objet

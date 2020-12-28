@@ -41,5 +41,8 @@
         </li>
     </ul>
 
-    <a href="{{ path('team_print_requests') }}">{{ 'common.action.back_to_list'|trans }}</a>
+    {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('team_print_requests')} %}
+        {% block success_form %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

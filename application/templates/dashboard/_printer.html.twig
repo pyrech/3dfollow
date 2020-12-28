@@ -41,13 +41,13 @@
     <div class="rounded border p-4 text-center">
         <h2 class="mb-3">{{ 'dashboard.index.help.no_print_object.title'|trans }}</h2>
         <p>{{ 'dashboard.index.help.no_print_object.content'|trans|raw }}</p>
-        <a href="{{ path('print_object_new') }}" class="btn btn-success">{{ 'dashboard.index.help.no_print_object.cta'|trans }}</a>
+        <a href="{{ path('print_object_new') }}" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'dashboard.index.help.no_print_object.cta'|trans }}</a>
     </div>
 {% else %}
     <div class="rounded border p-4 text-center">
         <h2 class="mb-3">{{ 'dashboard.index.help.no_filament.title'|trans }}</h2>
         <p>{{ 'dashboard.index.help.no_filament.content'|trans|raw }}</p>
-        <a href="{{ path('filament_new') }}" class="btn btn-success">{{ 'dashboard.index.help.no_filament.cta'|trans }}</a>
+        <a href="{{ path('filament_new') }}" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'dashboard.index.help.no_filament.cta'|trans }}</a>
     </div>
 {% endif %}
 
@@ -70,7 +70,7 @@
                     <td>{{ print_request.name }}</td>
                     <td>{{ print_request.quantity }}</td>
                     <td class="text-right">
-                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info">{{ 'dashboard.index.section.pending_print_requests.action.show'|trans }}</a>
+                        <a href="{{ path('print_request_show', {'id': print_request.id}) }}" class="btn btn-info"><span class="fa fa-eye"></span> {{ 'dashboard.index.section.pending_print_requests.action.show'|trans }}</a>
                     </td>
                 </tr>
             {% else %}
@@ -82,6 +82,6 @@
     </table>
 
     <div class="text-center">
-        <a href="{{ path('team_print_requests') }}" class="btn btn-primary">{{ 'dashboard.index.section.pending_print_requests.cta'|trans }}</a>
+        <a href="{{ path('team_print_requests') }}" class="btn btn-primary"><span class="fa fa-eye"></span> {{ 'dashboard.index.section.pending_print_requests.cta'|trans }}</a>
     </div>
 {% endif %}

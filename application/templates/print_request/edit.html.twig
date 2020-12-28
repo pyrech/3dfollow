@@ -8,11 +8,13 @@
         <p class="text-black-50 mt-5">{{ 'print_request.edit.not_deletable'|trans }}</p>
     {% endif %}
 
-    {{ include('print_request/_form.html.twig', {'button_label': 'common.action.edit'|trans}) }}
+    {{ include('print_request/_form.html.twig') }}
 
-    <a href="{{ path('print_request_index') }}">{{ 'common.action.back_to_list'|trans }}</a>
-
-    {% if not print_request.isPrinted %}
-        {{ include('print_request/_delete_form.html.twig') }}
-    {% endif %}
+    {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('print_request_index')} %}
+        {% block delete_form %}
+            {% if not print_request.isPrinted %}
+                {{ include('print_request/_delete_form.html.twig') }}
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

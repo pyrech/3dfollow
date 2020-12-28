@@ -5,7 +5,10 @@
 
 {% block page_body %}
     {% for team in teams %}
-        <h2 class="display-6 mt-4 mb-4">{{ 'print_request.index.team_section.title'|trans({'%username%': team.creator.username}) }}</h2>
+        <h2 class="display-6 mt-4 mb-4">
+            {{ 'print_request.index.team_section.title'|trans({'%username%': team.creator.username}) }}
+            <a href="{{ path('print_request_new', {id: team.id}) }}" class="ml-5 btn btn-success"><span class="fa fa-plus"></span> {{ 'print_request.index.action.add_print_request'|trans({'%username%': team.creator.username}) }}</a>
+        </h2>
         <table class="table">
             <thead>
                 <tr>
@@ -36,7 +39,7 @@
                     </td>
                     <td class="text-right">
                         {% if app.user and app.user.id == print_request.user.id %}
-                            <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-info">{{ 'common.action.edit'|trans }}</a>
+                            <a href="{{ path('print_request_edit', {'id': print_request.id}) }}" class="btn btn-info"><span class="fa fa-edit"></span> {{ 'common.action.edit'|trans }}</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -48,12 +51,14 @@
             </tbody>
         </table>
 
-        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success">{{ 'print_request.index.action.add_print_request'|trans({'%username%': team.creator.username}) }}</a>
-
         {% if not loop.last %}
             <hr class="mt-4" />
         {% endif %}
     {% endfor %}
 
-    <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
+        </div>
+    </div>
 {% endblock %}

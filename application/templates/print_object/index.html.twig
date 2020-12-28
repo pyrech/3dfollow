@@ -31,7 +31,7 @@
                 </td>
                 <td class="text-right">
                     {% if app.user and app.user.id == print_object.user.id %}
-                        <a href="{{ path('print_object_edit', {'id': print_object.id}) }}" class="btn btn-info">{{ 'common.action.edit'|trans }}</a>
+                        <a href="{{ path('print_object_edit', {'id': print_object.id}) }}" class="btn btn-info"><span class="fa fa-edit"></span> {{ 'common.action.edit'|trans }}</a>
                     {% endif %}
                 </td>
             </tr>
@@ -43,7 +43,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('print_object_new') }}" class="btn btn-success">{{ 'print_object.index.action.add_print_object'|trans }}</a>
-
-    <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
+    {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
+        {% block success_form %}
+            <a class="btn btn-success" href="{{ path('print_object_new') }}"><span class="fa fa-plus"></span> {{ 'print_object.index.action.add_print_object'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

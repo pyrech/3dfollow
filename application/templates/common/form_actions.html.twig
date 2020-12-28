@@ -1,0 +1,15 @@
+<div class="row mt-5">
+    <div class="col-md-4 text-left">
+        {% block success_form %}
+            <button form="{{ form.vars.id }}" type="submit" class="btn btn-success"><span class="fa fa-save"></span> {{ button_label|default('common.action.save'|trans) }}</button>
+        {% endblock %}
+    </div>
+    <div class="col-md-4 text-center">
+        {% if back_to_action_link|default('') %}
+            <a class="btn btn-link" href="{{ back_to_action_link }}"><span class="fa fa-long-arrow-alt-left"></span> {{ back_to_action_label|default('common.action.back_to_list'|trans) }}</a>
+        {% endif %}
+    </div>
+    <div class="col-md-4 text-right">
+        {% block delete_form %}{% endblock %}
+    </div>
+</div>

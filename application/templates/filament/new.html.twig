@@ -6,5 +6,6 @@
 {% block page_body %}
     {{ include('filament/_form.html.twig') }}
 
-    <a href="{{ path('filament_index') }}">{{ 'common.action.back_to_list'|trans }}</a>
+    {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('filament_index')} %}
+    {% endembed %}
 {% endblock %}
