@@ -86,6 +86,7 @@ class Exporter
                 'username' => $user->getUsername(),
                 'has 3D printer' => $user->getIsPrinter() ? 'yes' : 'no',
                 'registered at' => $user->getCreatedAt()->format('Y-m-d H:i:s'),
+                'preferred language' => $user->getDefaultLocale(),
             ],
         ]);
     }

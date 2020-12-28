@@ -396,6 +396,8 @@ account:
                 label: Nom d'utilisateur
             isPrinter:
                 label: Je possède une imprimante 3D
+            defaultLocale:
+                label: Langue préférée
             oldPassword:
                 label: Ancien mot de passe
             newPassword:

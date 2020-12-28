@@ -50,6 +50,8 @@ class RegistrationController extends AbstractController
                 $user->setTeamCreated($team);
             }
 
+            $user->setDefaultLocale($request->attributes->get('_locale'));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();

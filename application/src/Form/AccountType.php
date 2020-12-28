@@ -14,6 +14,17 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AccountType extends AbstractType
 {
+    /** @var array<string, string> */
+    private array $localeLabels;
+
+    /**
+     * @param array<string, string> $localeLabels
+     */
+    public function __construct(array $localeLabels)
+    {
+        $this->localeLabels = $localeLabels;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -28,6 +39,11 @@ class AccountType extends AbstractType
                     'common.no' => false,
                 ],
                 'expanded' => true,
+            ])
+            ->add('defaultLocale', ChoiceType::class, [
+                'label' => 'account.index.form.defaultLocale.label',
+                'required' => false,
+                'choices' => array_flip($this->localeLabels),
             ])
             ->add('oldPassword', PasswordType::class, [
                 'label' => 'account.index.form.oldPassword.label',

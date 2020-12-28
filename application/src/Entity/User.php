@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private ?\DateTimeInterface $lastChangelogSeenAt = null;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private ?string $defaultLocale = null;
+
     public function __construct()
     {
         $this->printRequests = new ArrayCollection();
@@ -343,6 +348,18 @@ class User implements UserInterface
     public function setLastChangelogSeenAt(?\DateTimeInterface $lastChangelogSeenAt): self
     {
         $this->lastChangelogSeenAt = $lastChangelogSeenAt;
+
+        return $this;
+    }
+
+    public function getDefaultLocale(): ?string
+    {
+        return $this->defaultLocale;
+    }
+
+    public function setDefaultLocale(?string $defaultLocale): self
+    {
+        $this->defaultLocale = $defaultLocale;
 
         return $this;
     }

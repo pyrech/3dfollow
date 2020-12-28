@@ -60,8 +60,9 @@
                                 {{ app.request.locale == 'fr' ? '🇫🇷' }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="locale-switch">
-                                <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'en'})) }}">🇬🇧 English</a>
-                                <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'fr'})) }}">🇫🇷 Français</a>
+                                {% for locale,label in locale_labels %}
+                                    <a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: locale, change_locale: '1'})) }}">{{ label }}</a>
+                                {% endfor %}
                             </div>
                         </li>
                         {% if app.user %}

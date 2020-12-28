@@ -396,6 +396,8 @@ account:
                 label: Username
             isPrinter:
                 label: I have a 3D printer
+            defaultLocale:
+                label: Preferred language
             oldPassword:
                 label: Old password
             newPassword:
