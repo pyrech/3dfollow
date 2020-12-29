@@ -350,7 +350,7 @@ team:
         column:
             request_count: Nombre de demandes
         action:
-            see_all_requests: Voir toutes les demandes de mon groupe
+            see_all_requests: Voir toutes les demandes
     print_requests:
         meta_title: Liste des demandes de mon groupe | 3D Follow
         page_title: Toutes les demandes reçues

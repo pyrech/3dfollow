@@ -50,7 +50,7 @@
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}
-            <a class="btn btn-success" href="{{ path('filament_new') }}"><span class="fa fa-plus"></span> {{ 'filament.index.action.add_filament'|trans }}</a>
+            <a class="btn btn-success w-100" href="{{ path('filament_new') }}"><span class="fa fa-plus"></span> {{ 'filament.index.action.add_filament'|trans }}</a>
         {% endblock %}
     {% endembed %}
 {% endblock %}

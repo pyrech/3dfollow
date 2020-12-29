@@ -350,7 +350,7 @@ team:
         column:
             request_count: Requests count
         action:
-            see_all_requests: See all the requests in my group
+            see_all_requests: See all requests
     print_requests:
         meta_title: Received requests | 3D Follow
         page_title: Received requests in my team

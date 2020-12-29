@@ -45,7 +45,7 @@
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}
-            <a class="btn btn-success" href="{{ path('print_object_new') }}"><span class="fa fa-plus"></span> {{ 'print_object.index.action.add_print_object'|trans }}</a>
+            <a class="btn btn-success w-100" href="{{ path('print_object_new') }}"><span class="fa fa-plus"></span> {{ 'print_object.index.action.add_print_object'|trans }}</a>
         {% endblock %}
     {% endembed %}
 {% endblock %}

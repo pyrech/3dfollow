@@ -8,9 +8,8 @@
         {{ 'account.export_data.content'|trans|nl2br }}
     </p>
     {{ form_start(form, {attr: {class: 'mt-5 mb-3'}}) }}
-        <div class="mt-4">
-            <button class="btn btn-success">{{ 'account.export_data.button_submit'|trans }}</button>
-            <a href="{{ path('dashboard_index') }}">{{ 'common.action.back_to_dashboard'|trans }}</a>
-        </div>
     {{ form_end(form) }}
+
+    {% embed 'common/form_actions.html.twig' with {button_label: 'account.export_data.button_submit'|trans, button_icon: 'file-export', back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
+    {% endembed %}
 {% endblock %}

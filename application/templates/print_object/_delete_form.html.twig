@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('print_object_delete', {'id': print_object.id}) }}" onsubmit="return confirm('{{ 'print_object.delete.confirm'|trans }}');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete-print-object-' ~ print_object.id) }}">
-    <button class="btn btn-danger"><span class="fa fa-trash"></span> {{ 'common.action.delete'|trans }}</button>
+    <button class="btn btn-danger w-100"><span class="fa fa-trash"></span> {{ 'common.action.delete'|trans }}</button>
 </form>

@@ -54,7 +54,7 @@
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}
             {% if team.joinToken  %}
-                <a class="btn btn-primary" href="{{ path('team_print_requests') }}"><span class="fa fa-eye"></span> {{ 'team.index.action.see_all_requests'|trans }}</a>
+                <a class="btn btn-primary w-100" href="{{ path('team_print_requests') }}"><span class="fa fa-eye"></span> {{ 'team.index.action.see_all_requests'|trans }}</a>
             {% endif %}
         {% endblock %}
     {% endembed %}
