@@ -109,6 +109,9 @@
             ".php_cs.dist"
         ]
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "jms/metadata": {
         "version": "2.1.0"
     },
