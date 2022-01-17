@@ -181,6 +181,9 @@
     "pyrech/gcode-estimator": {
         "version": "v1.0.1"
     },
+    "rector/rector": {
+        "version": "0.12.13"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {

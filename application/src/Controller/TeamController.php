@@ -22,15 +22,11 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
-/**
- * @Route("/team", name="team_")
- */
+#[Route(path: '/team', name: 'team_')]
 class TeamController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     * @IsGranted("ROLE_PRINTER")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
     public function index(): Response
     {
         /** @var User $user */
@@ -41,10 +37,8 @@ class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/print-requests", name="print_requests", methods={"GET"})
-     * @IsGranted("ROLE_PRINTER")
-     */
+    #[Route(path: '/print-requests', name: 'print_requests', methods: ['GET'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
     public function printRequests(PrintRequestRepository $printRequestRepository): Response
     {
         /** @var User $user */
@@ -58,10 +52,8 @@ class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/generate-join-token", name="generate_join_token", methods={"POST"})
-     * @IsGranted("ROLE_PRINTER")
-     */
+    #[Route(path: '/generate-join-token', name: 'generate_join_token', methods: ['POST'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
     public function generateJoinToken(CsrfTokenManagerInterface $csrfTokenManager, TokenGeneratorInterface $tokenGenerator, Request $request): Response
     {
         $token = new CsrfToken('team_generate_join_token', (string) $request->request->get('token'));
@@ -85,9 +77,7 @@ class TeamController extends AbstractController
         return $this->redirectToRoute('team_index');
     }
 
-    /**
-     * @Route("/join/{token}", name="join")
-     */
+    #[Route(path: '/join/{token}', name: 'join')]
     public function join(
         TeamRepository $repository,
         InvitationManager $invitationManager,

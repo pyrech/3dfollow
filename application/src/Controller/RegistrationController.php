@@ -23,9 +23,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
-    /**
-     * @Route("/register", name="registration_register")
-     */
+    #[Route(path: '/register', name: 'registration_register')]
     public function register(
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,

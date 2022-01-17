@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\PrintObjectRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,95 +18,69 @@ use Vich\UploaderBundle\Entity\File as EmbeddedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PrintObjectRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: PrintObjectRepository::class)]
 class PrintObject
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="guid")
-     */
+    #[ORM\Column(type: 'guid')]
     private string $uuid;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Filament", inversedBy="printObjects")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank()
-     */
+    #[ORM\ManyToOne(targetEntity: Filament::class, inversedBy: 'printObjects')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Filament $filament = null;
 
-    /**
-     * @ORM\Embedded(class="Vich\UploaderBundle\Entity\File")
-     */
+    #[ORM\Embedded(class: EmbeddedFile::class)]
     private ?EmbeddedFile $gCode = null;
 
     /**
      * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
-     * @Assert\File(maxSize="128M")
-     * @Assert\PositiveOrZero()
      */
+    #[Assert\File(maxSize: '128M')]
+    #[Assert\PositiveOrZero]
     private ?File $gCodeFile = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(value=1)
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThanOrEqual(value: 1)]
     private ?int $quantity = 1;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
-     * @Assert\PositiveOrZero()
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Assert\NotBlank(message: 'validation.value_required_no_gcode', groups: ['no_gcode_uploaded'])]
+    #[Assert\PositiveOrZero]
     private ?string $weight = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
-     * @Assert\PositiveOrZero()
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Assert\NotBlank(message: 'validation.value_required_no_gcode', groups: ['no_gcode_uploaded'])]
+    #[Assert\PositiveOrZero]
     private ?string $length = null;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
-     * @Assert\NotBlank(message="validation.value_required_no_gcode", groups={"no_gcode_uploaded"})
-     * @Assert\PositiveOrZero()
-     */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Assert\NotBlank(message: 'validation.value_required_no_gcode', groups: ['no_gcode_uploaded'])]
+    #[Assert\PositiveOrZero]
     private ?string $cost = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printObjects")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'printObjects')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PrintRequest", inversedBy="printObjects")
-     */
+    #[ORM\ManyToOne(targetEntity: PrintRequest::class, inversedBy: 'printObjects')]
     private ?PrintRequest $printRequest = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $printedAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt;
 
     public function __construct()

@@ -25,15 +25,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/account", name="account_")
- * @IsGranted("ROLE_USER")
- */
+#[Route(path: '/account', name: 'account_')]
+#[IsGranted(data: 'ROLE_USER')]
 class AccountController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET", "POST"})
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
         UserPasswordEncoderInterface $passwordEncoder,
         TokenRefresher $tokenRefresher,
@@ -89,9 +85,7 @@ class AccountController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/export-data", name="export_data", methods={"GET", "POST"})
-     */
+    #[Route(path: '/export-data', name: 'export_data', methods: ['GET', 'POST'])]
     public function exportData(Exporter $exporter, Request $request): Response
     {
         /** @var User $user */

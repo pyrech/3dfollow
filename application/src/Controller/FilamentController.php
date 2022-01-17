@@ -19,15 +19,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/filament", name="filament_")
- * @IsGranted("ROLE_PRINTER")
- */
+#[Route(path: '/filament', name: 'filament_')]
+#[IsGranted(data: 'ROLE_PRINTER')]
 class FilamentController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(FilamentRepository $filamentRepository): Response
     {
         /** @var User $user */
@@ -38,9 +34,7 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         /** @var User $user */
@@ -66,9 +60,7 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Filament $filament): Response
     {
         $this->assertOwner($filament);
@@ -88,9 +80,7 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, Filament $filament): Response
     {
         $this->assertOwner($filament);

@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,80 +17,54 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="validation.username_existing")
- * @ORM\Table(name="users")
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['username'], message: 'validation.username_existing')]
+#[ORM\Table(name: 'users')]
 class User implements UserInterface
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
     private ?string $username = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $isAdmin = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $isPrinter = false;
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private ?string $password = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="user")
-     */
+    #[ORM\OneToMany(targetEntity: PrintRequest::class, mappedBy: 'user')]
     private Collection $printRequests;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Filament", mappedBy="owner", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: Filament::class, mappedBy: 'owner', orphanRemoval: true)]
     private Collection $filaments;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Team", mappedBy="creator", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Team::class, mappedBy: 'creator', cascade: ['persist', 'remove'])]
     private ?Team $teamCreated = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Team", mappedBy="members")
-     */
+    #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'members')]
     private Collection $teams;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="user", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $printObjects;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private \DateTimeInterface $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $lastChangelogSeenAt = null;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $defaultLocale = null;
 
     public function __construct()

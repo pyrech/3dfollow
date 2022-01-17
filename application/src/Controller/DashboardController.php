@@ -16,15 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/dashboard", name="dashboard_")
- * @IsGranted("ROLE_USER")
- */
+#[Route(path: '/dashboard', name: 'dashboard_')]
+#[IsGranted(data: 'ROLE_USER')]
 class DashboardController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(PrintRequestRepository $printRequestRepository): Response
     {
         /** @var User $user */

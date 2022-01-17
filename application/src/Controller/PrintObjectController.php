@@ -26,15 +26,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
-/**
- * @Route("/print-object", name="print_object_")
- * @IsGranted("ROLE_PRINTER")
- */
+#[Route(path: '/print-object', name: 'print_object_')]
+#[IsGranted(data: 'ROLE_PRINTER')]
 class PrintObjectController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(PrintObjectRepository $printObjectRepository): Response
     {
         /** @var User $user */
@@ -47,9 +43,7 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(StorageInterface $storage, TranslatorInterface $translator, Request $request): Response
     {
         /** @var User $user */
@@ -81,9 +75,7 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(StorageInterface $storage, TranslatorInterface $translator, Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
@@ -112,9 +104,7 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
