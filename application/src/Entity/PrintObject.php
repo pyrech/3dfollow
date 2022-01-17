@@ -262,6 +262,11 @@ class PrintObject
         return $this;
     }
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
     public function getUploadDirectory(): string
     {
         $directory = '';

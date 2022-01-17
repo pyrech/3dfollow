@@ -57,7 +57,7 @@ class TeamController extends AbstractController
      */
     public function generateJoinToken(CsrfTokenManagerInterface $csrfTokenManager, TokenGeneratorInterface $tokenGenerator, Request $request): Response
     {
-        $token = new CsrfToken('team_generate_join_token', $request->request->get('token'));
+        $token = new CsrfToken('team_generate_join_token', (string) $request->request->get('token'));
 
         if (!$csrfTokenManager->isTokenValid($token)) {
             $this->addFlash('danger', 'common.csrf_token_error');

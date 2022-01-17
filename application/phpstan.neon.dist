@@ -1,5 +1,5 @@
 parameters:
-    level: 8
+    level: 9
     paths:
         - src
     tmpDir: var/phpstan-tmp
@@ -9,4 +9,10 @@ parameters:
     symfony:
         container_xml_path: '%rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml'
 
-    ignoreErrors: []
+    ignoreErrors:
+        - message: '#Generator expects value type Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface, object given\.#'
+          path: src/Kernel.php
+        - message: '#Method App\\Repository\\[a-zA-Z0-9\\_]+Repository::.*\(\) should return array\<[a-zA-Z0-9\\_]+\> but returns mixed\.#'
+          path: src/Repository
+        - message: '#Method App\\Repository\\[a-zA-Z0-9\\_]+Repository::.*\(\) should return [a-zA-Z0-9\\_]+\|null but returns mixed\.#'
+          path: src/Repository

@@ -43,7 +43,9 @@ class ChangeLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $user->setDefaultLocale($request->attributes->get('_locale'));
+        /** @var string $locale */
+        $locale = $request->attributes->get('_locale');
+        $user->setDefaultLocale($locale);
         $this->entityManager->flush();
     }
 

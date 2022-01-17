@@ -42,12 +42,17 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $isValid = true;
 
-            if ($form->get('newPassword')->getData()) {
-                if ($passwordEncoder->isPasswordValid($user, $form->get('oldPassword')->getData())) {
+            /** @var string $oldPassword */
+            $oldPassword = $form->get('oldPassword')->getData();
+            /** @var string $newPassword */
+            $newPassword = $form->get('newPassword')->getData();
+
+            if ($newPassword) {
+                if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
                     $user->setPassword(
                         $passwordEncoder->encodePassword(
                             $user,
-                            $form->get('newPassword')->getData()
+                            $newPassword
                         )
                     );
                 } else {

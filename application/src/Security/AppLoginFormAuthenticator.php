@@ -66,14 +66,20 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
         return $credentials;
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
+        /** @var string $csrfToken */
+        $csrfToken = $credentials['csrf_token'] ?? '';
+
+        $token = new CsrfToken('authenticate', $csrfToken);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username'] ?? '']);
 
         if (!$user) {
             // fail authentication with a custom error
@@ -83,17 +89,28 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
         return $user;
     }
 
+    /**
+     * @param array<string, mixed> $credentials
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        /** @var string $password */
+        $password = $credentials['password'] ?? '';
+
+        return $this->passwordEncoder->isPasswordValid($user, $password);
     }
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param array<string, mixed> $credentials
      */
     public function getPassword($credentials): ?string
     {
-        return $credentials['password'];
+        /** @var string|null $password */
+        $password = $credentials['password'] ?? null;
+
+        return $password;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)

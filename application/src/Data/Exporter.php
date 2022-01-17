@@ -51,7 +51,7 @@ class Exporter
     /**
      * @see https://stackoverflow.com/a/30533173/1917092
      *
-     * @param array<string,mixed>[] $data
+     * @param array<string,bool|float|int|string|null>[] $data
      */
     private function addCsvToArchive(\ZipArchive $archive, string $filename, array $data): void
     {

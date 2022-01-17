@@ -142,9 +142,9 @@ def tests(c):
 
 
 @task
-def qa(c):
+def phpstan(c):
     """
-    Run static analysis tools
+    Run Phpstan
     """
     with Builder(c):
         docker_compose_run(c, 'vendor/bin/phpstan analyse', no_deps=True)

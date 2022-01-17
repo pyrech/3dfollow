@@ -37,11 +37,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var string $plainPassword */
+            $plainPassword = $form->get('plainPassword')->getData();
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $plainPassword
                 )
             );
 
@@ -50,7 +53,9 @@ class RegistrationController extends AbstractController
                 $user->setTeamCreated($team);
             }
 
-            $user->setDefaultLocale($request->attributes->get('_locale'));
+            /** @var string $locale */
+            $locale = $request->attributes->getAlpha('_locale');
+            $user->setDefaultLocale($locale);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

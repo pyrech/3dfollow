@@ -112,7 +112,7 @@ class PrintObjectController extends AbstractController
     {
         $this->assertUser($printObject);
 
-        if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), (string) $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($printObject);
             $entityManager->flush();
