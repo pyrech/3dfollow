@@ -2,34 +2,38 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-zip": "^1.15",
+        "composer/package-versions-deprecated": "1.11.99.5",
+        "doctrine/annotations": "^1.0",
+        "doctrine/doctrine-bundle": "^2",
+        "doctrine/doctrine-migrations-bundle": "^2",
+        "doctrine/orm": "^2",
         "easycorp/easyadmin-bundle": "^2.3",
         "pyrech/gcode-estimator": "^1.0",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/dotenv": "*",
-        "symfony/expression-language": "*",
-        "symfony/flex": "^1.3.1",
+        "symfony/flex": "^2.0",
         "symfony/form": "*",
         "symfony/framework-bundle": "*",
         "symfony/intl": "*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/notifier": "*",
-        "symfony/orm-pack": "^1.0",
         "symfony/polyfill-uuid": "^1.14",
         "symfony/proxy-manager-bridge": "*",
         "symfony/security-bundle": "*",
-        "symfony/serializer-pack": "*",
+        "symfony/serializer": "5.4.*",
         "symfony/string": "*",
         "symfony/translation": "*",
-        "symfony/twig-pack": "*",
+        "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "*",
         "symfony/yaml": "*",
+        "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.1",
+        "twig/twig": "^2.12|^3.0",
         "vich/uploader-bundle": "^1.13"
     },
     "require-dev": {
@@ -38,10 +42,14 @@
         "phpstan/phpstan": "^0.12.64",
         "phpstan/phpstan-doctrine": "^0.12.26",
         "phpstan/phpstan-symfony": "^0.12.12",
-        "symfony/debug-pack": "*",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "*",
+        "symfony/css-selector": "*",
+        "symfony/debug-bundle": "*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/profiler-pack": "*",
-        "symfony/test-pack": "*"
+        "symfony/phpunit-bridge": "^6.0",
+        "symfony/stopwatch": "5.4.*",
+        "symfony/web-profiler-bundle": "5.4.*"
     },
     "config": {
         "preferred-install": {
@@ -82,7 +90,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.2.*"
+            "require": "5.4.*"
         }
     }
 }

@@ -3,7 +3,7 @@ ARG PROJECT_NAME
 FROM ${PROJECT_NAME}_php-base
 
 ARG NODEJS_VERSION=14.x
-RUN echo "deb https://deb.nodesource.com/node_${NODEJS_VERSION} buster main" > /etc/apt/sources.list.d/nodejs.list \
+RUN echo "deb https://deb.nodesource.com/node_${NODEJS_VERSION} bullseye main" > /etc/apt/sources.list.d/nodejs.list \
     && apt-key adv --fetch-keys https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 
 # Default toys
@@ -33,7 +33,7 @@ RUN adduser app sudo \
     && phpenmod app-builder
 
 # Composer
-COPY --from=composer/composer:2.0.7 /usr/bin/composer /usr/bin/composer
+COPY --from=composer/composer:2.1.14 /usr/bin/composer /usr/bin/composer
 RUN mkdir -p "/home/app/.composer/cache" \
     && chown app: /home/app/.composer -R
 

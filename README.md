@@ -66,7 +66,7 @@ This IP is probably `127.0.0.1` unless you run Docker in a special VM (docker-ma
 Note: The router binds port 80 and 443, that's why it will work with `127.0.0.1`
 
 ```
-echo '127.0.0.1 <your hostnames>' | sudo tee -a /etc/hosts
+echo '127.0.0.1 3dfollow.test' | sudo tee -a /etc/hosts
 ```
 
 Using dinghy? Run `dinghy ip` to get the IP of the VM.
