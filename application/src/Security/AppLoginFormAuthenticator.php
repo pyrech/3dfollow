@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -20,6 +27,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Webmozart\Assert\Assert;
 
 class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -71,10 +79,9 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        /** @var string $csrfToken */
-        $csrfToken = $credentials['csrf_token'] ?? '';
+        Assert::nullOrString($credentials['csrf_token']);
 
-        $token = new CsrfToken('authenticate', $csrfToken);
+        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
@@ -94,10 +101,9 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        /** @var string $password */
-        $password = $credentials['password'] ?? '';
+        Assert::string($credentials['password']);
 
-        return $this->passwordEncoder->isPasswordValid($user, $password);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
     /**
@@ -107,10 +113,9 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator implement
      */
     public function getPassword($credentials): ?string
     {
-        /** @var string|null $password */
-        $password = $credentials['password'] ?? null;
+        Assert::nullOrString($credentials['password']);
 
-        return $password;
+        return $credentials['password'] ?? null;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)

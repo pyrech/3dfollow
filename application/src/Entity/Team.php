@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +46,12 @@ class Team
      */
     private ?string $joinToken = null;
 
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+        $this->printRequests = new ArrayCollection();
+    }
+
     public function __toString()
     {
         if (!$this->creator) {
@@ -46,12 +59,6 @@ class Team
         }
 
         return sprintf('%s\'s team', $this->creator);
-    }
-
-    public function __construct()
-    {
-        $this->members = new ArrayCollection();
-        $this->printRequests = new ArrayCollection();
     }
 
     public function getId(): ?int

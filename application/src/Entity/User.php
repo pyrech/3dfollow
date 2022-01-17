@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -94,6 +101,11 @@ class User implements UserInterface
         $this->createdAt = new \DateTime();
     }
 
+    public function __toString()
+    {
+        return $this->username ?: 'New user';
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -156,7 +168,7 @@ class User implements UserInterface
             $roles[] = 'ROLE_PRINTER';
         }
 
-        if (count($this->teams) > 0) {
+        if (\count($this->teams) > 0) {
             $roles[] = 'ROLE_TEAM_MEMBER';
         }
 
@@ -194,11 +206,6 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function __toString()
-    {
-        return $this->username ?: 'New user';
     }
 
     /**

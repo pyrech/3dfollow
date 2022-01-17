@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Filament;
@@ -88,7 +95,7 @@ class FilamentController extends AbstractController
     {
         $this->assertOwner($filament);
 
-        if (count($filament->getPrintObjects()) > 0) {
+        if (\count($filament->getPrintObjects()) > 0) {
             throw $this->createNotFoundException('Filament is not deletable');
         }
 
