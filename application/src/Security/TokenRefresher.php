@@ -15,10 +15,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class TokenRefresher
 {
-    public const PROVIDER_KEY = 'main';
+    final public const PROVIDER_KEY = 'main';
 
-    private AppLoginFormAuthenticator $authenticator;
-    private TokenStorageInterface $tokenStorage;
+    private readonly AppLoginFormAuthenticator $authenticator;
+    private readonly TokenStorageInterface $tokenStorage;
 
     public function __construct(
         AppLoginFormAuthenticator $authenticator,

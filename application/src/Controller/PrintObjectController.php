@@ -13,6 +13,7 @@ use App\Entity\PrintObject;
 use App\Entity\User;
 use App\Form\PrintObjectType;
 use App\Repository\PrintObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Pyrech\GcodeEstimator\Estimator;
 use Pyrech\GcodeEstimator\Exception\FileNotReadable;
 use Pyrech\GcodeEstimator\Exception\InvalidGcode;
@@ -30,6 +31,11 @@ use Vich\UploaderBundle\Storage\StorageInterface;
 #[IsGranted(data: 'ROLE_PRINTER')]
 class PrintObjectController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(PrintObjectRepository $printObjectRepository): Response
     {
@@ -59,9 +65,8 @@ class PrintObjectController extends AbstractController
             $printObject->setUser($user);
 
             if ($this->fillPrintProperties($storage, $printObject)) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($printObject);
-                $entityManager->flush();
+                $this->entityManager->persist($printObject);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('print_object_index');
             }
@@ -90,7 +95,7 @@ class PrintObjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($this->fillPrintProperties($storage, $printObject)) {
-                $this->getDoctrine()->getManager()->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('print_object_index');
             }
@@ -110,9 +115,8 @@ class PrintObjectController extends AbstractController
         $this->assertUser($printObject);
 
         if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), (string) $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($printObject);
-            $entityManager->flush();
+            $this->entityManager->remove($printObject);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('print_object_index');

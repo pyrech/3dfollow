@@ -17,8 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ChangeLocaleSubscriber implements EventSubscriberInterface
 {
-    private TokenStorageInterface $tokenStorage;
-    private EntityManagerInterface $entityManager;
+    private readonly TokenStorageInterface $tokenStorage;
+    private readonly EntityManagerInterface $entityManager;
 
     public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
     {
@@ -56,7 +56,7 @@ class ChangeLocaleSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'kernel.request' => 'onKernelRequest',

@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
 use App\Team\InvitationManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,8 +55,12 @@ class TeamController extends AbstractController
 
     #[Route(path: '/generate-join-token', name: 'generate_join_token', methods: ['POST'])]
     #[IsGranted(data: 'ROLE_PRINTER')]
-    public function generateJoinToken(CsrfTokenManagerInterface $csrfTokenManager, TokenGeneratorInterface $tokenGenerator, Request $request): Response
-    {
+    public function generateJoinToken(
+        EntityManagerInterface $entityManager,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        TokenGeneratorInterface $tokenGenerator,
+        Request $request
+    ): Response {
         $token = new CsrfToken('team_generate_join_token', (string) $request->request->get('token'));
 
         if (!$csrfTokenManager->isTokenValid($token)) {
@@ -71,7 +76,7 @@ class TeamController extends AbstractController
         if ($team) {
             $team->setJoinToken($tokenGenerator->generateToken());
 
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('team_index');

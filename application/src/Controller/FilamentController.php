@@ -13,6 +13,7 @@ use App\Entity\Filament;
 use App\Entity\User;
 use App\Form\FilamentType;
 use App\Repository\FilamentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted(data: 'ROLE_PRINTER')]
 class FilamentController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(FilamentRepository $filamentRepository): Response
     {
@@ -47,9 +53,8 @@ class FilamentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $filament->setOwner($user);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($filament);
-            $entityManager->flush();
+            $this->entityManager->persist($filament);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('filament_index');
         }
@@ -69,7 +74,7 @@ class FilamentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('filament_index');
         }
@@ -90,9 +95,8 @@ class FilamentController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('filament-delete-' . $filament->getId(), (string) $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($filament);
-            $entityManager->flush();
+            $this->entityManager->remove($filament);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('filament_index');

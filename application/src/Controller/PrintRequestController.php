@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\PrintRequestType;
 use App\Repository\PrintRequestRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/print-request', name: 'print_request_')]
 class PrintRequestController extends AbstractController
 {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
+
     #[Route(path: '/', name: 'index', methods: ['GET'])]
     #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
     public function index(PrintRequestRepository $printRequestRepository): Response
@@ -72,9 +78,8 @@ class PrintRequestController extends AbstractController
             $printRequest->setUser($user);
             $printRequest->setTeam($team);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($printRequest);
-            $entityManager->flush();
+            $this->entityManager->persist($printRequest);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('print_request_index');
         }
@@ -97,7 +102,7 @@ class PrintRequestController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('print_request_index');
         }
@@ -138,9 +143,8 @@ class PrintRequestController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete-print-request-' . $printRequest->getId(), (string) $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($printRequest);
-            $entityManager->flush();
+            $this->entityManager->remove($printRequest);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('print_request_index');

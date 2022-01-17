@@ -18,8 +18,8 @@ use Twig\TwigFunction;
 
 class ChangelogExtension extends AbstractExtension
 {
-    private TokenStorageInterface $tokenStorage;
-    private ChangelogRepository $changelogRepository;
+    private readonly TokenStorageInterface $tokenStorage;
+    private readonly ChangelogRepository $changelogRepository;
 
     public function __construct(TokenStorageInterface $tokenStorage, ChangelogRepository $changelogRepository)
     {

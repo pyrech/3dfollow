@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class AccountType extends AbstractType
 {
     /** @var array<string, string> */
-    private array $localeLabels;
+    private readonly array $localeLabels;
 
     /**
      * @param array<string, string> $localeLabels

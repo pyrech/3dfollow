@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppLoginFormAuthenticator;
 use App\Team\InvitationManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,7 @@ class RegistrationController extends AbstractController
 {
     #[Route(path: '/register', name: 'registration_register')]
     public function register(
+        EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
         AppLoginFormAuthenticator $authenticator,
@@ -62,7 +64,6 @@ class RegistrationController extends AbstractController
             $locale = $request->attributes->getAlpha('_locale');
             $user->setDefaultLocale($locale);
 
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 

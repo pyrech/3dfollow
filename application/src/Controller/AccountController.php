@@ -14,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\TokenRefresher;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -31,6 +32,7 @@ class AccountController extends AbstractController
 {
     #[Route(path: '/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
+        EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $passwordEncoder,
         TokenRefresher $tokenRefresher,
         TranslatorInterface $translator,
@@ -70,7 +72,7 @@ class AccountController extends AbstractController
                     $user->setTeamCreated($team);
                 }
 
-                $this->getDoctrine()->getManager()->flush();
+                $entityManager->flush();
 
                 $this->addFlash('success', 'account.index.flash.success');
 
