@@ -143,9 +143,6 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
-    "pagerfanta/pagerfanta": {
-        "version": "v2.0.1"
-    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -357,9 +354,6 @@
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v3.0.0"
-    },
-    "symfony/expression-language": {
-        "version": "v5.4.0"
     },
     "symfony/filesystem": {
         "version": "v5.4.0"
@@ -604,6 +598,9 @@
             "config/packages/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "symfony/uid": {
+        "version": "v5.4.2"
     },
     "symfony/validator": {
         "version": "5.4",
