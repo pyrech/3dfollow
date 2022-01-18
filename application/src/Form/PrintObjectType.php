@@ -82,7 +82,7 @@ class PrintObjectType extends AbstractType
                 'label' => 'print_object.form.gCodeFile.label',
                 'required' => false,
                 'allow_delete' => true,
-                'download_link' => false,
+                'download_uri' => false,
                 'attr' => [
                     'accept' => '.gcode',
                     'placeholder' => $gCodeName ?: '',

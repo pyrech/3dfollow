@@ -18,17 +18,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route(path: '/register', name: 'registration_register')]
     public function register(
         EntityManagerInterface $entityManager,
-        UserPasswordEncoderInterface $passwordEncoder,
-        GuardAuthenticatorHandler $guardHandler,
+        UserPasswordHasherInterface $passwordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
         AppLoginFormAuthenticator $authenticator,
         InvitationManager $invitationManager,
         Request $request
@@ -47,9 +47,9 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // encode the plain password
+            // hash the plain password
             $user->setPassword(
-                $passwordEncoder->encodePassword(
+                $passwordHasher->hashPassword(
                     $user,
                     $plainPassword
                 )
@@ -69,11 +69,10 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            if ($response = $guardHandler->authenticateUserAndHandleSuccess(
+            if ($response = $userAuthenticator->authenticateUser(
                     $user,
-                    $request,
                     $authenticator,
-                    'main' // firewall name in security.yaml
+                    $request,
                 )
             ) {
                 return $response;

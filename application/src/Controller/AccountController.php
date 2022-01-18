@@ -22,8 +22,8 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(path: '/account', name: 'account_')]
@@ -33,7 +33,7 @@ class AccountController extends AbstractController
     #[Route(path: '/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
         EntityManagerInterface $entityManager,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordHasher,
         TokenRefresher $tokenRefresher,
         TranslatorInterface $translator,
         Request $request
@@ -53,9 +53,9 @@ class AccountController extends AbstractController
             $newPassword = $form->get('newPassword')->getData();
 
             if ($newPassword) {
-                if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
+                if ($passwordHasher->isPasswordValid($user, $oldPassword)) {
                     $user->setPassword(
-                        $passwordEncoder->encodePassword(
+                        $passwordHasher->hashPassword(
                             $user,
                             $newPassword
                         )
