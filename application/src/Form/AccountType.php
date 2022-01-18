@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form;
 
 use App\Entity\User;
@@ -15,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class AccountType extends AbstractType
 {
     /** @var array<string, string> */
-    private array $localeLabels;
+    private readonly array $localeLabels;
 
     /**
      * @param array<string, string> $localeLabels

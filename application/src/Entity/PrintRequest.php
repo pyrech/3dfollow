@@ -1,72 +1,58 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use App\Repository\PrintRequestRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PrintRequestRepository")
- */
+#[ORM\Entity(repositoryClass: PrintRequestRepository::class)]
 class PrintRequest
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $link = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $comment = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $isPrinted = false;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(value=1)
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThanOrEqual(value: 1)]
     private ?int $quantity = 1;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="printRequests")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'printRequests')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Team", inversedBy="printRequests")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'printRequests')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Team $team = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="printRequest")
-     */
+    #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'printRequest')]
     private Collection $printObjects;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private \DateTimeInterface $createdAt;
 
     public function __construct()

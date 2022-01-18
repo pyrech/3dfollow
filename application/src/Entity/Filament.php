@@ -1,89 +1,80 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use App\Repository\FilamentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\FilamentRepository")
- */
+#[ORM\Entity(repositoryClass: FilamentRepository::class)]
 class Filament
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     /**
      * Weight in grams (g).
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=0)
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
      */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 0)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     private ?string $weight = null;
 
     /**
      * Quantity of filament used in grams (g).
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=0)
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
      */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 0)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     private ?string $weightUsed = '0';
 
     /**
      * Price in euro (€).
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
      */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     private ?string $price = null;
 
     /**
      * Density in g/cm³.
-     *
-     * @ORM\Column(type="decimal", precision=10, scale=2)
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
      */
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     private ?string $density = null;
 
     /**
      * Diameter in millimeters (mm).
-     *
-     * @ORM\Column(type="decimal", precision=5, scale=2)
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
      */
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
     private ?string $diameter = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="filaments")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'filaments')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PrintObject", mappedBy="filament")
-     */
+    #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'filament')]
     private Collection $printObjects;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $comment = null;
 
     public function __construct()
@@ -91,14 +82,14 @@ class Filament
         $this->printObjects = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function __toString()
     {
         return $this->name ? ($this->name . ' (' . floor($this->computeUsagePercentage()) . ' %)') : 'New filament';
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getName(): ?string

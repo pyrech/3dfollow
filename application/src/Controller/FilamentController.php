@@ -1,26 +1,35 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Filament;
 use App\Entity\User;
 use App\Form\FilamentType;
 use App\Repository\FilamentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/filament", name="filament_")
- * @IsGranted("ROLE_PRINTER")
- */
+#[Route(path: '/filament', name: 'filament_')]
+#[IsGranted(data: 'ROLE_PRINTER')]
 class FilamentController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
+
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(FilamentRepository $filamentRepository): Response
     {
         /** @var User $user */
@@ -31,9 +40,7 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         /** @var User $user */
@@ -46,9 +53,8 @@ class FilamentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $filament->setOwner($user);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($filament);
-            $entityManager->flush();
+            $this->entityManager->persist($filament);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('filament_index');
         }
@@ -59,9 +65,7 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Filament $filament): Response
     {
         $this->assertOwner($filament);
@@ -70,7 +74,7 @@ class FilamentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('filament_index');
         }
@@ -81,21 +85,18 @@ class FilamentController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, Filament $filament): Response
     {
         $this->assertOwner($filament);
 
-        if (count($filament->getPrintObjects()) > 0) {
+        if (\count($filament->getPrintObjects()) > 0) {
             throw $this->createNotFoundException('Filament is not deletable');
         }
 
-        if ($this->isCsrfTokenValid('filament-delete-' . $filament->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($filament);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('filament-delete-' . $filament->getId(), (string) $request->request->get('_token'))) {
+            $this->entityManager->remove($filament);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('filament_index');

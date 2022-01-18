@@ -1,30 +1,32 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Security;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
 
 class TokenRefresher
 {
-    public const PROVIDER_KEY = 'main';
-
-    private AppLoginFormAuthenticator $authenticator;
-    private TokenStorageInterface $tokenStorage;
+    final public const PROVIDER_KEY = 'main';
 
     public function __construct(
-        AppLoginFormAuthenticator $authenticator,
-        TokenStorageInterface $tokenStorage
+        private readonly TokenStorageInterface $tokenStorage,
     ) {
-        $this->authenticator = $authenticator;
-        $this->tokenStorage = $tokenStorage;
     }
 
     public function refresh(User $user, Request $request): void
     {
         // create an authenticated token for the User
-        $token = $this->authenticator->createAuthenticatedToken($user, self::PROVIDER_KEY);
+        $token = new PostAuthenticationToken($user, self::PROVIDER_KEY, $user->getRoles());
         // authenticate this in the system
         $this->tokenStorage->setToken($token);
     }

@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Data;
 
 use App\Entity\Filament;
@@ -10,7 +17,7 @@ use Vich\UploaderBundle\Storage\StorageInterface;
 
 class Exporter
 {
-    private StorageInterface $storage;
+    private readonly StorageInterface $storage;
 
     public function __construct(StorageInterface $storage)
     {
@@ -51,7 +58,7 @@ class Exporter
     /**
      * @see https://stackoverflow.com/a/30533173/1917092
      *
-     * @param array<string,mixed>[] $data
+     * @param array<string,bool|float|int|string|null>[] $data
      */
     private function addCsvToArchive(\ZipArchive $archive, string $filename, array $data): void
     {

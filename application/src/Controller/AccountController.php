@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Data\Exporter;
@@ -7,6 +14,7 @@ use App\Entity\Team;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\TokenRefresher;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -14,21 +22,18 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @Route("/account", name="account_")
- * @IsGranted("ROLE_USER")
- */
+#[Route(path: '/account', name: 'account_')]
+#[IsGranted(data: 'ROLE_USER')]
 class AccountController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET", "POST"})
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
-        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher,
         TokenRefresher $tokenRefresher,
         TranslatorInterface $translator,
         Request $request
@@ -42,12 +47,17 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $isValid = true;
 
-            if ($form->get('newPassword')->getData()) {
-                if ($passwordEncoder->isPasswordValid($user, $form->get('oldPassword')->getData())) {
+            /** @var string $oldPassword */
+            $oldPassword = $form->get('oldPassword')->getData();
+            /** @var string $newPassword */
+            $newPassword = $form->get('newPassword')->getData();
+
+            if ($newPassword) {
+                if ($passwordHasher->isPasswordValid($user, $oldPassword)) {
                     $user->setPassword(
-                        $passwordEncoder->encodePassword(
+                        $passwordHasher->hashPassword(
                             $user,
-                            $form->get('newPassword')->getData()
+                            $newPassword
                         )
                     );
                 } else {
@@ -62,7 +72,7 @@ class AccountController extends AbstractController
                     $user->setTeamCreated($team);
                 }
 
-                $this->getDoctrine()->getManager()->flush();
+                $entityManager->flush();
 
                 $this->addFlash('success', 'account.index.flash.success');
 
@@ -77,9 +87,7 @@ class AccountController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/export-data", name="export_data", methods={"GET", "POST"})
-     */
+    #[Route(path: '/export-data', name: 'export_data', methods: ['GET', 'POST'])]
     public function exportData(Exporter $exporter, Request $request): Response
     {
         /** @var User $user */

@@ -55,5 +55,5 @@ jobs:
                   set -o pipefail
                   curl --fail --insecure --silent -H "Host: 3dfollow.test" https://127.0.0.1 | grep "3D Follow"
             - run: pipenv run inv tests
-            - run: pipenv run inv qa
+            - run: pipenv run inv phpstan
             - run: pipenv run inv cs --dry-run

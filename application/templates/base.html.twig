@@ -16,6 +16,9 @@
         <link rel="alternate" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'en'})) }}" hreflang="en" />
         <link rel="alternate" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({_locale: 'fr'})) }}" hreflang="fr" />
         {% block stylesheets %}
+            {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+            {#} encore_entry_link_tags('app') }#}
+
             <!-- Latest compiled and minified CSS -->
             <link href="{{ asset('css/fonts.css') }}" rel="stylesheet" type="text/css">
             <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -140,6 +143,9 @@
         </footer>
 
         {% block javascripts %}
+            {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+            {#{ encore_entry_script_tags('app') }#}
+
             <script src="{{ asset('js/jquery.min.js') }}"></script>
             <script src="{{ asset('js/popper.min.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>

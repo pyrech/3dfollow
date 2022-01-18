@@ -142,9 +142,9 @@ def tests(c):
 
 
 @task
-def qa(c):
+def phpstan(c):
     """
-    Run static analysis tools
+    Run Phpstan
     """
     with Builder(c):
         docker_compose_run(c, 'vendor/bin/phpstan analyse', no_deps=True)
@@ -157,9 +157,9 @@ def cs(c, dry_run=False):
     """
     with Builder(c):
         if dry_run:
-            docker_compose_run(c, 'vendor/bin/php-cs-fixer fix --config=.php_cs.dist --dry-run --diff', no_deps=True)
+            docker_compose_run(c, 'vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --dry-run --diff', no_deps=True)
         else:
-            docker_compose_run(c, 'vendor/bin/php-cs-fixer fix --config=.php_cs.dist', no_deps=True)
+            docker_compose_run(c, 'vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php', no_deps=True)
 
         docker_compose_run(c, 'pycodestyle --ignore=E501,W605,E722 invoke.py tasks.py', no_deps=True, workdir='/home/app/')
 

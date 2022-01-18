@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\PrintObject;
 use App\Entity\User;
 use App\Form\PrintObjectType;
 use App\Repository\PrintObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Pyrech\GcodeEstimator\Estimator;
 use Pyrech\GcodeEstimator\Exception\FileNotReadable;
 use Pyrech\GcodeEstimator\Exception\InvalidGcode;
@@ -19,15 +27,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
-/**
- * @Route("/print-object", name="print_object_")
- * @IsGranted("ROLE_PRINTER")
- */
+#[Route(path: '/print-object', name: 'print_object_')]
+#[IsGranted(data: 'ROLE_PRINTER')]
 class PrintObjectController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     */
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
+    }
+
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
     public function index(PrintObjectRepository $printObjectRepository): Response
     {
         /** @var User $user */
@@ -40,9 +49,7 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(StorageInterface $storage, TranslatorInterface $translator, Request $request): Response
     {
         /** @var User $user */
@@ -58,9 +65,8 @@ class PrintObjectController extends AbstractController
             $printObject->setUser($user);
 
             if ($this->fillPrintProperties($storage, $printObject)) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($printObject);
-                $entityManager->flush();
+                $this->entityManager->persist($printObject);
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('print_object_index');
             }
@@ -74,9 +80,7 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(StorageInterface $storage, TranslatorInterface $translator, Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
@@ -91,7 +95,7 @@ class PrintObjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($this->fillPrintProperties($storage, $printObject)) {
-                $this->getDoctrine()->getManager()->flush();
+                $this->entityManager->flush();
 
                 return $this->redirectToRoute('print_object_index');
             }
@@ -105,17 +109,14 @@ class PrintObjectController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, PrintObject $printObject): Response
     {
         $this->assertUser($printObject);
 
-        if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($printObject);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete-print-object-' . $printObject->getId(), (string) $request->request->get('_token'))) {
+            $this->entityManager->remove($printObject);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('print_object_index');
@@ -169,7 +170,7 @@ class PrintObjectController extends AbstractController
 
         try {
             $estimate = (new Estimator())->estimate($gCodePath, $estimatorFilament);
-        } catch (FileNotReadable | InvalidGcode $e) {
+        } catch (FileNotReadable|InvalidGcode $e) {
             return false;
         }
 

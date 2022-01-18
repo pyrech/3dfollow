@@ -1,43 +1,45 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
+use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TeamRepository")
- */
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 class Team
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="teamCreated", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'teamCreated', cascade: ['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="teams")
-     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'teams')]
     private Collection $members;
 
-    /**
-     * @ORM\OneToMany(targetEntity="PrintRequest", mappedBy="team")
-     */
+    #[ORM\OneToMany(targetEntity: PrintRequest::class, mappedBy: 'team')]
     private Collection $printRequests;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $joinToken = null;
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+        $this->printRequests = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -46,12 +48,6 @@ class Team
         }
 
         return sprintf('%s\'s team', $this->creator);
-    }
-
-    public function __construct()
-    {
-        $this->members = new ArrayCollection();
-        $this->printRequests = new ArrayCollection();
     }
 
     public function getId(): ?int

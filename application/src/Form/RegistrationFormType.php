@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form;
 
 use App\Entity\User;
@@ -24,7 +31,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'registration.register.form.plainPassword.label',
                 // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+                // this is read and hashed in the controller
                 'mapped' => false,
                 'constraints' => [
                     new NotBlank([

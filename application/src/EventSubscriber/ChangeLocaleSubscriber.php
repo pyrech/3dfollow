@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\EventSubscriber;
 
 use App\Entity\User;
@@ -10,8 +17,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class ChangeLocaleSubscriber implements EventSubscriberInterface
 {
-    private TokenStorageInterface $tokenStorage;
-    private EntityManagerInterface $entityManager;
+    private readonly TokenStorageInterface $tokenStorage;
+    private readonly EntityManagerInterface $entityManager;
 
     public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
     {
@@ -21,7 +28,7 @@ class ChangeLocaleSubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -43,11 +50,13 @@ class ChangeLocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $user->setDefaultLocale($request->attributes->get('_locale'));
+        /** @var string $locale */
+        $locale = $request->attributes->get('_locale');
+        $user->setDefaultLocale($locale);
         $this->entityManager->flush();
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'kernel.request' => 'onKernelRequest',

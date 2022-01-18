@@ -10,7 +10,7 @@ extra_domains = []
 project_directory = 'application'
 
 # Usually, you should not edit the file above this point
-php_version = '7.4'
+php_version = '8.1'
 docker_compose_files = [
     'docker-compose.yml',
     'docker-compose.worker.yml',
@@ -37,9 +37,13 @@ def __extract_runtime_configuration(config):
 
     config['root_dir'] = os.path.dirname(os.path.abspath(__file__))
 
-    composer_cache_dir = run('composer global config cache-dir -q', warn=True, hide=True).stdout
-    if composer_cache_dir:
-        config['composer_cache_dir'] = composer_cache_dir.strip()
+    if os.path.exists(config['root_dir'] + '/infrastructure/docker/docker-compose.override.yml'):
+        config['docker_compose_files'] += ['docker-compose.override.yml']
+
+    config['composer_cache_dir'] = composer_cache_dir
+    composer_cache_dir_from_host = run('composer global config cache-dir -q', warn=True, hide=True).stdout
+    if composer_cache_dir_from_host:
+        config['composer_cache_dir'] = composer_cache_dir_from_host.strip()
 
     if platform == "darwin":
         try:

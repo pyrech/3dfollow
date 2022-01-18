@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form;
 
 use App\Entity\Filament;
@@ -75,7 +82,7 @@ class PrintObjectType extends AbstractType
                 'label' => 'print_object.form.gCodeFile.label',
                 'required' => false,
                 'allow_delete' => true,
-                'download_link' => false,
+                'download_uri' => false,
                 'attr' => [
                     'accept' => '.gcode',
                     'placeholder' => $gCodeName ?: '',
@@ -95,7 +102,7 @@ class PrintObjectType extends AbstractType
             ])
         ;
 
-        if (!$team || count($team->getPrintRequests()) < 1) {
+        if (!$team || \count($team->getPrintRequests()) < 1) {
             $builder->remove('printRequest');
         }
     }

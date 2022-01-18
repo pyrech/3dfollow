@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Team;
 
 use App\Entity\Team;
@@ -16,10 +23,10 @@ class InvitationManager
 {
     private const JOIN_SESSION_KEY = 'team_join';
 
-    private EntityManagerInterface $entityManager;
-    private TeamRepository $teamRepository;
-    private TranslatorInterface $translator;
-    private TokenRefresher $tokenRefresher;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly TeamRepository $teamRepository;
+    private readonly TranslatorInterface $translator;
+    private readonly TokenRefresher $tokenRefresher;
 
     public function __construct(
         EntityManagerInterface $entityManager,

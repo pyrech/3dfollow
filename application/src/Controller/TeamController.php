@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is part of the 3D Follow project.
+ * (c) Loïck Piera <pyrech@gmail.com>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
 use App\Team\InvitationManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +23,11 @@ use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
-/**
- * @Route("/team", name="team_")
- */
+#[Route(path: '/team', name: 'team_')]
 class TeamController extends AbstractController
 {
-    /**
-     * @Route("/", name="index", methods={"GET"})
-     * @IsGranted("ROLE_PRINTER")
-     */
+    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
     public function index(): Response
     {
         /** @var User $user */
@@ -34,10 +38,8 @@ class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/print-requests", name="print_requests", methods={"GET"})
-     * @IsGranted("ROLE_PRINTER")
-     */
+    #[Route(path: '/print-requests', name: 'print_requests', methods: ['GET'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
     public function printRequests(PrintRequestRepository $printRequestRepository): Response
     {
         /** @var User $user */
@@ -51,13 +53,15 @@ class TeamController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/generate-join-token", name="generate_join_token", methods={"POST"})
-     * @IsGranted("ROLE_PRINTER")
-     */
-    public function generateJoinToken(CsrfTokenManagerInterface $csrfTokenManager, TokenGeneratorInterface $tokenGenerator, Request $request): Response
-    {
-        $token = new CsrfToken('team_generate_join_token', $request->request->get('token'));
+    #[Route(path: '/generate-join-token', name: 'generate_join_token', methods: ['POST'])]
+    #[IsGranted(data: 'ROLE_PRINTER')]
+    public function generateJoinToken(
+        EntityManagerInterface $entityManager,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        TokenGeneratorInterface $tokenGenerator,
+        Request $request
+    ): Response {
+        $token = new CsrfToken('team_generate_join_token', (string) $request->request->get('token'));
 
         if (!$csrfTokenManager->isTokenValid($token)) {
             $this->addFlash('danger', 'common.csrf_token_error');
@@ -72,15 +76,13 @@ class TeamController extends AbstractController
         if ($team) {
             $team->setJoinToken($tokenGenerator->generateToken());
 
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('team_index');
     }
 
-    /**
-     * @Route("/join/{token}", name="join")
-     */
+    #[Route(path: '/join/{token}', name: 'join')]
     public function join(
         TeamRepository $repository,
         InvitationManager $invitationManager,
