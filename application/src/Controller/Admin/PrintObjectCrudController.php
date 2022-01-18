@@ -19,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class PrintObjectCrudController extends AbstractCrudController
 {
@@ -41,7 +42,7 @@ class PrintObjectCrudController extends AbstractCrudController
         $user = AssociationField::new('user');
         $name = TextField::new('name');
         $filament = AssociationField::new('filament');
-        $gCodeFile = Field::new('gCodeFile')->setFormType('vich_file');
+        $gCodeFile = Field::new('gCodeFile')->setFormType(VichFileType::class);
         $quantity = IntegerField::new('quantity');
         $weight = NumberField::new('weight');
         $length = NumberField::new('length');
@@ -57,9 +58,6 @@ class PrintObjectCrudController extends AbstractCrudController
         $gCodeSize = IntegerField::new('gCode.size');
         $gCodeDimensions = ArrayField::new('gCode.dimensions');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$user, $name, $filament, $quantity, $cost, $printedAt];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $uuid, $name, $quantity, $weight, $length, $cost, $printedAt, $updatedAt, $gCodeName, $gCodeOriginalName, $gCodeMimeType, $gCodeSize, $gCodeDimensions, $filament, $user, $printRequest];
         }
@@ -69,5 +67,8 @@ class PrintObjectCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$user, $name, $filament, $gCodeFile, $quantity, $weight, $length, $cost, $printRequest, $printedAt];
         }
+
+        // Index page
+        return [$user, $name, $filament, $quantity, $cost, $printedAt];
     }
 }

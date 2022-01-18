@@ -40,9 +40,6 @@ class TeamCrudController extends AbstractCrudController
         $joinToken = TextField::new('joinToken');
         $printRequests = AssociationField::new('printRequests');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$creator, $members, $joinToken];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $joinToken, $creator, $members, $printRequests];
         }
@@ -52,5 +49,8 @@ class TeamCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$creator, $members];
         }
+
+        // Index page
+        return [$creator, $members, $joinToken];
     }
 }

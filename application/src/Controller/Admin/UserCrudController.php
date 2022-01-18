@@ -42,7 +42,6 @@ class UserCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt')->setDisabled(true);
         $teams = AssociationField::new('teams');
         $id = IntegerField::new('id', 'ID');
-        $password = TextField::new('password');
         $lastChangelogSeenAt = DateTimeField::new('lastChangelogSeenAt');
         $defaultLocale = TextField::new('defaultLocale');
         $printRequests = AssociationField::new('printRequests');
@@ -50,9 +49,6 @@ class UserCrudController extends AbstractCrudController
         $teamCreated = AssociationField::new('teamCreated');
         $printObjects = AssociationField::new('printObjects');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $username, $isAdmin, $isPrinter, $createdAt, $lastChangelogSeenAt, $defaultLocale, $printRequests, $filaments, $teamCreated, $teams, $printObjects];
         }
@@ -62,5 +58,8 @@ class UserCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
         }
+
+        // Index page
+        return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
     }
 }

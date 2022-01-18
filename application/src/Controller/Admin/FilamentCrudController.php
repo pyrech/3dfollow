@@ -47,9 +47,6 @@ class FilamentCrudController extends AbstractCrudController
         $weightUsed = NumberField::new('weightUsed');
         $printObjects = AssociationField::new('printObjects');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$owner, $name, $weight, $price, $density, $diameter];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $weight, $weightUsed, $price, $density, $diameter, $comment, $owner, $printObjects];
         }
@@ -59,5 +56,8 @@ class FilamentCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$owner, $name, $weight, $price, $density, $diameter, $comment];
         }
+
+        // Index page
+        return [$owner, $name, $weight, $price, $density, $diameter];
     }
 }

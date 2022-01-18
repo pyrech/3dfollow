@@ -47,7 +47,6 @@ class PrintObject
      * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
      */
     #[Assert\File(maxSize: '128M')]
-    #[Assert\PositiveOrZero]
     private ?File $gCodeFile = null;
 
     #[ORM\Column(type: 'integer')]

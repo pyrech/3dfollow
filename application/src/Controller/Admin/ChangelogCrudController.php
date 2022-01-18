@@ -38,9 +38,6 @@ class ChangelogCrudController extends AbstractCrudController
         $items = ArrayField::new('items');
         $id = IntegerField::new('id', 'ID');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$date];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $date, $items];
         }
@@ -50,5 +47,8 @@ class ChangelogCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$date, $items];
         }
+
+        // Index page
+        return [$date];
     }
 }

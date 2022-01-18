@@ -49,9 +49,6 @@ class PrintRequestCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
         $isPrinted = Field::new('isPrinted');
 
-        if (Crud::PAGE_INDEX === $pageName) {
-            return [$team, $user, $name, $link, $quantity, $isPrinted];
-        }
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $link, $comment, $isPrinted, $quantity, $createdAt, $user, $team, $printObjects];
         }
@@ -61,5 +58,8 @@ class PrintRequestCrudController extends AbstractCrudController
         if (Crud::PAGE_EDIT === $pageName) {
             return [$team, $user, $name, $link, $comment, $quantity, $printObjects, $createdAt];
         }
+
+        // Index page
+        return [$team, $user, $name, $link, $quantity, $isPrinted];
     }
 }
