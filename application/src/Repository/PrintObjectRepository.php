@@ -33,7 +33,7 @@ class PrintObjectRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.user = :user')
             ->setParameter('user', $user)
-            ->orderBy('p.printedAt', 'DESC')
+            ->addOrderBy('p.id', 'DESC')
         ;
     }
 }

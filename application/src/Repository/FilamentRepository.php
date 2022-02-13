@@ -33,7 +33,7 @@ class FilamentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('f')
             ->andWhere('f.owner = :user')
             ->setParameter('user', $user)
-            ->orderBy('f.createdAt', 'DESC')
+            ->orderBy('f.id', 'DESC')
         ;
     }
 }
