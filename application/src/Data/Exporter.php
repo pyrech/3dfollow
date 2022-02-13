@@ -17,11 +17,9 @@ use Vich\UploaderBundle\Storage\StorageInterface;
 
 class Exporter
 {
-    private readonly StorageInterface $storage;
-
-    public function __construct(StorageInterface $storage)
-    {
-        $this->storage = $storage;
+    public function __construct(
+        private readonly StorageInterface $storage,
+    ) {
     }
 
     public function export(User $user): string

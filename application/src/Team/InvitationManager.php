@@ -23,21 +23,12 @@ class InvitationManager
 {
     private const JOIN_SESSION_KEY = 'team_join';
 
-    private readonly EntityManagerInterface $entityManager;
-    private readonly TeamRepository $teamRepository;
-    private readonly TranslatorInterface $translator;
-    private readonly TokenRefresher $tokenRefresher;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        TeamRepository $teamRepository,
-        TranslatorInterface $translator,
-        TokenRefresher $tokenRefresher
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TeamRepository $teamRepository,
+        private readonly TranslatorInterface $translator,
+        private readonly TokenRefresher $tokenRefresher,
     ) {
-        $this->entityManager = $entityManager;
-        $this->teamRepository = $teamRepository;
-        $this->translator = $translator;
-        $this->tokenRefresher = $tokenRefresher;
     }
 
     public function join(Request $request, User $user, Team $team): void
