@@ -4,7 +4,7 @@
 {% block page_title %}{{ 'team.print_requests.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
-    {% if app.user.teamCreated.members|length < 1 %}
+    {% if not app.user.teamCreated or app.user.teamCreated.members|length < 1 %}
         <div class="rounded border p-4 text-center">
             <h2 class="mb-3">{{ 'team.print_requests.help.no_members.title'|trans }}</h2>
             <p>{{ 'team.print_requests.help.no_members.content'|trans|raw }}</p>

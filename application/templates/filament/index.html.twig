@@ -26,7 +26,7 @@
                                 {% if usagePercentage == 0 %}
                                     {{ 'filament.index.full'|trans }}
                                 {% else %}
-                                    {{ 'filament.index.usage'|trans({'%weightPercentage%': usagePercentage|number_format(0), '%weightRemaining%': weightRemaining|number_format(0)}) }}
+                                    {{ 'filament.index.usage'|trans({'weightPercentage': usagePercentage|number_format(0), 'weightRemaining': weightRemaining|number_format(0)}) }}
                                 {% endif %}
                             </div>
                             <div class="col-md-6">

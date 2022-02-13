@@ -10,7 +10,6 @@
 namespace App\Controller;
 
 use App\Data\Exporter;
-use App\Entity\Team;
 use App\Entity\User;
 use App\Form\AccountType;
 use App\Security\TokenRefresher;
@@ -30,7 +29,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted(data: 'ROLE_USER')]
 class AccountController extends AbstractController
 {
-    #[Route(path: '/', name: 'index', methods: ['GET', 'POST'])]
+    #[Route(path: '', name: 'index', methods: ['GET', 'POST'])]
     public function index(
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
@@ -67,11 +66,6 @@ class AccountController extends AbstractController
             }
 
             if ($isValid) {
-                if ($user->getIsPrinter() && !$user->getTeamCreated()) {
-                    $team = new Team();
-                    $user->setTeamCreated($team);
-                }
-
                 $entityManager->flush();
 
                 $this->addFlash('success', 'account.index.flash.success');

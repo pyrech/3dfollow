@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Team;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AppLoginFormAuthenticator;
@@ -54,11 +53,6 @@ class RegistrationController extends AbstractController
                     $plainPassword
                 )
             );
-
-            if ($user->getIsPrinter()) {
-                $team = new Team();
-                $user->setTeamCreated($team);
-            }
 
             /** @var string $locale */
             $locale = $request->attributes->getAlpha('_locale');

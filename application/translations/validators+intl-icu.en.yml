@@ -1,4 +1,5 @@
 validation:
+    username_required: Please enter a username
     username_existing: This username is already used
     password_required: Please enter a password
     password_length: 'Your password should be at least {{ limit }} characters'

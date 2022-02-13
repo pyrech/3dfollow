@@ -6,7 +6,7 @@
 {% block page_body %}
     <div class="rounded border p-4 text-center">
         <form method="post" action="{{ path('team_generate_join_token') }}">
-            {% if not team.joinToken %}
+            {% if not team or not team.joinToken %}
                 <h2 class="mb-3">{{ 'team.index.help.no_join_token.title'|trans }}</h2>
                 <p>{{ 'team.index.help.no_join_token.content'|trans|raw }}</p>
                 <button type="submit" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'team.index.help.no_join_token.cta'|trans }}</button>
@@ -26,7 +26,7 @@
         </form>
     </div>
 
-    {% if team.joinToken  %}
+    {% if team and team.joinToken  %}
         <h2 class="mt-5 mb-2">{{ 'team.index.subtitle'|trans }}</h2>
 
         <table class="table">
@@ -53,7 +53,7 @@
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}
-            {% if team.joinToken  %}
+            {% if team and team.joinToken  %}
                 <a class="btn btn-primary w-100" href="{{ path('team_print_requests') }}"><span class="fa fa-eye"></span> {{ 'team.index.action.see_all_requests'|trans }}</a>
             {% endif %}
         {% endblock %}

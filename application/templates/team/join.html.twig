@@ -1,7 +1,7 @@
 {% extends 'default_page.html.twig' %}
 
 {% block title %}{{ 'team.join.meta_title'|trans }}{% endblock %}
-{% block page_title %}{{ 'team.join.page_title'|trans({'%username%': team.creator.username})|raw }}{% endblock %}
+{% block page_title %}{{ 'team.join.page_title'|trans({'username': team.creator.username})|raw }}{% endblock %}
 
 {% block page_body %}
     <div class="row">

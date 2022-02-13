@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/changelog', name: 'changelog_')]
 class ChangelogController extends AbstractController
 {
-    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[Route(path: '', name: 'index', methods: ['GET'])]
     public function index(ChangelogRepository $changelogRepository): Response
     {
         return $this->render('changelog/index.html.twig', [

@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'validation.username_required')]
     private ?string $username = null;
 
     #[ORM\Column(type: 'boolean')]

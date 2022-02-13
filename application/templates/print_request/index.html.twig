@@ -6,8 +6,8 @@
 {% block page_body %}
     {% for team in teams %}
         <h2 class="display-6 mt-4 mb-4">
-            {{ 'print_request.index.team_section.title'|trans({'%username%': team.creator.username}) }}
-            <a href="{{ path('print_request_new', {id: team.id}) }}" class="ml-5 btn btn-success"><span class="fa fa-plus"></span> {{ 'print_request.index.action.add_print_request'|trans({'%username%': team.creator.username}) }}</a>
+            {{ 'print_request.index.team_section.title'|trans({'username': team.creator.username}) }}
+            <a href="{{ path('print_request_new', {id: team.id}) }}" class="ml-5 btn btn-success"><span class="fa fa-plus"></span> {{ 'print_request.index.action.add_print_request'|trans({'username': team.creator.username}) }}</a>
         </h2>
         <table class="table">
             <thead>

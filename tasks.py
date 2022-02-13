@@ -133,12 +133,17 @@ def stop(c):
 
 
 @task
-def tests(c):
+def tests(c, filter=''):
     """
     Launch tests
     """
-    # with Builder(c):
-    #     docker_compose_run(c, 'bin/phpunit')
+    with Builder(c):
+        docker_compose_run(c, 'php bin/console doctrine:database:create --if-not-exists --env=test', no_deps=True)
+        docker_compose_run(c, 'php bin/console doctrine:migration:migrate -n --allow-no-migration --env=test', no_deps=True)
+        if filter != '':
+            docker_compose_run(c, 'bin/phpunit --filter %s' % filter)
+        else:
+            docker_compose_run(c, 'bin/phpunit')
 
 
 @task

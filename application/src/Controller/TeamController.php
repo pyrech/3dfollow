@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
@@ -26,7 +27,7 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 #[Route(path: '/team', name: 'team_')]
 class TeamController extends AbstractController
 {
-    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[Route(path: '', name: 'index', methods: ['GET'])]
     #[IsGranted(data: 'ROLE_PRINTER')]
     public function index(): Response
     {
@@ -73,11 +74,14 @@ class TeamController extends AbstractController
         $user = $this->getUser();
         $team = $user->getTeamCreated();
 
-        if ($team) {
-            $team->setJoinToken($tokenGenerator->generateToken());
-
-            $entityManager->flush();
+        if (!$team) {
+            $team = new Team();
+            $user->setTeamCreated($team);
         }
+
+        $team->setJoinToken($tokenGenerator->generateToken());
+
+        $entityManager->flush();
 
         return $this->redirectToRoute('team_index');
     }

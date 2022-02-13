@@ -36,7 +36,7 @@ class PrintObjectController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[Route(path: '', name: 'index', methods: ['GET'])]
     public function index(PrintObjectRepository $printObjectRepository): Response
     {
         /** @var User $user */
