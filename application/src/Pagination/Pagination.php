@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Pagination
 {
-    public const ITEMS_PER_PAGE = 2;
+    public const ITEMS_PER_PAGE = 15;
 
     public function __construct(
         private readonly PaginatorInterface $paginator,
