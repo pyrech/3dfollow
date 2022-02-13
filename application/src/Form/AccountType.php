@@ -21,15 +21,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AccountType extends AbstractType
 {
-    /** @var array<string, string> */
-    private readonly array $localeLabels;
-
     /**
      * @param array<string, string> $localeLabels
      */
-    public function __construct(array $localeLabels)
-    {
-        $this->localeLabels = $localeLabels;
+    public function __construct(
+        private readonly array $localeLabels,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

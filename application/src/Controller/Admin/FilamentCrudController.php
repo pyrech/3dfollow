@@ -13,6 +13,7 @@ use App\Entity\Filament;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -46,15 +47,16 @@ class FilamentCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
         $weightUsed = NumberField::new('weightUsed');
         $printObjects = AssociationField::new('printObjects');
+        $createdAt = DateTimeField::new('createdAt');
 
         if (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $weight, $weightUsed, $price, $density, $diameter, $comment, $owner, $printObjects];
+            return [$id, $name, $weight, $weightUsed, $price, $density, $diameter, $comment, $owner, $printObjects, $createdAt];
         }
         if (Crud::PAGE_NEW === $pageName) {
-            return [$owner, $name, $weight, $price, $density, $diameter, $comment];
+            return [$owner, $name, $weight, $price, $density, $diameter, $comment, $createdAt];
         }
         if (Crud::PAGE_EDIT === $pageName) {
-            return [$owner, $name, $weight, $price, $density, $diameter, $comment];
+            return [$owner, $name, $weight, $price, $density, $diameter, $comment, $createdAt];
         }
 
         // Index page

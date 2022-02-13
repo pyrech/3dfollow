@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3",
         "doctrine/orm": "^2",
         "easycorp/easyadmin-bundle": "^4",
+        "knplabs/knp-paginator-bundle": "^5.8",
         "pyrech/gcode-estimator": "^1.0",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "*",

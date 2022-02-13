@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for print_request in print_requests %}
+                {% for print_request in pagination %}
                     <tr>
                         <td>{{ print_request.name }}</td>
                         <td>{{ print_request.user.username }}</td>
@@ -52,6 +52,8 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {{ include('common/pagination.html.twig') }}
     {% endif %}
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}

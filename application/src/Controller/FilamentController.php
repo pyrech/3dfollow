@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Filament;
 use App\Entity\User;
 use App\Form\FilamentType;
+use App\Pagination\Pagination;
 use App\Repository\FilamentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -30,13 +31,15 @@ class FilamentController extends AbstractController
     }
 
     #[Route(path: '', name: 'index', methods: ['GET'])]
-    public function index(FilamentRepository $filamentRepository): Response
+    public function index(FilamentRepository $filamentRepository, Pagination $pagination): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
+        $qb = $filamentRepository->getQueryBuilderForOwner($user);
+
         return $this->render('filament/index.html.twig', [
-            'filaments' => $filamentRepository->findAllForOwner($user),
+            'pagination' => $pagination->create($qb),
         ]);
     }
 

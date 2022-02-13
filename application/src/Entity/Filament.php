@@ -77,9 +77,13 @@ class Filament
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $comment = null;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private \DateTimeInterface $createdAt;
+
     public function __construct()
     {
         $this->printObjects = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function __toString()
@@ -217,6 +221,11 @@ class Filament
         $this->comment = $comment;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
     }
 
     public function computeCostFromWeight(float $weight): ?float

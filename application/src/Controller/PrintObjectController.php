@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\PrintObject;
 use App\Entity\User;
 use App\Form\PrintObjectType;
+use App\Pagination\Pagination;
 use App\Repository\PrintObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pyrech\GcodeEstimator\Estimator;
@@ -37,15 +38,15 @@ class PrintObjectController extends AbstractController
     }
 
     #[Route(path: '', name: 'index', methods: ['GET'])]
-    public function index(PrintObjectRepository $printObjectRepository): Response
+    public function index(PrintObjectRepository $printObjectRepository, Pagination $pagination): Response
     {
         /** @var User $user */
         $user = $this->getUser();
 
-        $printObjects = $printObjectRepository->findAllForUser($user);
+        $qb = $printObjectRepository->getQueryBuilderForUser($user);
 
         return $this->render('print_object/index.html.twig', [
-            'print_objects' => $printObjects,
+            'pagination' => $pagination->create($qb),
         ]);
     }
 
