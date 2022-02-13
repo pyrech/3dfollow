@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Team;
 use App\Entity\User;
+use App\Pagination\Pagination;
 use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
 use App\Team\InvitationManager;
@@ -41,16 +42,16 @@ class TeamController extends AbstractController
 
     #[Route(path: '/print-requests', name: 'print_requests', methods: ['GET'])]
     #[IsGranted(data: 'ROLE_PRINTER')]
-    public function printRequests(PrintRequestRepository $printRequestRepository): Response
+    public function printRequests(PrintRequestRepository $printRequestRepository, Pagination $pagination): Response
     {
         /** @var User $user */
         $user = $this->getUser();
         $team = $user->getTeamCreated();
 
-        $printRequests = $team ? $printRequestRepository->findAllForTeam($team) : [];
+        $qb = $team ? $printRequestRepository->getQueryBuilderForTeam($team) : null;
 
         return $this->render('team/print_requests.html.twig', [
-            'print_requests' => $printRequests,
+            'pagination' => $qb ? $pagination->create($qb) : null,
         ]);
     }
 

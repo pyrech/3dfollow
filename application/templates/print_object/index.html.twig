@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for print_object in print_objects %}
+        {% for print_object in pagination %}
             <tr>
                 <td>{{ print_object.name }}</td>
                 <td>{{ print_object.filament }}</td>
@@ -42,6 +42,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {{ include('common/pagination.html.twig') }}
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}

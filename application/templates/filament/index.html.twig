@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for filament in filaments %}
+            {% for filament in pagination %}
                 {% set usagePercentage = filament.computeUsagePercentage %}
                 {% set weightRemaining = ((100 - usagePercentage) * 0.01 * filament.weight) %}
                 <tr>
@@ -47,6 +47,8 @@
             {% endfor %}
         </tbody>
     </table>
+
+    {{ include('common/pagination.html.twig') }}
 
     {% embed 'common/form_actions.html.twig' with {back_to_action_link: path('dashboard_index'), back_to_action_label: 'common.action.back_to_dashboard'|trans} %}
         {% block success_form %}

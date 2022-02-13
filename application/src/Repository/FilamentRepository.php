@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Filament;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,16 +28,12 @@ class FilamentRepository extends ServiceEntityRepository
         parent::__construct($registry, Filament::class);
     }
 
-    /**
-     * @return Filament[]
-     */
-    public function findAllForOwner(User $user): array
+    public function getQueryBuilderForOwner(User $user): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('f')
+        return $this->createQueryBuilder('f')
             ->andWhere('f.owner = :user')
             ->setParameter('user', $user)
+            ->orderBy('f.createdAt', 'DESC')
         ;
-
-        return $qb->getQuery()->getResult();
     }
 }

@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\PrintObject;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,16 +28,12 @@ class PrintObjectRepository extends ServiceEntityRepository
         parent::__construct($registry, PrintObject::class);
     }
 
-    /**
-     * @return PrintObject[]
-     */
-    public function findAllForUser(User $user): array
+    public function getQueryBuilderForUser(User $user): QueryBuilder
     {
-        $qb = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
             ->andWhere('p.user = :user')
             ->setParameter('user', $user)
+            ->orderBy('p.printedAt', 'DESC')
         ;
-
-        return $qb->getQuery()->getResult();
     }
 }

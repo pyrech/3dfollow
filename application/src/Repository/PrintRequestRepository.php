@@ -55,16 +55,11 @@ class PrintRequestRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @return PrintRequest[]
-     */
-    public function findAllForTeam(Team $team): array
+    public function getQueryBuilderForTeam(Team $team): QueryBuilder
     {
-        $qb = $this->createQueryBuilderForTeam($team)
+        return $this->createQueryBuilderForTeam($team)
             ->orderBy('p.createdAt', 'DESC')
         ;
-
-        return $qb->getQuery()->getResult();
     }
 
     /**
