@@ -149,7 +149,7 @@ dashboard:
     index:
         meta_title: Dashboard | 3D Follow
         page_title: My dashboard
-        welcome: 'Welcome %username%'
+        welcome: 'Welcome {username}'
         help:
             no_role:
                 title: New on 3D Follow?
@@ -173,13 +173,33 @@ dashboard:
                 cta: Add a new print
         stats:
             filaments:
-                label: 'filament|filaments'
+                label: >
+                    { count, plural,
+                        =0 { filament }
+                        =1 { filament }
+                        other { filaments }
+                    }
             print_objects:
-                label: 'print|prints'
+                label: >
+                    { count, plural,
+                        =0 { print }
+                        =1 { print }
+                        other { prints }
+                    }
             members:
-                label: 'member|members'
+                label: >
+                    { count, plural,
+                        =0 { member }
+                        =1 { member }
+                        other { members }
+                    }
             pending_print_requests:
-                label: 'pending request|pending requests'
+                label: >
+                    { count, plural,
+                        =0 { pending request }
+                        =1 { pending request }
+                        other { pending requests }
+                    }
         section:
             pending_print_requests:
                 title: Last requests received
@@ -199,7 +219,7 @@ dashboard:
                 title: Groups
                 subtitle: 'You are currently a member of this groups:'
                 action:
-                    add_print_request: 'Request a new print to %printer%'
+                    add_print_request: 'Request a new print to {printer}'
         export_data_link: Export my data
 
 filament:
@@ -211,7 +231,7 @@ filament:
             name: Name
             weight: Spool weight
             usage: Usage
-        usage: '%weightRemaining%g remaining'
+        usage: '{weightRemaining}g remaining'
         full: Not used yet
         action:
             add_filament: Add filament
@@ -295,7 +315,7 @@ print_request:
         page_title: My print requests
         no_data: No print requested.
         team_section:
-            title: Request for %username%
+            title: Request for {username}
         column:
             name: Print name
             status: Status
@@ -304,7 +324,7 @@ print_request:
             printed: Printed
             pending: Pending
         action:
-            add_print_request: Add request for %username%'s
+            add_print_request: Add request for {username}'s
     form:
         name:
             label: Print name
@@ -324,8 +344,8 @@ print_request:
         page_title: Edit this print request
         not_deletable: This object was printed. You can not update it
     show:
-        meta_title: Print "%name%" by %username%
-        page_title: Print "%name%" by %username%
+        meta_title: Print "{name}" by {username}
+        page_title: Print "{name}" by {username}
     delete:
         confirm: Are you sure you want to remove this print request?
 
@@ -372,7 +392,7 @@ team:
         no_data: No request received.
     join:
         meta_title: Join a group | 3D Follow
-        page_title: You are invited to join %username%'s group
+        page_title: You are invited to join {username}'s group
         section:
             login:
                 content: If you already have an account, log in to join the group.
@@ -381,8 +401,8 @@ team:
                 content: Else create an account in less than a minute to join the group.
                 cta: Register
         flash:
-            warning: 'You are already part of %username%''s group.'
-            success: 'You are now a member of %username%''s group.'
+            warning: 'You are already part of {username}''s group.'
+            success: 'You are now a member of {username}''s group.'
 
 account:
     index:

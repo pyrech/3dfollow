@@ -6,7 +6,7 @@
                     <i class="fas fa-tape"></i>
                 </div>
                 <span class="display-3">{{ app.user.filaments|length }}</span>
-                <span>{{ 'dashboard.index.stats.filaments.label'|transchoice(app.user.filaments|length) }}</span>
+                <span>{{ 'dashboard.index.stats.filaments.label'|trans({count: app.user.filaments|length}) }}</span>
             </a>
         </div>
         <div class="col-md-3 mt-4">
@@ -15,7 +15,7 @@
                     <i class="fas fa-print"></i>
                 </div>
                 <span class="display-3">{{ app.user.printObjects|length }}</span>
-                <span>{{ 'dashboard.index.stats.print_objects.label'|transchoice(app.user.printObjects|length) }}</span>
+                <span>{{ 'dashboard.index.stats.print_objects.label'|trans({count: app.user.printObjects|length}) }}</span>
             </a>
         </div>
         <div class="col-md-3 mt-4">
@@ -24,7 +24,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <span class="display-3">{{ app.user.teamCreated.members|length }}</span>
-                <span>{{ 'dashboard.index.stats.members.label'|transchoice(app.user.teamCreated.members|length) }}</span>
+                <span>{{ 'dashboard.index.stats.members.label'|trans({count: app.user.teamCreated.members|length}) }}</span>
             </a>
         </div>
         <div class="col-md-3 mt-4">
@@ -33,7 +33,7 @@
                     <i class="fas fa-envelope"></i>
                 </div>
                 <span class="display-3">{{ team_print_requests|length }}</span>
-                <span>{{ 'dashboard.index.stats.pending_print_requests.label'|transchoice(team_print_requests|length) }}</span>
+                <span>{{ 'dashboard.index.stats.pending_print_requests.label'|trans({count: team_print_requests|length}) }}</span>
             </a>
         </div>
     </div>

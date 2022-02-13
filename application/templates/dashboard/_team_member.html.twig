@@ -54,7 +54,7 @@
                 <tr>
                     <td>{{ team.creator }}</td>
                     <td>
-                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'dashboard.index.section.groups.action.add_print_request'|trans({'%printer%': team.creator}) }}</a>
+                        <a href="{{ path('print_request_new', {id: team.id}) }}" class="btn btn-success"><span class="fa fa-plus"></span> {{ 'dashboard.index.section.groups.action.add_print_request'|trans({'printer': team.creator}) }}</a>
                     </td>
                 </tr>
             {% endfor %}

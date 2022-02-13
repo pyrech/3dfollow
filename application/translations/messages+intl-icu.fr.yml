@@ -149,7 +149,7 @@ dashboard:
     index:
         meta_title: Dashboard | 3D Follow
         page_title: Mon dashboard
-        welcome: 'Bienvenue %username%'
+        welcome: 'Bienvenue {username}'
         help:
             no_role:
                 title: Nouveau sur 3D Follow?
@@ -173,13 +173,33 @@ dashboard:
                 cta: Enregistrer une impression
         stats:
             filaments:
-                label: 'filament|filaments'
+                label: >
+                    { count, plural,
+                        =0 { filament }
+                        =1 { filament }
+                        other { filaments }
+                    }
             print_objects:
-                label: 'impression|impressions'
+                label: >
+                    { count, plural,
+                        =0 { impression }
+                        =1 { impression }
+                        other { impressions }
+                    }
             members:
-                label: 'membre|membres'
+                label: >
+                    { count, plural,
+                        =0 { membre }
+                        =1 { membre }
+                        other { membres }
+                    }
             pending_print_requests:
-                label: 'demande en attente|demandes en attente'
+                label: >
+                    { count, plural,
+                        =0 { demande en attente }
+                        =1 { demande en attente }
+                        other { demandes en attente }
+                    }
         section:
             pending_print_requests:
                 title: Les dernières demandes reçues
@@ -199,7 +219,7 @@ dashboard:
                 title: Groupes
                 subtitle: 'Vous êtes actuellement membre de ces groupes :'
                 action:
-                    add_print_request: 'Demander une nouvelle impression à %printer%'
+                    add_print_request: 'Demander une nouvelle impression à {printer}'
         export_data_link: Exporter mes données
 
 filament:
@@ -211,7 +231,7 @@ filament:
             name: Nom
             weight: Poids de la bobine
             usage: Utilisation
-        usage: ' %weightRemaining%g restant'
+        usage: ' {weightRemaining}g restant'
         full: Pas encore utilisée
         action:
             add_filament: Ajouter un filament
@@ -295,7 +315,7 @@ print_request:
         page_title: Mes demandes d'impression
         no_data: Aucune demande enregistrée.
         team_section:
-            title: Demandes pour %username%
+            title: Demandes pour {username}
         column:
             name: Nom de l'impression
             status: Statut
@@ -304,7 +324,7 @@ print_request:
             printed: Imprimée
             pending: En attente
         action:
-            add_print_request: Ajouter une demande pour %username%
+            add_print_request: Ajouter une demande pour {username}
     form:
         name:
             label: Nom de l'objet
@@ -324,8 +344,8 @@ print_request:
         page_title: Modifier la demande d'impression
         not_deletable: L'objet a été imprimé. Vous ne pouvez plus le modifier
     show:
-        meta_title: Impression "%name%" de %username%
-        page_title: Consulter l'impression "%name%" de %username%
+        meta_title: Impression "{name}" de {username}
+        page_title: Consulter l'impression "{name}" de {username}
     delete:
         confirm: Êtes-vous sûr de vouloir supprimer cette demande d'impression ?
 
@@ -372,7 +392,7 @@ team:
         no_data: Aucune demande reçue.
     join:
         meta_title: Rejoindre un groupe | 3D Follow
-        page_title: Vous êtes invité à rejoindre le groupe de %username%
+        page_title: Vous êtes invité à rejoindre le groupe de {username}
         section:
             login:
                 content: Si vous avez déjà un compte, connectez-vous pour rejoindre le groupe.
@@ -381,8 +401,8 @@ team:
                 content: Sinon, créer votre compte en un instant afin de rejoindre le groupe.
                 cta: Créer mon compte
         flash:
-            warning: 'Vous êtes déjà membre du groupe de %username%.'
-            success: 'Vous êtes désormais membre du groupe de %username%.'
+            warning: 'Vous êtes déjà membre du groupe de {username}.'
+            success: 'Vous êtes désormais membre du groupe de {username}.'
 
 account:
     index:

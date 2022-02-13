@@ -29,7 +29,7 @@ class PrintRequestController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[Route(path: '', name: 'index', methods: ['GET'])]
     #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
     public function index(PrintRequestRepository $printRequestRepository): Response
     {

@@ -1,7 +1,7 @@
 {% extends 'default_page.html.twig' %}
 
-{% block title %}{{ 'print_request.show.meta_title'|trans({'%name%': print_request.name, '%username%': print_request.user.username}) }}{% endblock %}
-{% block page_title %}{{ 'print_request.show.page_title'|trans({'%name%': print_request.name, '%username%': print_request.user.username}) }}{% endblock %}
+{% block title %}{{ 'print_request.show.meta_title'|trans({'name': print_request.name, 'username': print_request.user.username}) }}{% endblock %}
+{% block page_title %}{{ 'print_request.show.page_title'|trans({'name': print_request.name, 'username': print_request.user.username}) }}{% endblock %}
 
 {% block page_body %}
     <ul>

@@ -29,7 +29,7 @@ class FilamentController extends AbstractController
     ) {
     }
 
-    #[Route(path: '/', name: 'index', methods: ['GET'])]
+    #[Route(path: '', name: 'index', methods: ['GET'])]
     public function index(FilamentRepository $filamentRepository): Response
     {
         /** @var User $user */

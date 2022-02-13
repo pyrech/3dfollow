@@ -11,23 +11,24 @@ namespace App\Security;
 
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class TokenRefresher
 {
     final public const PROVIDER_KEY = 'main';
 
     public function __construct(
-        private readonly TokenStorageInterface $tokenStorage,
+        private UserAuthenticatorInterface $userAuthenticator,
+        private AppLoginFormAuthenticator $authenticator,
     ) {
     }
 
     public function refresh(User $user, Request $request): void
     {
-        // create an authenticated token for the User
-        $token = new PostAuthenticationToken($user, self::PROVIDER_KEY, $user->getRoles());
-        // authenticate this in the system
-        $this->tokenStorage->setToken($token);
+        $this->userAuthenticator->authenticateUser(
+            $user,
+            $this->authenticator,
+            $request,
+        );
     }
 }

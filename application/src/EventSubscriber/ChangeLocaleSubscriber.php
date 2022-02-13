@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -39,21 +40,26 @@ class ChangeLocaleSubscriber implements EventSubscriberInterface
         }
 
         $token = $this->tokenStorage->getToken();
+        $user = $token?->getUser();
 
-        if (!$token) {
-            return;
+        if ($user instanceof User) {
+            /** @var string $locale */
+            $locale = $request->attributes->get('_locale');
+            $user->setDefaultLocale($locale);
+            $this->entityManager->flush();
         }
 
-        $user = $token->getUser();
+        $url = $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo();
 
-        if (!$user instanceof User) {
-            return;
+        $request->query->remove('change_locale');
+        $parameters = $request->query->all();
+        $queryString = http_build_query($parameters);
+
+        if ($queryString) {
+            $url = '?' . $queryString;
         }
 
-        /** @var string $locale */
-        $locale = $request->attributes->get('_locale');
-        $user->setDefaultLocale($locale);
-        $this->entityManager->flush();
+        $event->setResponse(new RedirectResponse($url));
     }
 
     public static function getSubscribedEvents(): array

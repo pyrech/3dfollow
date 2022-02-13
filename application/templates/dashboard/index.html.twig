@@ -4,7 +4,7 @@
 {% block page_title %}{{ 'dashboard.index.page_title'|trans }}{% endblock %}
 
 {% block page_body %}
-    <p>{{ 'dashboard.index.welcome'|trans({'%username%': app.user.username}) }}</p>
+    <p>{{ 'dashboard.index.welcome'|trans({'username': app.user.username}) }}</p>
 
     {% if is_granted('ROLE_PRINTER') %}
         {{ include('dashboard/_printer.html.twig') }}
