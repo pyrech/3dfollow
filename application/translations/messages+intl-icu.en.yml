@@ -22,6 +22,7 @@ nav:
 
 footer:
     built_with_love: 'Built with <i class="fa fa-heart"></i> by <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
+    code_oss: 'Code is <a href="https://github.com/pyrech/3dfollow" ref="nofollow">open source</a>'
     terms: Terms of Service
     privacy: Privacy Policy
 
