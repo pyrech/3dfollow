@@ -21,8 +21,7 @@ nav:
     register: Créer un compte
 
 footer:
-    built_with_love: 'Developpé avec <i class="fa fa-heart"></i> par <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
-    code_oss: 'Le code est <a href="https://github.com/pyrech/3dfollow" ref="nofollow">open source</a>'
+    built_with_love: 'Developpé avec <i class="fa fa-heart"></i> par <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a> et <a href="https://github.com/pyrech/3dfollow" ref="nofollow">open source</a>.'
     terms: Conditions d'utilisation
     privacy: Protection des données
 
@@ -101,7 +100,7 @@ home:
             free:
                 title: C'est gratuit !
                 content: |
-                    Cette application est complètement gratuite et sans publicités.<br />
+                    Cette application est complètement gratuite, <a href="https://github.com/pyrech/3dfollow">open source</a> et sans publicité.<br />
                 cta: Démarrer
     terms:
         meta_title: Conditions d'utilisation | 3D Follow

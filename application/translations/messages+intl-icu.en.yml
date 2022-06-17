@@ -21,8 +21,7 @@ nav:
     register: Register
 
 footer:
-    built_with_love: 'Built with <i class="fa fa-heart"></i> by <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a>'
-    code_oss: 'Code is <a href="https://github.com/pyrech/3dfollow" ref="nofollow">open source</a>'
+    built_with_love: 'Built with <i class="fa fa-heart"></i> by <a href="https://twitter.com/pyrech" rel="nofollow">@pyrech</a> and <a href="https://github.com/pyrech/3dfollow" ref="nofollow">open source</a>.'
     terms: Terms of Service
     privacy: Privacy Policy
 
@@ -78,7 +77,7 @@ home:
                 free:
                     name: Free
                     description: |
-                        Nothing to pay, not now, nor later. The application is completely free and no ad is displayed.
+                        Nothing to pay, not now, nor later. The application is completely free and <a href="https://github.com/pyrech/3dfollow">open source</a> and no ad is displayed.
             stock:
                 title: Look at your filament stock
                 content: |
