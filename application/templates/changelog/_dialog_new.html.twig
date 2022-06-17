@@ -17,7 +17,7 @@
                         <h6>{{ changelog.date|format_datetime('long', 'none') }}</h6>
                         <ul>
                             {% for item in changelog.items %}
-                                <li>{{ item }}</li>
+                                <li>{{ item|raw }}</li>
                             {% endfor %}
                         </ul>
                     {% endfor %}
