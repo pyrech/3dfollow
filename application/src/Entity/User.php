@@ -190,7 +190,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|PrintRequest[]
+     * @return Collection<PrintRequest>
      */
     public function getPrintRequests(): Collection
     {
@@ -221,7 +221,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Filament[]
+     * @return Collection<Filament>
      */
     public function getFilaments(): Collection
     {
@@ -269,7 +269,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Team[]
+     * @return Collection<Team>
      */
     public function getTeams(): Collection
     {
@@ -297,7 +297,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|PrintObject[]
+     * @return Collection<PrintObject>
      */
     public function getPrintObjects(): Collection
     {
