@@ -100,7 +100,7 @@ home:
             free:
                 title: It's free !
                 content: |
-                    This application is completely free and without any ad.<br />
+                    This application is completely free, <a href="https://github.com/pyrech/3dfollow">open source</a> and without any ad.<br />
                 cta: Start
     terms:
         meta_title: Terms of Service | 3D Follow

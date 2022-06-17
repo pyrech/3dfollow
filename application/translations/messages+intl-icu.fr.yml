@@ -77,7 +77,7 @@ home:
                 free:
                     name: Gratuit
                     description: |
-                        Rien à payer, ni tout de suite, ni plus tard. L'application est complètement gratuite et aucune publicité n'est affichée.
+                        Rien à payer, ni tout de suite, ni plus tard. L'application est complètement gratuite, <a href="https://github.com/pyrech/3dfollow">open source</a> et aucune publicité n'est affichée.
             stock:
                 title: Consultez votre stock de filament
                 content: |
