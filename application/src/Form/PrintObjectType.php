@@ -121,7 +121,7 @@ class PrintObjectType extends AbstractType
 
             /** @var PrintObject $data */
             $data = $form->getData();
-            if (empty($data->getGCodeFile()) && empty($data->getGCode()->getName())) {
+            if (empty($data->getGCodeFile()) && empty($data->getGCode()?->getName())) {
                 $groups[] = 'no_gcode_uploaded';
             }
 

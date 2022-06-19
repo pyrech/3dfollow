@@ -181,7 +181,7 @@ class Filament
     }
 
     /**
-     * @return Collection|PrintObject[]
+     * @return Collection<PrintObject>
      */
     public function getPrintObjects(): Collection
     {
@@ -234,7 +234,7 @@ class Filament
             return null;
         }
 
-        return $this->price * $weight / $this->weight;
+        return ((float) $this->price) * $weight / (float) $this->weight;
     }
 
     public function computeUsagePercentage(): float
@@ -249,6 +249,6 @@ class Filament
             $usedWeight += ((float) $printObject->getWeight()) * $printObject->getQuantity();
         }
 
-        return $usedWeight * 100 / $this->weight;
+        return $usedWeight * 100 / (float) $this->weight;
     }
 }

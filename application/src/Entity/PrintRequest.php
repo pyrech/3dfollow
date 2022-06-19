@@ -156,7 +156,7 @@ class PrintRequest
     }
 
     /**
-     * @return Collection|PrintObject[]
+     * @return Collection<PrintObject>
      */
     public function getPrintObjects(): Collection
     {

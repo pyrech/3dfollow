@@ -72,7 +72,7 @@ class Team
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection<User>
      */
     public function getMembers(): Collection
     {
@@ -99,7 +99,7 @@ class Team
     }
 
     /**
-     * @return Collection|PrintRequest[]
+     * @return Collection<PrintRequest>
      */
     public function getPrintRequests(): Collection
     {
