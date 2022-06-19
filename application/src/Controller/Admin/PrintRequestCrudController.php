@@ -33,6 +33,8 @@ class PrintRequestCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Print request')
             ->setEntityLabelInPlural('Print requests')
             ->setSearchFields(['id', 'name', 'link', 'comment', 'quantity'])
+            ->showEntityActionsInlined()
+            ->setDefaultSort(['createdAt' => 'DESC'])
         ;
     }
 
@@ -52,14 +54,11 @@ class PrintRequestCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $link, $comment, $isPrinted, $quantity, $createdAt, $user, $team, $printObjects];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$team, $user, $name, $link, $comment, $quantity, $printObjects, $createdAt];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$team, $user, $name, $link, $comment, $quantity, $printObjects, $createdAt];
         }
 
-        // Index page
-        return [$team, $user, $name, $link, $quantity, $isPrinted];
+        return [$team, $user, $name, $link, $quantity, $isPrinted, $createdAt];
     }
 }

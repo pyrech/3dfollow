@@ -34,6 +34,8 @@ class PrintObjectCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Print object')
             ->setEntityLabelInPlural('Print objects')
             ->setSearchFields(['id', 'uuid', 'name', 'quantity', 'weight', 'length', 'cost', 'gCode.name', 'gCode.originalName', 'gCode.mimeType', 'gCode.size', 'gCode.dimensions'])
+            ->showEntityActionsInlined()
+            ->setDefaultSort(['printedAt' => 'DESC'])
         ;
     }
 
@@ -61,14 +63,11 @@ class PrintObjectCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $uuid, $name, $quantity, $weight, $length, $cost, $printedAt, $updatedAt, $gCodeName, $gCodeOriginalName, $gCodeMimeType, $gCodeSize, $gCodeDimensions, $filament, $user, $printRequest];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$user, $name, $filament, $gCodeFile, $quantity, $weight, $length, $cost, $printRequest, $printedAt];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$user, $name, $filament, $gCodeFile, $quantity, $weight, $length, $cost, $printRequest, $printedAt];
         }
 
-        // Index page
         return [$user, $name, $filament, $quantity, $cost, $printedAt];
     }
 }

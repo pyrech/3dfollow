@@ -29,6 +29,8 @@ class ChangelogCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Changelog')
             ->setEntityLabelInPlural('Changelogs')
             ->setSearchFields(['id', 'items'])
+            ->showEntityActionsInlined()
+            ->setDefaultSort(['date' => 'DESC'])
         ;
     }
 
@@ -41,14 +43,11 @@ class ChangelogCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $date, $items];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$date, $items];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$date, $items];
         }
 
-        // Index page
         return [$date];
     }
 }
