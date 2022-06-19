@@ -29,6 +29,7 @@ class TeamCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Team')
             ->setEntityLabelInPlural('Teams')
             ->setSearchFields(['id', 'joinToken'])
+            ->showEntityActionsInlined()
         ;
     }
 
@@ -43,14 +44,11 @@ class TeamCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $joinToken, $creator, $members, $printRequests];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$creator, $members];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$creator, $members];
         }
 
-        // Index page
         return [$creator, $members, $joinToken];
     }
 }

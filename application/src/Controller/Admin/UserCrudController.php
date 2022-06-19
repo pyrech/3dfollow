@@ -31,6 +31,8 @@ class UserCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('User')
             ->setEntityLabelInPlural('Users')
             ->setSearchFields(['id', 'username', 'defaultLocale'])
+            ->showEntityActionsInlined()
+            ->setDefaultSort(['createdAt' => 'DESC'])
         ;
     }
 
@@ -52,14 +54,11 @@ class UserCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $username, $isAdmin, $isPrinter, $createdAt, $lastChangelogSeenAt, $defaultLocale, $printRequests, $filaments, $teamCreated, $teams, $printObjects];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
         }
 
-        // Index page
-        return [$username, $isPrinter, $isAdmin, $createdAt, $teams];
+        return [$username, $isPrinter, $isAdmin, $teams, $createdAt];
     }
 }

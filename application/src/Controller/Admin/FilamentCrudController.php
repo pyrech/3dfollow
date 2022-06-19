@@ -32,6 +32,8 @@ class FilamentCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Filament')
             ->setEntityLabelInPlural('Filaments')
             ->setSearchFields(['id', 'name', 'weight', 'weightUsed', 'price', 'density', 'diameter', 'comment'])
+            ->showEntityActionsInlined()
+            ->setDefaultSort(['createdAt' => 'DESC'])
         ;
     }
 
@@ -52,14 +54,11 @@ class FilamentCrudController extends AbstractCrudController
         if (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $weight, $weightUsed, $price, $density, $diameter, $comment, $owner, $printObjects, $createdAt];
         }
-        if (Crud::PAGE_NEW === $pageName) {
-            return [$owner, $name, $weight, $price, $density, $diameter, $comment, $createdAt];
-        }
-        if (Crud::PAGE_EDIT === $pageName) {
+
+        if (Crud::PAGE_NEW === $pageName || Crud::PAGE_EDIT === $pageName) {
             return [$owner, $name, $weight, $price, $density, $diameter, $comment, $createdAt];
         }
 
-        // Index page
-        return [$owner, $name, $weight, $price, $density, $diameter];
+        return [$owner, $name, $weight, $price, $density, $diameter, $createdAt];
     }
 }
