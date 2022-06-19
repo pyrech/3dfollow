@@ -2,7 +2,7 @@ validation:
     username_required: Please enter a username
     username_existing: This username is already used
     password_required: Please enter a password
-    password_length: 'Your password should be at least {{ limit }} characters'
+    password_length: 'Your password should be at least {limit} characters'
     accept_terms: You must accept our terms
     invalid_gcode: The quantity of filament utilisé could not be estimated for this print. Please either upload a valid .gcode file, or manually fill filament used weight, length and cost.
     value_required_no_gcode: This value must not be empty if no .gcode file is uploaded
