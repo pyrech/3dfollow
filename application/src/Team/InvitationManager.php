@@ -37,7 +37,7 @@ class InvitationManager
 
         if ($team->getMembers()->contains($user)) {
             $this->getFlashBag($request)->add('warning', $this->translator->trans('team.join.flash.warning', [
-                '%username%' => $teamCreator ? $teamCreator->getUsername() : '',
+                '{username}' => $teamCreator ? $teamCreator->getUsername() : '',
             ]));
 
             return;
@@ -48,7 +48,7 @@ class InvitationManager
         $this->entityManager->flush();
 
         $this->getFlashBag($request)->add('success', $this->translator->trans('team.join.flash.success', [
-            '%username%' => $teamCreator ? $teamCreator->getUsername() : '',
+            '{username}' => $teamCreator ? $teamCreator->getUsername() : '',
         ]));
 
         // Roles of users may have changed if joining its first group, so let's refresh its token to avoid logout
