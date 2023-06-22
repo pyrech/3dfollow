@@ -4,11 +4,10 @@ volumes:
     builder-data: {}
 
 services:
-    php-base:
-        build: services/php-base
-
     builder:
-        build: services/builder
+        build:
+            context: services/php
+            target: builder
         depends_on:
             - postgres
         environment:
@@ -16,6 +15,7 @@ services:
         volumes:
             - "../../${PROJECT_DIRECTORY}:/home/app/application:cached"
             - "${COMPOSER_CACHE_DIR}:/home/app/.composer/cache"
-            - "../../invoke.py:/home/app/invoke.py"
-            - "../../tasks.py:/home/app/tasks.py"
+            - "../../.php-cs-fixer.php:/home/app/.php-cs-fixer.php"
+            - "../../castor.php:/home/app/castor.php"
+            - "../../.castor:/home/app/.castor"
             - "builder-data:/home/app"
