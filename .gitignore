@@ -1,2 +1,3 @@
-*.pyc
+*.castor.stub.php
+/.php-cs-fixer.cache
 /infrastructure/docker/docker-compose.override.yml

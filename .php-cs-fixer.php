@@ -21,10 +21,13 @@ $finder = PhpCsFixer\Finder::create()
     ->append([
         __FILE__,
     ])
+    ->ignoreVCSIgnored(true)
+    ->ignoreDotFiles(false)
 ;
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
+    ->setUsingCache(true)
     ->setRules([
         '@PHP80Migration' => true,
         '@PhpCsFixer' => true,
@@ -33,10 +36,10 @@ return (new PhpCsFixer\Config())
         'php_unit_internal_class' => false, // From @PhpCsFixer but we don't want it
         'php_unit_test_class_requires_covers' => false, // From @PhpCsFixer but we don't want it
         'phpdoc_add_missing_param_annotation' => false, // From @PhpCsFixer but we don't want it
-        'header_comment' => ['header' => $fileHeaderComment],
         'concat_space' => ['spacing' => 'one'],
         'ordered_class_elements' => true, // Symfony(PSR12) override the default value, but we don't want
         'blank_line_before_statement' => true, // Symfony(PSR12) override the default value, but we don't want
+        'header_comment' => ['header' => $fileHeaderComment],
     ])
     ->setFinder($finder)
 ;

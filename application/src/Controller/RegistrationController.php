@@ -64,10 +64,10 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
             if ($response = $userAuthenticator->authenticateUser(
-                    $user,
-                    $authenticator,
-                    $request,
-                )
+                $user,
+                $authenticator,
+                $request,
+            )
             ) {
                 return $response;
             }

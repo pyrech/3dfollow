@@ -14,5 +14,5 @@ parameters:
           path: src/Repository
         - message: '#Method App\\Repository\\[a-zA-Z0-9\\_]+Repository::.*\(\) should return [a-zA-Z0-9\\_]+\|null but returns mixed\.#'
           path: src/Repository
-        - message: '#Parameter \#1 \$func of method Doctrine\\Common\\Collections\\Collection\<mixed,mixed\>::map\(\) expects Closure\(mixed\): .*, Closure\(.*\): .* given\.#'
+        - message: '#Parameter \#1 \$func of method Doctrine\\Common\\Collections\\ReadableCollection<\(int\|string\),mixed>::map\(\) expects Closure\(mixed\): .*, Closure\(.*\): .* given\.#'
           path: src/Data/Exporter.php
