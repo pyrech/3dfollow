@@ -71,12 +71,12 @@ function install(): void
 #[AsTask(description: 'Clear the application cache', namespace: 'app')]
 function cache_clear(): void
 {
-    // docker_compose_run('rm -rf var/cache/ && bin/console cache:warmup');
+    docker_compose_run('rm -rf var/cache/ && bin/console cache:warmup');
 }
 
 #[AsTask(description: 'Migrates database schema', namespace: 'app:db')]
 function migrate(): void
 {
-    // docker_compose_run('bin/console doctrine:database:create --if-not-exists');
-    // docker_compose_run('bin/console doctrine:migration:migrate -n --allow-no-migration');
+    docker_compose_run('bin/console doctrine:database:create --if-not-exists');
+    docker_compose_run('bin/console doctrine:migration:migrate -n --allow-no-migration');
 }
