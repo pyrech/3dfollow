@@ -64,7 +64,7 @@ function phpcsfixer(
     bool $returnExitCode = true,
 ): null|int|Process {
     $process = docker_compose_run(
-        'php vendor/bin/php-cs-fixer fix --config=../.php-cs-fixer.php --cache-file=../.php-cs-fixer.cach',
+        'php vendor/bin/php-cs-fixer fix --config=../.php-cs-fixer.php --cache-file=../.php-cs-fixer.cache',
         c: get_context()->withQuiet($quiet),
     );
 
