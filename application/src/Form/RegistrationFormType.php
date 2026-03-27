@@ -20,6 +20,9 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<User>
+ */
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -27,6 +30,11 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username', null, [
                 'label' => 'registration.register.form.username.label',
+                'constraints' => [
+                    new NotBlank(
+                        message: 'validation.username_required',
+                    ),
+                ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 'label' => 'registration.register.form.plainPassword.label',
@@ -34,15 +42,15 @@ class RegistrationFormType extends AbstractType
                 // this is read and hashed in the controller
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'validation.password_required',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'validation.password_length',
+                    new NotBlank(
+                        message: 'validation.password_required',
+                    ),
+                    new Length(
+                        min: 6,
+                        minMessage: 'validation.password_length',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                        max: 4096,
+                    ),
                 ],
             ])
             ->add('isPrinter', ChoiceType::class, [
@@ -59,9 +67,9 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'mapped' => false,
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'validation.accept_terms',
-                    ]),
+                    new IsTrue(
+                        message: 'validation.accept_terms',
+                    ),
                 ],
             ])
         ;

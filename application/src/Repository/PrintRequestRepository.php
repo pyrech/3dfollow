@@ -17,10 +17,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method PrintRequest|null find($id, $lockMode = null, $lockVersion = null)
- * @method PrintRequest|null findOneBy(array $criteria, array $orderBy = null)
- * @method PrintRequest[]    findAll()
- * @method PrintRequest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<PrintRequest>
  */
 class PrintRequestRepository extends ServiceEntityRepository
 {

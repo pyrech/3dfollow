@@ -16,20 +16,20 @@ use App\Repository\PrintRequestRepository;
 use App\Repository\TeamRepository;
 use App\Team\InvitationManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/team', name: 'team_')]
 class TeamController extends AbstractController
 {
     #[Route(path: '', name: 'index', methods: ['GET'])]
-    #[IsGranted(data: 'ROLE_PRINTER')]
+    #[IsGranted('ROLE_PRINTER')]
     public function index(): Response
     {
         /** @var User $user */
@@ -41,7 +41,7 @@ class TeamController extends AbstractController
     }
 
     #[Route(path: '/print-requests', name: 'print_requests', methods: ['GET'])]
-    #[IsGranted(data: 'ROLE_PRINTER')]
+    #[IsGranted('ROLE_PRINTER')]
     public function printRequests(PrintRequestRepository $printRequestRepository, Pagination $pagination): Response
     {
         /** @var User $user */
@@ -56,12 +56,12 @@ class TeamController extends AbstractController
     }
 
     #[Route(path: '/generate-join-token', name: 'generate_join_token', methods: ['POST'])]
-    #[IsGranted(data: 'ROLE_PRINTER')]
+    #[IsGranted('ROLE_PRINTER')]
     public function generateJoinToken(
         EntityManagerInterface $entityManager,
         CsrfTokenManagerInterface $csrfTokenManager,
         TokenGeneratorInterface $tokenGenerator,
-        Request $request
+        Request $request,
     ): Response {
         $token = new CsrfToken('team_generate_join_token', (string) $request->request->get('token'));
 
@@ -92,7 +92,7 @@ class TeamController extends AbstractController
         TeamRepository $repository,
         InvitationManager $invitationManager,
         Request $request,
-        string $token
+        string $token,
     ): Response {
         /** @var User|null $user */
         $user = $this->getUser();

@@ -19,6 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @extends AbstractType<User>
+ */
 class AccountType extends AbstractType
 {
     /**
@@ -34,6 +37,9 @@ class AccountType extends AbstractType
         $builder
             ->add('username', null, [
                 'label' => 'account.index.form.username.label',
+                'constraints' => [
+                    new NotBlank(message: 'validation.username_required'),
+                ],
             ])
             ->add('isPrinter', ChoiceType::class, [
                 'label' => 'account.index.form.isPrinter.label',
@@ -54,10 +60,10 @@ class AccountType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'validation.old_password_required',
-                        'groups' => ['password_change'],
-                    ]),
+                    new NotBlank(
+                        message: 'validation.old_password_required',
+                        groups: ['password_change'],
+                    ),
                 ],
             ])
             ->add('newPassword', PasswordType::class, [
@@ -65,16 +71,16 @@ class AccountType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'groups' => ['password_change'],
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'validation.password_length',
+                    new NotBlank(
+                        groups: ['password_change'],
+                    ),
+                    new Length(
+                        min: 6,
+                        minMessage: 'validation.password_length',
                         // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                        'groups' => ['password_change'],
-                    ]),
+                        max: 4096,
+                        groups: ['password_change'],
+                    ),
                 ],
             ])
         ;
@@ -82,11 +88,7 @@ class AccountType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-
-        $resolver->setDefault('validation_groups', function (FormInterface $form) {
+        $resolver->setDefault('validation_groups', static function (FormInterface $form) {
             $groups = ['Default'];
 
             if ($form->get('oldPassword')->getData() || $form->get('newPassword')->getData()) {

@@ -25,7 +25,7 @@ class Exporter
     public function export(User $user): string
     {
         $date = new \DateTime();
-        $name = sprintf('%s/3dfollow-export-%s-%s.zip', sys_get_temp_dir(), $user->getUsername(), $date->format('Ymd-His'));
+        $name = \sprintf('%s/3dfollow-export-%s-%s.zip', sys_get_temp_dir(), $user->getUsername(), $date->format('Ymd-His'));
 
         $archive = $this->buildArchive($name);
 
@@ -98,7 +98,7 @@ class Exporter
 
     private function exportFilament(User $user, \ZipArchive $archive): void
     {
-        $this->addCsvToArchive($archive, 'filaments.csv', $user->getFilaments()->map(function (Filament $filament) {
+        $this->addCsvToArchive($archive, 'filaments.csv', $user->getFilaments()->map(static function (Filament $filament) {
             return [
                 'filament' => $filament->getName(),
                 'weight (g)' => $filament->getWeight(),
@@ -116,7 +116,7 @@ class Exporter
     {
         $storage = $this->storage;
 
-        $this->addCsvToArchive($archive, 'prints.csv', $user->getPrintObjects()->map(function (PrintObject $printObject) use ($archive, $storage) {
+        $this->addCsvToArchive($archive, 'prints.csv', $user->getPrintObjects()->map(static function (PrintObject $printObject) use ($archive, $storage) {
             $filament = $printObject->getFilament();
             $printedAt = $printObject->getPrintedAt();
             $gcode = $printObject->getGCode();
@@ -152,7 +152,7 @@ class Exporter
             return;
         }
 
-        $this->addCsvToArchive($archive, 'group.csv', $team->getMembers()->map(function (User $user) {
+        $this->addCsvToArchive($archive, 'group.csv', $team->getMembers()->map(static function (User $user) {
             return [
                 'member username' => $user->getUsername(),
                 'print requests count' => $user->getPrintRequests()->count(),
@@ -162,18 +162,18 @@ class Exporter
 
     private function exportPrintRequests(User $user, \ZipArchive $archive): void
     {
-        $this->addCsvToArchive($archive, 'requests.csv', $user->getPrintRequests()->map(function (PrintRequest $printRequest) {
+        $this->addCsvToArchive($archive, 'requests.csv', $user->getPrintRequests()->map(static function (PrintRequest $printRequest) {
             $createdAt = $printRequest->getCreatedAt();
 
             return [
                 'name' => $printRequest->getName(),
                 'link' => $printRequest->getLink(),
                 'quantity' => $printRequest->getQuantity(),
-                'prints' => implode(', ', $printRequest->getPrintObjects()->map(function (PrintObject $printObject) {
+                'prints' => implode(', ', $printRequest->getPrintObjects()->map(static function (PrintObject $printObject) {
                     return $printObject->getName();
                 })->toArray()),
                 'is printed' => $printRequest->getIsPrinted() ? 'yes' : 'no',
-                'request date' => $createdAt ? $createdAt->format('Y-m-d H:i:s') : '',
+                'request date' => $createdAt->format('Y-m-d H:i:s'),
                 'comment' => $printRequest->getComment(),
             ];
         })->toArray());

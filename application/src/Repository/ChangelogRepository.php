@@ -14,10 +14,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Changelog|null find($id, $lockMode = null, $lockVersion = null)
- * @method Changelog|null findOneBy(array $criteria, array $orderBy = null)
- * @method Changelog[]    findAll()
- * @method Changelog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Changelog>
  */
 class ChangelogRepository extends ServiceEntityRepository
 {

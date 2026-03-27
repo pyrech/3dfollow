@@ -26,7 +26,7 @@ class Pagination
     }
 
     /**
-     * @return PaginationInterface<object>
+     * @return PaginationInterface<int, mixed>
      */
     public function create(QueryBuilder $qb, int $maxItemsPerPage = self::ITEMS_PER_PAGE): PaginationInterface
     {

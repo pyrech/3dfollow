@@ -11,13 +11,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\PrintRequestRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/dashboard', name: 'dashboard_')]
-#[IsGranted(data: 'ROLE_USER')]
+#[IsGranted('ROLE_USER')]
 class DashboardController extends AbstractController
 {
     #[Route(path: '', name: 'index', methods: ['GET'])]

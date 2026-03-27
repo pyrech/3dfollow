@@ -25,6 +25,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
+/**
+ * @extends AbstractType<PrintObject>
+ */
 class PrintObjectType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -50,7 +53,7 @@ class PrintObjectType extends AbstractType
             ->add('filament', EntityType::class, [
                 'label' => 'print_object.form.filament.label',
                 'class' => Filament::class,
-                'query_builder' => function (FilamentRepository $filamentRepository) use ($user) {
+                'query_builder' => static function (FilamentRepository $filamentRepository) use ($user) {
                     return $filamentRepository->createQueryBuilder('f')
                         ->andWhere('f.owner = :user')
                         ->setParameter('user', $user)
@@ -61,7 +64,7 @@ class PrintObjectType extends AbstractType
                 'label' => 'print_object.form.printRequest.label',
                 'class' => PrintRequest::class,
                 'required' => false,
-                'query_builder' => function (PrintRequestRepository $printRequestRepository) use ($user) {
+                'query_builder' => static function (PrintRequestRepository $printRequestRepository) use ($user) {
                     return $printRequestRepository->createQueryBuilder('p')
                         ->andWhere('p.team = :team')
                         ->setParameter('team', $user->getTeamCreated())
@@ -116,7 +119,7 @@ class PrintObjectType extends AbstractType
         $resolver->setRequired('user');
         $resolver->setAllowedTypes('user', User::class);
 
-        $resolver->setDefault('validation_groups', function (FormInterface $form) {
+        $resolver->setDefault('validation_groups', static function (FormInterface $form) {
             $groups = ['Default'];
 
             /** @var PrintObject $data */

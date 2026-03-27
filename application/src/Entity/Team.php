@@ -26,9 +26,12 @@ class Team
     #[ORM\JoinColumn(nullable: false)]
     private ?User $creator = null;
 
+    /** @var Collection<int, User> */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'teams')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $members;
 
+    /** @var Collection<int, PrintRequest> */
     #[ORM\OneToMany(targetEntity: PrintRequest::class, mappedBy: 'team')]
     private Collection $printRequests;
 
@@ -47,7 +50,7 @@ class Team
             return 'New team';
         }
 
-        return sprintf('%s\'s team', $this->creator);
+        return \sprintf('%s\'s team', $this->creator);
     }
 
     public function getId(): ?int
@@ -72,7 +75,7 @@ class Team
     }
 
     /**
-     * @return Collection<User>
+     * @return Collection<int, User>
      */
     public function getMembers(): Collection
     {
@@ -99,7 +102,7 @@ class Team
     }
 
     /**
-     * @return Collection<PrintRequest>
+     * @return Collection<int, PrintRequest>
      */
     public function getPrintRequests(): Collection
     {

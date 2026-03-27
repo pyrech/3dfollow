@@ -9,20 +9,15 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Changelog;
-use App\Entity\Filament;
-use App\Entity\PrintObject;
-use App\Entity\PrintRequest;
-use App\Entity\Team;
-use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
+#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function configureDashboard(): Dashboard
@@ -39,20 +34,19 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Print object', 'far fa-file-code', PrintObject::class);
-        yield MenuItem::linkToCrud('Print request', 'fas fa-list', PrintRequest::class);
-        yield MenuItem::linkToCrud('Filament', 'fas fa-circle-notch', Filament::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Team', 'fas fa-users', Team::class);
-        yield MenuItem::linkToCrud('Changelog', 'fas fa-book', Changelog::class);
+        yield MenuItem::linkTo(PrintObjectCrudController::class, 'Print object', 'far fa-file-code');
+        yield MenuItem::linkTo(PrintRequestCrudController::class, 'Print request', 'fas fa-list');
+        yield MenuItem::linkTo(FilamentCrudController::class, 'Filament', 'fas fa-circle-notch');
+        yield MenuItem::linkTo(UserCrudController::class, 'User', 'fas fa-user');
+        yield MenuItem::linkTo(TeamCrudController::class, 'Team', 'fas fa-users');
+        yield MenuItem::linkTo(ChangelogCrudController::class, 'Changelog', 'fas fa-book');
     }
 
     #[Route(path: '/admin')]
     public function index(): Response
     {
-        return $this->redirect($this->container->get(AdminUrlGenerator::class)
-            ->setController(PrintObjectCrudController::class)
-            ->generateUrl()
+        return $this->redirect(
+            $this->generateUrl('admin_print_object_index')
         );
     }
 }

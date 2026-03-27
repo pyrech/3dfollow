@@ -62,10 +62,8 @@ class AccountTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         // TODO fix redirection after change
-        /*
         $this->assertResponseUri($crawler, self::URL);
         $this->assertSelectorTextContains('.alert-success', 'account.index.flash.success');
         $this->assertCount(0, $crawler->filter('.form-error-message'));
-        */
     }
 }

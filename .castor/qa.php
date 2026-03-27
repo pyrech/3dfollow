@@ -10,116 +10,101 @@
 namespace qa;
 
 use Castor\Attribute\AsOption;
+use Castor\Attribute\AsRawTokens;
 use Castor\Attribute\AsTask;
-use Symfony\Component\Process\Process;
 
-use function Castor\get_context;
 use function Castor\io;
-use function Castor\notify;
-use function Castor\parallel;
+use function Castor\variable;
+use function docker\docker_compose_run;
+use function docker\docker_exit_code;
 
-#[AsTask(namespace: 'qa', description: 'Run PHPUnit tests and PHP CS Fixer and PHPStan analysis')]
-function all(): ?int
+#[AsTask(description: 'Runs all QA tasks')]
+function all(): int
 {
-    [$phpCsFixer, $phpStan] = parallel(
-        function () {
-            return phpcsfixer(true, false);
-        },
-        function () {
-            return phpstan(true, false);
-        }
-    );
+    $cs = cs();
+    $phpstan = phpstan();
+    $twigCs = twigCs();
+    $phpunit = phpunit();
 
-    if (0 === $phpCsFixer->getExitCode() && 0 === $phpStan->getExitCode()) {
-        notify('🎉 QA passes!');
-        io()->success('🎉 QA passes!');
-        echo $phpCsFixer->getOutput();
-        echo $phpStan->getOutput();
-
-        return 0;
-    }
-    if (0 !== $phpCsFixer->getExitCode()) {
-        notify('🚨 QA fails! PHP CS Fixer failed.');
-        io()->error('🚨 QA fails! PHP CS Fixer failed.');
-        echo $phpCsFixer->getOutput();
-
-        return $phpCsFixer->getExitCode();
-    }
-    if (0 !== $phpStan->getExitCode()) {
-        notify('🚨 QA fails! PHPStan failed.');
-        io()->error('🚨 QA fails! PHPStan failed.');
-        echo $phpStan->getOutput();
-
-        return $phpStan->getExitCode();
-    }
-
-    return 0;
+    return max($cs, $phpstan, $twigCs, $phpunit);
 }
 
-#[AsTask(namespace: 'qa', description: 'Run PHP CS Fixer', aliases: ['cs'])]
-function phpcsfixer(
-    #[AsOption(shortcut: 'q', description: 'Run quietly the command')]
-    bool $quiet = false,
-    #[AsOption(shortcut: 'e', description: 'Return exit code instead of process')]
-    bool $returnExitCode = true,
-): null|int|Process {
-    $process = docker_compose_run(
-        'php vendor/bin/php-cs-fixer fix --config=../.php-cs-fixer.php --cache-file=../.php-cs-fixer.cache',
-        c: get_context()->withQuiet($quiet),
-    );
+#[AsTask(description: 'Installs tooling')]
+function install(): void
+{
+    io()->title('Installing QA tooling');
 
-    if ($returnExitCode) {
-        return $process->getExitCode();
-    }
-
-    return $process;
+    docker_compose_run('composer install -o', workDir: '/var/www/tools/php-cs-fixer');
+    docker_compose_run('composer install -o', workDir: '/var/www/tools/phpstan');
+    docker_compose_run('composer install -o', workDir: '/var/www/tools/twig-cs-fixer');
 }
 
-#[AsTask(namespace: 'qa', description: 'Run PHPStan analysis', aliases: ['phpstan'])]
+#[AsTask(description: 'Updates tooling')]
+function update(): void
+{
+    io()->title('Updating QA tooling');
+
+    docker_compose_run('composer update -o', workDir: '/var/www/tools/php-cs-fixer');
+    docker_compose_run('composer update -o', workDir: '/var/www/tools/phpstan');
+    docker_compose_run('composer update -o', workDir: '/var/www/tools/twig-cs-fixer');
+}
+
+/**
+ * @param string[] $rawTokens
+ */
+#[AsTask(description: 'Runs PHPUnit', aliases: ['phpunit'])]
+function phpunit(#[AsRawTokens] array $rawTokens = []): int
+{
+    io()->section('Running PHPUnit...');
+
+    return docker_exit_code('vendor/bin/phpunit ' . implode(' ', $rawTokens));
+}
+
+#[AsTask(description: 'Runs PHPStan', aliases: ['phpstan'])]
 function phpstan(
-    #[AsOption(shortcut: 'q', description: 'Run quietly the command')]
-    bool $quiet = false,
-    #[AsOption(shortcut: 'e', description: 'Return exit code instead of process')]
-    bool $returnExitCode = true,
-): null|int|Process {
-    $process = docker_compose_run(
-        'php vendor/bin/phpstan analyse src/ -c phpstan.neon',
-        c: get_context()->withQuiet($quiet),
-    );
-
-    if ($returnExitCode) {
-        return $process->getExitCode();
+    #[AsOption(description: 'Generate baseline file', shortcut: 'b')]
+    bool $baseline = false,
+): int {
+    if (!is_dir(variable('root_dir') . '/tools/phpstan/vendor')) {
+        install();
     }
 
-    return $process;
+    io()->section('Running PHPStan...');
+
+    $options = $baseline ? '--generate-baseline --allow-empty-baseline' : '';
+    $command = \sprintf('phpstan analyse --memory-limit=-1 %s -v', $options);
+
+    return docker_exit_code($command, workDir: '/var/www');
 }
 
-#[AsTask(namespace: 'qa', description: 'Run PHPUnit tests', aliases: ['test'])]
-function phpunit(
-    #[AsOption(shortcut: 'q', description: 'Run quietly the command')]
-    bool $quiet = false,
-    #[AsOption(shortcut: 'e', description: 'Return exit code instead of process')]
-    bool $returnExitCode = true,
-    #[AsOption(shortcut: 'filter', description: 'Filter tests to run')]
-    string $filter = null,
-): null|int|Process {
-    docker_compose_run('php bin/console doctrine:database:create --if-not-exists --env=test');
-    docker_compose_run('php bin/console doctrine:migration:migrate -n --allow-no-migration --env=test');
-
-    if ($filter) {
-        $command = sprintf('bin/phpunit --filter %s', $filter);
-    } else {
-        $command = 'bin/phpunit';
+#[AsTask(description: 'Fixes Coding Style', aliases: ['cs'])]
+function cs(bool $dryRun = false): int
+{
+    if (!is_dir(variable('root_dir') . '/tools/php-cs-fixer/vendor')) {
+        install();
     }
 
-    $process = docker_compose_run(
-        $command,
-        c: get_context()->withQuiet($quiet),
-    );
+    io()->section('Running PHP CS Fixer...');
 
-    if ($returnExitCode) {
-        return $process->getExitCode();
+    if ($dryRun) {
+        return docker_exit_code('php-cs-fixer fix --dry-run --diff', workDir: '/var/www');
     }
 
-    return $process;
+    return docker_exit_code('php-cs-fixer fix', workDir: '/var/www');
+}
+
+#[AsTask(description: 'Fixes Twig Coding Style', aliases: ['twig-cs'])]
+function twigCs(bool $dryRun = false): int
+{
+    if (!is_dir(variable('root_dir') . '/tools/twig-cs-fixer/vendor')) {
+        install();
+    }
+
+    io()->section('Running Twig CS Fixer...');
+
+    if ($dryRun) {
+        return docker_exit_code('twig-cs-fixer', workDir: '/var/www');
+    }
+
+    return docker_exit_code('twig-cs-fixer --fix', workDir: '/var/www');
 }

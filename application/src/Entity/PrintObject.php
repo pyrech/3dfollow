@@ -15,11 +15,9 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Entity\File as EmbeddedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Attribute as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: PrintObjectRepository::class)]
 class PrintObject
 {
@@ -43,9 +41,7 @@ class PrintObject
     #[ORM\Embedded(class: EmbeddedFile::class)]
     private ?EmbeddedFile $gCode = null;
 
-    /**
-     * @Vich\UploadableField(mapping="print_oject", fileNameProperty="gCode.name", size="gCode.size", mimeType="gCode.mimeType", originalName="gCode.originalName", dimensions="gCode.dimensions")
-     */
+    #[Vich\UploadableField(mapping: 'print_oject', fileNameProperty: 'gCode.name', size: 'gCode.size', mimeType: 'gCode.mimeType', originalName: 'gCode.originalName', dimensions: 'gCode.dimensions')]
     #[Assert\File(maxSize: '128M')]
     private ?File $gCodeFile = null;
 
@@ -80,7 +76,7 @@ class PrintObject
     private ?\DateTimeInterface $printedAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private ?\DateTimeInterface $updatedAt;
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {

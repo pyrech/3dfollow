@@ -1,5 +1,7 @@
-*.castor.stub.php
-/.php-cs-fixer.cache
+/.castor.stub.php
 /infrastructure/docker/docker-compose.override.yml
-/infrastructure/docker/services/router/etc/ssl/certs/*
-!/infrastructure/docker/services/router/etc/ssl/certs/.gitkeep
+/infrastructure/docker/services/router/certs/*.pem
+
+# Tools
+.php-cs-fixer.cache
+.twig-cs-fixer.cache

@@ -21,7 +21,7 @@ class Changelog
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
-    private ?\DateTimeInterface $date;
+    private \DateTimeInterface $date;
 
     /**
      * @var string[]
@@ -39,7 +39,7 @@ class Changelog
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): \DateTimeInterface
     {
         return $this->date;
     }

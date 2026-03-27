@@ -1,0 +1,43 @@
+parameters:
+    level: 9
+    paths:
+        - application/src
+        - application/public
+        - castor.php
+        - .castor/
+    scanFiles:
+        - .castor.stub.php
+    scanDirectories:
+        - application/vendor
+    tmpDir: tools/phpstan/var
+    inferPrivatePropertyTypeFromConstructor: true
+
+    symfony:
+        containerXmlPath: 'application/var/cache/dev/App_KernelDevDebugContainer.xml'
+
+    ignoreErrors:
+        - message: '#.*#'
+          path: .castor/docker.php
+        - message: '#Method App\\Repository\\[a-zA-Z0-9\\_]+Repository::.*\(\) should return array\<[a-zA-Z0-9\\_]+\> but returns mixed\.#'
+          path: application/src/Repository
+        - message: '#Method App\\Repository\\[a-zA-Z0-9\\_]+Repository::.*\(\) should return [a-zA-Z0-9\\_]+\|null but returns mixed\.#'
+          path: application/src/Repository
+        - message: '#Property App\\Entity\\.*::\$id \(int\|null\) is never assigned int so it can be removed from the property type\.#'
+          path: application/src/Entity
+
+    typeAliases:
+        ContextData: '''
+            array{
+                project_name: string,
+                root_domain: string,
+                extra_domains: string[],
+                php_version: string,
+                docker_compose_files: list<string>,
+                docker_compose_run_environment: list<string>,
+                macos: bool,
+                power_shell: bool,
+                user_id: int,
+                root_dir: string,
+                registry?: ?string,
+            }
+        '''
