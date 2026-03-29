@@ -52,6 +52,6 @@ class AdminTest extends WebTestCase
         $crawler = $client->request('GET', self::URL);
 
         $this->assertResponseIsSuccessful();
-        $this->assertResponseUri($crawler, self::URL);
+        $this->assertResponseUri($crawler, '/admin/print-object');
     }
 }

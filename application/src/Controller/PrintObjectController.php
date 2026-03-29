@@ -19,17 +19,17 @@ use Pyrech\GcodeEstimator\Estimator;
 use Pyrech\GcodeEstimator\Exception\FileNotReadable;
 use Pyrech\GcodeEstimator\Exception\InvalidGcode;
 use Pyrech\GcodeEstimator\Filament as EstimatorFilament;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Vich\UploaderBundle\Storage\StorageInterface;
 
 #[Route(path: '/print-object', name: 'print_object_')]
-#[IsGranted(data: 'ROLE_PRINTER')]
+#[IsGranted('ROLE_PRINTER')]
 class PrintObjectController extends AbstractController
 {
     public function __construct(

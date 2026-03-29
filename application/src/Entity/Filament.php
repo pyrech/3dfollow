@@ -71,6 +71,7 @@ class Filament
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
+    /** @var Collection<int, PrintObject> */
     #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'filament')]
     private Collection $printObjects;
 
@@ -181,7 +182,7 @@ class Filament
     }
 
     /**
-     * @return Collection<PrintObject>
+     * @return Collection<int, PrintObject>
      */
     public function getPrintObjects(): Collection
     {

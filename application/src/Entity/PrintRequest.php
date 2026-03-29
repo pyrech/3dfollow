@@ -49,10 +49,11 @@ class PrintRequest
     #[ORM\JoinColumn(nullable: false)]
     private ?Team $team = null;
 
+    /** @var Collection<int, PrintObject> */
     #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'printRequest')]
     private Collection $printObjects;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: false)]
     private \DateTimeInterface $createdAt;
 
     public function __construct()
@@ -156,7 +157,7 @@ class PrintRequest
     }
 
     /**
-     * @return Collection<PrintObject>
+     * @return Collection<int, PrintObject>
      */
     public function getPrintObjects(): Collection
     {
@@ -186,7 +187,7 @@ class PrintRequest
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }

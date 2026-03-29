@@ -10,12 +10,17 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Changelog;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
+/**
+ * @extends AbstractCrudController<Changelog>
+ */
+#[AdminRoute(path: '/changelog', name: 'changelog')]
 class ChangelogCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

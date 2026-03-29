@@ -16,7 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'validation.username_existing')]
@@ -29,7 +28,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'validation.username_required')]
     private ?string $username = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -44,18 +42,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private ?string $password = null;
 
+    /** @var Collection<int, PrintRequest> */
     #[ORM\OneToMany(targetEntity: PrintRequest::class, mappedBy: 'user')]
     private Collection $printRequests;
 
+    /** @var Collection<int, Filament> */
     #[ORM\OneToMany(targetEntity: Filament::class, mappedBy: 'owner', orphanRemoval: true)]
     private Collection $filaments;
 
     #[ORM\OneToOne(targetEntity: Team::class, mappedBy: 'creator', cascade: ['persist', 'remove'])]
     private ?Team $teamCreated = null;
 
+    /** @var Collection<int, Team> */
     #[ORM\ManyToMany(targetEntity: Team::class, mappedBy: 'members')]
     private Collection $teams;
 
+    /** @var Collection<int, PrintObject> */
     #[ORM\OneToMany(targetEntity: PrintObject::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $printObjects;
 
@@ -184,13 +186,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        if (!$this->username) {
+            throw new \LogicException('The user identifier cannot be empty.');
+        }
+
+        return $this->username;
     }
 
     /**
-     * @return Collection<PrintRequest>
+     * @return Collection<int, PrintRequest>
      */
     public function getPrintRequests(): Collection
     {
@@ -221,7 +230,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<Filament>
+     * @return Collection<int, Filament>
      */
     public function getFilaments(): Collection
     {
@@ -269,7 +278,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<Team>
+     * @return Collection<int, Team>
      */
     public function getTeams(): Collection
     {
@@ -297,7 +306,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<PrintObject>
+     * @return Collection<int, PrintObject>
      */
     public function getPrintObjects(): Collection
     {

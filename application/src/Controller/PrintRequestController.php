@@ -15,11 +15,11 @@ use App\Entity\User;
 use App\Form\PrintRequestType;
 use App\Repository\PrintRequestRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/print-request', name: 'print_request_')]
 class PrintRequestController extends AbstractController
@@ -30,7 +30,7 @@ class PrintRequestController extends AbstractController
     }
 
     #[Route(path: '', name: 'index', methods: ['GET'])]
-    #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
+    #[IsGranted('ROLE_TEAM_MEMBER')]
     public function index(PrintRequestRepository $printRequestRepository): Response
     {
         /** @var User $user */
@@ -62,7 +62,7 @@ class PrintRequestController extends AbstractController
     }
 
     #[Route(path: '/new/{id}', name: 'new', methods: ['GET', 'POST'])]
-    #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
+    #[IsGranted('ROLE_TEAM_MEMBER')]
     public function new(Request $request, Team $team): Response
     {
         /** @var User $user */
@@ -91,7 +91,7 @@ class PrintRequestController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
+    #[IsGranted('ROLE_TEAM_MEMBER')]
     public function edit(Request $request, PrintRequest $printRequest): Response
     {
         $this->assertUser($printRequest);
@@ -114,7 +114,7 @@ class PrintRequestController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'show', methods: ['GET'])]
-    #[IsGranted(data: 'ROLE_PRINTER')]
+    #[IsGranted('ROLE_PRINTER')]
     public function show(Request $request, PrintRequest $printRequest): Response
     {
         /** @var User $user */
@@ -133,7 +133,7 @@ class PrintRequestController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'delete', methods: ['DELETE'])]
-    #[IsGranted(data: 'ROLE_TEAM_MEMBER')]
+    #[IsGranted('ROLE_TEAM_MEMBER')]
     public function delete(Request $request, PrintRequest $printRequest): Response
     {
         $this->assertUser($printRequest);

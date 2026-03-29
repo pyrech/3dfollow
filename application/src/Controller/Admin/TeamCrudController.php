@@ -10,12 +10,17 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Team;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Team>
+ */
+#[AdminRoute(path: '/team', name: 'team')]
 class TeamCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
